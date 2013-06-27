@@ -1,0 +1,100 @@
+﻿.col1 {
+    width: 78%;
+    text-align: left;
+    float: left;
+}
+
+.col2 {
+    padding-right: 10px;
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+}
+
+.col3 {
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+}
+
+.clear {
+    clear: left;
+    line-height: 7px;
+}
+.trash_col1 {
+    width: 66%;
+    text-align: left;
+    float: left;
+}
+.trash_col2 {
+    padding-right: 10px;
+    text-align: left;
+    float: left;
+}
+.trash_col3 {
+    padding-right: 10px;
+    text-align: left;
+    float: left;
+}
+.approval_col1 {
+    width: 51%;
+    text-align: left;
+    float: left;
+}
+
+.approval_col2 {
+    padding-right: 10px;
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+}
+
+.approval_col3 {
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+}
+
+.approval_col4 {
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+}
+
+.approval_col5 {
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+}
+
+.approval_col6 {
+    padding-right: 10px;
+    text-align: right;
+    float: left;
+}
+
+.container_padding {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.formlabel {
+    width: 10%;
+    text-align: right;
+    float: left;
+}
+
+.formfield {
+    text-align: left;
+    padding-left: 15px;
+    float: left;
+}
+.formcontainer {
+    padding-top: 75px;
+    padding-left: 40px;
+}
+.myckeditor {
+    width: 75%;
+}
+
+

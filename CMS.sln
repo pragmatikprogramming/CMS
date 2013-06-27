@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.Domain", "CMS.Domain\CMS.Domain.csproj", "{78EBB8FC-EDBC-4500-AD62-E2D3E0625826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.WebUI", "CMS.WebUI\CMS.WebUI.csproj", "{3B713086-7B20-4850-AA4B-0E821E3F17F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.UnitTests", "CMS.UnitTests\CMS.UnitTests.csproj", "{80B12960-51F6-4DE0-A46B-EB6D5D6A3EA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78EBB8FC-EDBC-4500-AD62-E2D3E0625826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78EBB8FC-EDBC-4500-AD62-E2D3E0625826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78EBB8FC-EDBC-4500-AD62-E2D3E0625826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78EBB8FC-EDBC-4500-AD62-E2D3E0625826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B713086-7B20-4850-AA4B-0E821E3F17F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B713086-7B20-4850-AA4B-0E821E3F17F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B713086-7B20-4850-AA4B-0E821E3F17F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B713086-7B20-4850-AA4B-0E821E3F17F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80B12960-51F6-4DE0-A46B-EB6D5D6A3EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B12960-51F6-4DE0-A46B-EB6D5D6A3EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B12960-51F6-4DE0-A46B-EB6D5D6A3EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B12960-51F6-4DE0-A46B-EB6D5D6A3EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
