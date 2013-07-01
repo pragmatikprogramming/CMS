@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Create Page";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Create Page</h1>
+</div>
+
+<div class="formcontainer">
+    <form action="" method="post">
+        <div class="formlabel">Content Group:</div>
+        <div class="formfield"><select name="content_group"><option value="">-- Select a Content Group --</option></select></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Page Title:</div>
+        <div class="formfield"><input type="text" name="page_title" /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Navigation Name:</div>
+        <div class="formfield"><input type="text" name="navigation_name" /></div>
+        <div class="clear">&nbsp;</div>
+        
+        <div class="formlabel">Publish Date:</div>
+        <div class="formfield"><input type="text" name="publish_date" readonly="readonly" />&nbsp; <i class="icon-calendar icon-2x"></i></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Expiration Date:</div>
+        <div class="formfield"><input type="text" name="expiration_date" readonly="readonly" />&nbsp; <i class="icon-calendar icon-2x"></i></div>
+        <div class="clear">&nbsp;</div>
+
+        <div id="content"" name="content" class="myckeditor">
+
+            <script>
+                CKEDITOR.appendTo('content', {
+                    "extraPlugins": "imagebrowser",
+                    "imageBrowser_listUrl": "/Content/images/images_list.json"
+                }, '');
+            </script>
+
+        </div>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+
+        <div class="formlabel">Review Schedule:</div>
+        <div class="formfield"><input type="text" name="review_schedule" readonly="readonly" />&nbsp; <i class="icon-calendar icon-2x"></i></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Meta Description:</div>
+        <div class="formfield"><textarea cols="20" rows="5"></textarea></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Meta Keywords:</div>
+        <div class="formfield"><textarea cols="20" rows="5"></textarea></div>
+        <div class="clear">&nbsp;</div>
+    </form>
+
+
+</div>

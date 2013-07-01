@@ -21,5 +21,14 @@ namespace CMS.WebUI.Controllers
             return View("PagesCreate");
         }
 
+        public ViewResult User()
+        {
+            return View("User");
+        }
+
+        public ViewResult UsersManage()
+        {
+            return View("UsersManage");
+        }
     }
 }

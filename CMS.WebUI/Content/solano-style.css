@@ -1,24 +1,45 @@
-﻿.col1 {
-    width: 78%;
+﻿.row_unlock_container {
+    width: 31%;
+    float:left;
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.row_trash_container {
+    width: 34%;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.row_approval_container {
+    width: 67%;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.col1 {
+    width: 68%;
     text-align: left;
     float: left;
 }
 
 .col2 {
     padding-right: 10px;
-    text-align: right;
-    vertical-align: middle;
-    float: left;
+    display: inline;
 }
 
 .col3 {
-    padding-right: 10px;
-    text-align: right;
-    float: left;
+    display: inline;
 }
 
 .clear {
     clear: left;
+    line-height: 7px;
+}
+.clear_right {
+    clear: right;
     line-height: 7px;
 }
 .trash_col1 {
@@ -28,49 +49,39 @@
 }
 .trash_col2 {
     padding-right: 10px;
-    text-align: left;
-    float: left;
+    display: inline;
 }
 .trash_col3 {
-    padding-right: 10px;
-    text-align: left;
-    float: left;
+    display: inline;
 }
 .approval_col1 {
-    width: 51%;
+    width: 33%;
     text-align: left;
     float: left;
 }
 
 .approval_col2 {
     padding-right: 10px;
-    text-align: right;
-    vertical-align: middle;
-    float: left;
+    display: inline;
 }
 
 .approval_col3 {
     padding-right: 10px;
-    text-align: right;
-    float: left;
+    display: inline;
 }
 
 .approval_col4 {
     padding-right: 10px;
-    text-align: right;
-    float: left;
+    display: inline;
 }
 
 .approval_col5 {
     padding-right: 10px;
-    text-align: right;
-    float: left;
+    display: inline;
 }
 
 .approval_col6 {
-    padding-right: 10px;
-    text-align: right;
-    float: left;
+    display: inline;
 }
 
 .container_padding {
@@ -96,5 +107,43 @@
 .myckeditor {
     width: 75%;
 }
-
+.dashboardbutton {
+    width: 31%;
+    text-align: left;
+    float: left;
+    padding-left: 4%;
+}
+.dashboardpag {
+    width: 64%;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.dashboardapprbutton {
+    width: 31%;
+    text-align: left;
+    float: left;
+    padding-left: 2%;
+}
+.dashboardapprpag {
+    width: 67%;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.dashboardtrashbutton {
+    width: 35%;
+    text-align: left;
+    float: left;
+    padding-left: 4%;
+}
+.dashboardtrashpag {
+    width: 61%;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
 

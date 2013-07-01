@@ -2253,6 +2253,9 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\PagesCreate.cshtml" />
+    <Content Include="Views\Admin\UserAdd.cshtml" />
+    <Content Include="Views\Admin\UsersManage.cshtml" />
+    <Content Include="Views\Admin\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
