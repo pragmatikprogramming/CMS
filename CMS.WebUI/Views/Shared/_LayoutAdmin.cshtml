@@ -37,6 +37,8 @@
         }
     </style>
 
+
+
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -65,7 +67,7 @@
                     
                     <li id="fat-menu" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user"></i> Katrina Laws
+                            <i class="icon-user"></i> @ViewBag.FirstName @ViewBag.LastName
                             <i class="icon-caret-down"></i>
                         </a>
 
@@ -100,15 +102,15 @@
 
         <a href="#users-menu" class="nav-header" data-toggle="collapse"><i class="icon-group"></i>Users</a>
         <ul id="users-menu" class="nav nav-list collapse">
-            <li ><a href="/Admin/User">Add User</a></li>
-            <li ><a href="/Admin/UsersManage">Manage Users</a></li>
+            <li ><a href="/User/Add">Add User</a></li>
+            <li ><a href="/User/Manage">Manage Users</a></li>
         </ul>
         
        
 
-       <a href="#" class="nav-header" ><i class="icon-sitemap"></i>Menus</a>
-		<a href="#" class="nav-header" ><i class="icon-picture"></i>Media</a>
-         <a href="#extensions-menu" class="nav-header" data-toggle="collapse"><i class="icon-puzzle-piece"></i>Extensions</a>
+        <a href="#" class="nav-header" ><i class="icon-sitemap"></i>Menus</a>
+	    <a href="/Admin/MediaManager" class="nav-header" ><i class="icon-picture"></i>Media</a>
+        <a href="#extensions-menu" class="nav-header" data-toggle="collapse"><i class="icon-puzzle-piece"></i>Extensions</a>
         <ul id="extensions-menu" class="nav nav-list collapse">
             <li ><a href="#">Calendar</a></li>
             <li ><a href="#">FAQ</a></li>

@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CMS.Domain.Entities;
+using System.Data.SqlClient;
 
 namespace CMS.Domain.DataAccess
 {
     public class DBPage
     {
-        public void DBCreate(Page m_Page)
+        public void DBPageCreate(Page m_Page)
         {
 
         }
 
-        public Page DBRetrieve(int m_ID)
+        public Page DBPageRetrieve(int m_ID)
         {
             object myObject = new object();
             return (Page)myObject;
         }
 
-        public bool DBUpdate(Page m_Page)
+        public bool DBPageUpdate(Page m_Page)
         {
             return true;
         }
 
-        public void DBDelete(int m_ID)
+        public void DBPageDelete(int m_ID)
         {
 
         }

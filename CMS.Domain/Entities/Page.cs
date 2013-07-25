@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CMS.Domain.Abstract;
 
 namespace CMS.Domain.Entities
 {
@@ -16,8 +17,7 @@ namespace CMS.Domain.Entities
         private string reviewSchedule;
         private string metaDescription;
         private string metaKeywords;
-
-
+        private IPageRepository m_PageRepository;
 
         public int PageID
         {
@@ -113,6 +113,11 @@ namespace CMS.Domain.Entities
             { 
                 metaKeywords = value; 
             }
+        }
+
+        public Page(IPageRepository m_Page)
+        {
+            m_PageRepository = m_Page;
         }
     }
 }

@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Admin - Add User";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h2>Add New CMS User</h2>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">              
+        <div class="btn-toolbar">
+            <button class="btn btn-primary"><i class="icon-save"></i> Save</button>
+            <a href="#myModal" data-toggle="modal" class="btn">Delete</a>
+            <div class="btn-group">
+            </div>
+        </div>
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">Profile</a></li>
+                <li><a href="#profile" data-toggle="tab">Password</a></li>
+                <li><a href="#permissions" data-toggle="tab">Permissions</a></li>
+            </ul>
+            <form action="#" method="POST">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <label>Username</label>
+                        <input type="text" value="" class="input-xlarge">
+                        <label>First Name</label>
+                        <input type="text" value="" class="input-xlarge">
+                        <label>Last Name</label>
+                        <input type="text" value="" class="input-xlarge">
+                        <label>Email</label>
+                        <input type="text" value="" class="input-xlarge">
+                    </div>
+                    <div class="tab-pane fade" id="profile">
+                        <label>New Password</label>
+                        <input type="password" class="input-xlarge">
+                    </div>
+                    <div class="tab-pane fade" id="permissions">
+                        good stuff here
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+            <h3 id="myModalLabel">Delete Confirmation</h3>
+        </div>
+        <div class="modal-body"> 
+            <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+        </div>
+    </div>
+
+

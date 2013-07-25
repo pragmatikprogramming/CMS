@@ -119,16 +119,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IPageRepository.cs" />
+    <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="DataAccess\DBPage.cs" />
+    <Compile Include="DataAccess\DBUser.cs" />
     <Compile Include="Entities\Page.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\BCrypt.cs" />
+    <Compile Include="HelperClasses\DB.cs" />
+    <Compile Include="HelperClasses\SessionHandler.cs" />
     <Compile Include="Models\PageRepository.cs" />
+    <Compile Include="Models\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
