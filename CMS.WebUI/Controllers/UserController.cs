@@ -77,5 +77,33 @@ namespace CMS.WebUI.Controllers
             List<User> CMSUsers = UserRepository.RetrieveAll();
             return View("Manage", CMSUsers);
         }
+
+        [CMSAuth]
+        public ActionResult Edit(int id)
+        {
+            int uid;
+            int.TryParse((string)Url.RequestContext.RouteData.Values["id"], out uid);
+
+            User m_User = UserRepository.RetrieveOne(uid);
+
+            return View("Edit", m_User);
+        }
+
+        [CMSAuth]
+        [HttpPost]
+        public ActionResult Edit(User m_User, string oldUserName)
+        {
+            if (ModelState.IsValid)
+            {
+                UserRepository.Update(m_User, oldUserName);
+
+                List<User> CMSUsers = UserRepository.RetrieveAll();
+                return View("Manage", CMSUsers);
+            }
+            else
+            {
+                return View("Edit", m_User);
+            }
+        }
     }
 }

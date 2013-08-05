@@ -34,6 +34,7 @@ namespace CMS.WebUI.Infrastructure
         private void AddBindings()
         {
             kernel.Bind<IUserRepository>().To<UserRepository>();
+            kernel.Bind<IEventRepository>().To<EventRepository>();
         }
     }
 }

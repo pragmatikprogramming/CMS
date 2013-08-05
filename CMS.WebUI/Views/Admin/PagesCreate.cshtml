@@ -3,6 +3,17 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+
+<script>
+    $(function () {
+        $("#publish_date").datepicker();
+    });
+
+    $(function () {
+        $("#expiration_date").datepicker();
+    });
+</script>
+
 <div class="header">
     <h1 class="page-title">Create Page</h1>
 </div>
@@ -22,11 +33,11 @@
         <div class="clear">&nbsp;</div>
         
         <div class="formlabel">Publish Date:</div>
-        <div class="formfield"><input type="text" name="publish_date" readonly="readonly" />&nbsp; <i class="icon-calendar icon-2x"></i></div>
+        <div class="formfield"><input type="text" name="publish_date" id="publish_date" readonly="readonly" /></div>
         <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Expiration Date:</div>
-        <div class="formfield"><input type="text" name="expiration_date" readonly="readonly" />&nbsp; <i class="icon-calendar icon-2x"></i></div>
+        <div class="formfield"><input type="text" name="expiration_date" id="expiration_date" readonly="readonly" /></div>
         <div class="clear">&nbsp;</div>
 
         <div id="content"" name="content" class="myckeditor">

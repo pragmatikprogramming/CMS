@@ -126,6 +126,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2211,6 +2212,9 @@
     <Content Include="Content\CKEditor\styles.js" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\fullcalendar.css" />
+    <Content Include="Content\fullcalendar.min.js" />
+    <Content Include="Content\fullcalendar.print.css" />
     <Content Include="Content\images\140x140.gif" />
     <Content Include="Content\images\170x170.gif" />
     <Content Include="Content\images\logo-tagline.png" />
@@ -2266,6 +2270,9 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\User\UserAdd.cshtml" />
     <Content Include="Views\User\Manage.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Calendar\ViewFull.cshtml" />
+    <Content Include="Views\Calendar\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

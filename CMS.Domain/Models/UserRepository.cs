@@ -40,14 +40,26 @@ namespace CMS.Domain.Models
 
         public User RetrieveOne(int m_Uid)
         {
-            object myObject = new Object();
-            return (User)myObject;
+            User m_User = DBUser.GetOne(m_Uid);
+
+            return m_User;
         }
 
-        public bool Update(User m_User)
+        public bool Update(User m_User, string oldUserName)
         {
+            if (m_User.UserName != oldUserName)
+            {
+                if (!DBUser.isUserNameAvailable(m_User.UserName))
+                {
+                    return false;
+                }
+            }
+
+            DBUser.userUpdate(m_User);
+
             return true;
         }
+
         public bool Delete(int m_Uid)
         {
             DBUser.userDelete(m_Uid);

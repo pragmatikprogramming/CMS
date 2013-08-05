@@ -127,8 +127,7 @@ namespace CMS.Domain.HelperClasses
             if (userRecord.Read())
             {
                 HttpContext.Current.Session["uid"] = userRecord.GetInt32(0);
-                HttpContext.Current.Session["FirstName"] = userRecord.GetString(1);
-                HttpContext.Current.Session["LastName"] = userRecord.GetString(2);
+                HttpContext.Current.Session["Name"] = userRecord.GetString(1) + " " + userRecord.GetString(2);
 
                 if (is_user_locked((int)HttpContext.Current.Session["uid"]))
                 {

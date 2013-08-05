@@ -9,10 +9,10 @@ namespace CMS.Domain.Abstract
 {
     public interface IUserRepository
     {
-        bool Create(string userName, string firstName, string lastName, string email, string passWord);
+        bool Create(string usernName, string firstName, string lastName, string email, string passWord);
         User RetrieveOne(int m_Uid);
         List<User> RetrieveAll();
-        bool Update(User m_User);
+        bool Update(User m_User, string oldUserName);
         bool Delete(int m_Uid);
     }
 }

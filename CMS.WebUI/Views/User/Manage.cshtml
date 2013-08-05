@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<CMS.Domain.Entities.User>
 @{
     ViewBag.Title = "Admin - Manage Users";
-    ViewBag.FirstName = HttpContext.Current.Session["UserName"];
-    ViewBag.LastName = HttpContext.Current.Session["LastName"];
+    ViewBag.Name = HttpContext.Current.Session["Name"];
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -44,7 +43,7 @@
                 <td>@p.LastName</td>
                 <td>@p.UserName</td>
                 <td>
-                       <a href="#"><i class="icon-pencil"></i></a>
+                       <a href="/User/Edit/@p.Uid"><i class="icon-pencil"></i></a>
                        <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@p.Uid);"><i class="icon-remove"></i></a>
                 </td>
            </tr>

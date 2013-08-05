@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script>
+    $(function () {
+        $("#EventStartDate").datepicker();
+    });
+
+    $(function () {
+        $("#EventEndDate").datepicker();
+    });
+</script>
+
+<div class="header">
+    <h1 class="page-title">Create Calendar Event</h1>
+</div>
+
+<div class="formcontainer">
+    <div style="color: red">@Html.ValidationSummary()</div>
+    <form action="/Calendar/Add" method="post" id="eventAdd">
+        <div class="formlabel">Content Group</div>
+        <div class="formfield"><select name="ContentGroup"><option value="1">-- Select a Content Group --</option></select></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Event Title:</div>
+        <div class="formfield"><input type="text" name="EventTitle" id="EventTitle" value="@Model.EventTitle"/></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Event Start Date:</div>
+        <div class="formfield"><input type="text" name="EventStartDate" id="EventStartDate" value="
+            @if(Model.EventStartDate != DateTime.Parse("1/1/0001 12:00:00 AM"))
+            {
+                @Model.EventStartDate.ToString("M/dd/yyyy");
+            }" /></div>
+        <div class="formlabel">Event Start Time:</div>
+        <div class="formfield">
+            <select name="EventStartHour" id="EventStartHour" style="width: 75px;">
+                <option value="-1"></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="EventStartMin" id="EventStartMin" style="width: 75px">
+                <option value="-1"></option>
+                <option value="0">00</option>
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="45">45</option>
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="AmpmStart" id="AmpmStart" style="width: 75px">
+                <option value="-1"></option>
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Event End Date:</div>
+        <div class="formfield"><input type="text" name="EventEndDate" id="EventEndDate" value="
+            @if(Model.EventEndDate != DateTime.Parse("1/1/0001 12:00:00 AM"))
+            {
+                @Model.EventEndDate.ToString("M/dd/yyyy");
+            }"/></div>
+
+        <div class="formlabel">Event End Time:</div>
+        <div class="formfield">
+            <select name="EventEndHour" id="EventEndHour" style="width: 75px;">
+                <option value="-1"></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="EventEndMin" id="EventEndMin" style="width: 75px">
+                <option value="-1"></option>
+                <option value="0">00</option>
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="45">45</option>
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="AmpmEnd" id="AmpmEnd" style="width: 75px">
+                <option value=""></option>
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Branch:</div>
+        <div class="formfield"><select name="Branch" id="Branch"><option value="1">-- Select a Branch --</option></select></div>
+        <div class="clear">&nbsp;</div>
+        <textarea name="Body" id="Body" style="width: 80%"></textarea>
+        
+        <script>
+            CKEDITOR.replace('Body', {
+                "extraPlugins": "imagebrowser",
+                "imageBrowser_listUrl": "/Content/images/images_list.json"
+            }, '');
+            </script>
+       
+        <div style="line-height: 30px;">&nbsp;</div>
+        <button form="eventAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+    </form>

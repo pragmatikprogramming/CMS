@@ -40,18 +40,35 @@ namespace CMS.Domain.DataAccess
             return myList;
         }
 
-        public static SqlDataReader GetOne(int m_Uid)
+        public static User GetOne(int m_Uid)
         {
+            User myUser = new User();
+
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT firstName, lastName, userName, email FROM CMS_Users";
+            string queryString = "SELECT id, firstName, lastName, userName, email FROM CMS_Users WHERE id = @id";
             SqlCommand cmd = new SqlCommand(queryString, conn);
+            cmd.Parameters.AddWithValue("id", m_Uid);
 
             SqlDataReader m_User = cmd.ExecuteReader();
-            conn.Close();
 
-            return m_User;
+            if (m_User.Read())
+            {
+                myUser.Uid = m_User.GetInt32(0);
+                myUser.FirstName = m_User.GetString(1);
+                myUser.LastName = m_User.GetString(2);
+                myUser.UserName = m_User.GetString(3);
+                myUser.Email = m_User.GetString(4);
+                conn.Close();
+                return myUser;
+            }
+            else
+            {
+                myUser = null;
+                conn.Close();
+                return myUser;
+            }
         }
 
         public static bool isUserNameAvailable(string userName)
@@ -103,6 +120,38 @@ namespace CMS.Domain.DataAccess
             deleteUser.Parameters.AddWithValue("uid", m_Uid);
 
             deleteUser.ExecuteNonQuery();
+        }
+
+        public static void userUpdate(User m_User)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString;
+            queryString = "UPDATE CMS_Users SET firstName = @firstName, lastName = @lastName, email = @email, userName = @userName";
+
+            if (m_User.PassWord != "1111")
+            {
+                queryString += ", passWord = @passWord";
+            }
+
+            queryString += " WHERE id = @Uid";
+
+            SqlCommand updateUser = new SqlCommand(queryString, conn);
+            updateUser.Parameters.AddWithValue("firstName", m_User.FirstName);
+            updateUser.Parameters.AddWithValue("lastName", m_User.LastName);
+            updateUser.Parameters.AddWithValue("email", m_User.Email);
+            updateUser.Parameters.AddWithValue("userName", m_User.UserName);
+            updateUser.Parameters.AddWithValue("Uid", m_User.Uid);
+
+            if (m_User.PassWord != "1111")
+            {
+                updateUser.Parameters.AddWithValue("passWord", m_User.PassWord);
+            }
+
+            updateUser.ExecuteNonQuery();
+
+            conn.Close();
         }
     }
 }

@@ -1,9 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Admin - Add User";
-    
+    ViewBag.Title = "Admin - Edit User";
+    ViewBag.Name = HttpContext.Current.Session["Name"];
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<script type="text/javascript">
+    var myID = 0;
 
+    function doWork(id)
+    {
+        myID = id;
+    }
+
+</script>
 <div class="header">
     <h2>Add New CMS User</h2>
 </div>
@@ -12,6 +20,7 @@
     <div class="row-fluid">              
         <div class="btn-toolbar">
             <button class="btn btn-primary" form="userAdd"><i class="icon-save"></i> Save</button>
+            <a href="#myModal" data-toggle="modal" class="btn" onclick="doWork(@Model.Uid);" >Delete</a>
             <div class="btn-group">
             </div>
         </div>
@@ -26,11 +35,13 @@
                 <li><a href="#profile" data-toggle="tab">Password</a></li>
                 <li><a href="#permissions" data-toggle="tab">Permissions</a></li>
             </ul>
-            <form action="/User/Add" method="POST" id="userAdd">
+            <form action="/User/Edit" method="POST" id="userAdd">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="home">
                         <label>Username</label>
                         <input type="text" class="input-xlarge" name="UserName" value="@Model.UserName">
+                        <input type="hidden" class="input-xlarge" name="oldUserName" value="@Model.UserName" />
+                        <input type="hidden" name="Uid" value="@Model.Uid" />
                         <label>First Name</label>
                         <input type="text" class="input-xlarge" name="FirstName" value="@Model.FirstName">
                         <label>Last Name</label>
@@ -40,7 +51,7 @@
                     </div>
                     <div class="tab-pane fade" id="profile">
                         <label>New Password</label>
-                        <input type="password" class="input-xlarge" name="PassWord" value="">
+                        <input type="password" class="input-xlarge" name="PassWord" value="1111">
                     </div>
                     <div class="tab-pane fade" id="permissions">
                         good stuff here
@@ -61,9 +72,10 @@
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+            <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/User/Delete/' + myID;" >Delete</button>
         </div>
     </div>
+
 
 
 
