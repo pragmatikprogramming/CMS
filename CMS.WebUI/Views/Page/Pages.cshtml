@@ -1,0 +1,103 @@
+﻿@model IEnumerable<CMS.Domain.Entities.Page>
+@{
+    ViewBag.Title = "Pages";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h2>Pages</h2>
+</div>
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id) {
+        myID = id;
+    }
+
+</script>
+<div class="container-fluid">
+    <div class="row-fluid">            
+        <div class="btn-toolbar">
+            <a href="/Page/AddPage/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-plus"></i>Add Page</button></a>
+            <div class="btn-group">
+            </div>
+        </div>
+        <div style="line-height: 30px;">&nbsp;</div>
+        <div style="color: red">@Html.ValidationSummary()</div>
+        <div class="well">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Page Title</th>
+                        <th>Locked By</th>
+                        <th>Page Status</th>
+                        <th style="width: 85px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var page in Model)
+                {
+                    <tr>
+                        <td><a href="/Page/Index/@page.PageID">@page.PageTitle</a></td>
+                        <td>@page.LockedByName</td>
+                        <td>
+                            @if(page.PageWorkFlowState == 1)
+                            {
+                                @:Unpublished
+                            }
+                            else if(page.PageWorkFlowState ==2)
+                            {
+                                @:Published
+                            }
+                            else if(page.PageWorkFlowState == 3)
+                            {
+                                @:Expired
+                            }
+
+                        </td>
+                        <td>
+                            @if (page.LockedBy > 0 && page.LockedBy == ViewBag.m_SessionId)
+                            {
+                                <a href="/Page/PageUnlock/@page.Id"><i class="icon-lock" title="Unlock" alt="Unlock"></i></a>
+                            }
+                            @if(page.PageWorkFlowState == 1)
+                            {
+                                <a href="/Page/PagePublish/@page.Id"><i class="icon-book" title="Publish" alt="Publish"></i></a>
+                            }
+                            <a href="/Page/PagePreview/@page.Id" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a>
+                            <a href="/Page/EditPage/@page.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a>
+                            <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@page.PageID);"><i class="icon-remove" title="Delete" alt="Delete"></i></a>
+                        </td>
+                    </tr>   
+                }
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="pagination">
+            <ul>
+                <li><a href="#">Prev</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">Next</a></li>
+            </ul>
+        </div>
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="myModalLabel">Delete Confirmation</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/Page/PageDelete/' + myID;">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+

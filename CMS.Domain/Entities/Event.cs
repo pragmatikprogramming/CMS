@@ -28,6 +28,10 @@ namespace CMS.Domain.Entities
             { 
                 return eventID; 
             }
+            set
+            {
+                eventID = value;
+            }
         }
 
         [Required(ErrorMessage = "Please select a Content Group")]
@@ -82,7 +86,7 @@ namespace CMS.Domain.Entities
             }
         }
 
-        
+        [Required(ErrorMessage = "Body is a required field")]
         public string Body
         {
             get 

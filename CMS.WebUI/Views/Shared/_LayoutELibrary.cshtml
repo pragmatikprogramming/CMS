@@ -1,0 +1,96 @@
+﻿<!DOCTYPE HTML>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Welcome to Solano County Library</title>
+	<meta name="description" content="Solano County Library">
+    <meta name="keywords" content="Solano County Library">
+    <meta name="robots" content="Follow,index"/>
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/reset.css" media="screen" />
+  	<link rel="stylesheet" type="text/css" href="~/Content/css/style.css" media="screen" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:light|Yeseva+One&v1' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="~/Content/js/cufon-yui.js"></script>
+	<script type="text/javascript" src="~/Content/js/cufon-replace.js"></script>
+    <script type="text/javascript" src="~/Content/js/compacta_400.font.js"></script>
+
+    	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+            <!--[if IE 6]>
+			<script type="text/javascript" src="~/Content/js/DD_belatedPNG.js"></script>
+			<script>
+	      		/* EXAMPLE */
+	      		//DD_belatedPNG.fix('*');
+	    	</script>
+		<![endif]-->       
+</head>
+<body class="teens-bg">	
+    <div class="wrapper">
+        <div class="container"> 
+    	    <header>
+        	<div class="logo"><a href="index.html"><img src="~/Content/images/teens-logo.jpg" width="146" height="153" title="Solano County Library Logo" alt="Solano County Library" /></a></div>
+        	    <div class="header4">
+       		        <div class="nav_box">
+           	            <ul class="top_nav">
+            		        <li><a href="#" title="Your Library Cart">Your Library Cart</a></li>
+               	  		    <li><a href="#" title="Search the Site">Search the Site</a></li>
+           		  			<li><a href="#" title="Hours & Locations">Hours & Locations</a></li>
+       			  			<li><a href="#" title="About the Library">About the Library</a></li>
+       			  			<li><a href="#" title="Library News">Library News</a></li>
+           		  			<li><a href="#" title="Help/FAQ">Help/FAQ</a></li>
+               	  		    <li><a href="#" title="Call Us">Call Us</a></li>
+                            <li><a href="#" title="Biblioteca EspaÃ±ol">Biblioteca Espanol</a></li>
+           	            </ul>
+                    </div>  
+                    <div class="search_bar">
+               	        <form name="form1" method="post" action="">
+                            <label for="name">Search For</label>
+               	            <input type="text" class="input" name="search" value="Search">
+                            <label for="name">In</label>
+               	            <select name="select" class="select" id="select">
+               	                <option>Library Catlog</option>
+               	                <option>This Website</option>
+               	                <option>This Web</option>
+           	                </select>
+					        <input type="submit" class="submit" name="button"  value="Go">
+           	            </form>
+				    </div>          
+                </div><!--end header-->
+                <div class="clear"></div>
+            </header>
+           	<div class="navigation2">
+                <nav>
+            	    <ul class="nav">
+            		    <li><a href="index.html" title="Home">HOME</a></li>
+                    	<li><a href="catlog.html" title="Catalog">CATALOG</a></li>
+                   		<li><a href="kids.html" title="Kids" >KIDS</a></li>
+                    	<li><a href="teens.html" title="Teens" >TEENS</a></li>
+                    	<li><a href="homework-help.html" title="eLibrary">eLIBRARY</a></li>
+                    	<li><a href="#" title="Events">EVENTS</a></li>
+                    	<li><a href="#" title="Programs">PROGRAMS</a></li>
+                    	<li><a href="#" title="Best of the Web">BEST OF THE WEB</a></li>
+           	    	</ul>
+                    <div class="clear"></div>
+                </nav>
+            </div><!--end navigation-->
+            <div class="inner_bg"></div><!--end inner-->
+            	
+            @RenderBody()
+
+    	    <footer>
+        	    <div class="footer_menu">
+            	    <a href="#">Contact</a> : <a href="#">Sitemap</a> : <a href="#">Privacy</a> : <a href="#">Terms of Use</a> :  <a href="#">About the Library</a>
+                </div>
+                <div class="copyright">Copyright 2006 Solano County Library</div>
+                <div class="clear"></div>
+            </footer>
+        </div><!--end container-->  
+    </div><!--end wrapper-->
+<script type="text/javascript"> Cufon.now(); </script>      
+</body>
+</html>
+

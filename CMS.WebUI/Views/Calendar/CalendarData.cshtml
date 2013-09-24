@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CMS.Domain.Entities.Event>
+
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id)
+    {
+        myID = id;
+    }
+
+</script>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Event Title</th>
+            <th style="width: 36px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var p in Model)
+    {
+        <tr>
+            <td>@p.EventTitle</td>
+            <td>
+                <a href="/Calendar/Edit/@p.EventID"><i class="icon-pencil"></i></a>
+                <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@p.EventID);"><i class="icon-remove"></i></a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3 id="myModalLabel">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/Calendar/Delete/' + myID;">Delete</button>
+    </div>
+</div>

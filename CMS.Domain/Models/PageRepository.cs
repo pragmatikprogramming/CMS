@@ -13,23 +13,60 @@ namespace CMS.Domain.Models
     {
         public void Create(Page m_Page)
         {
+            DBPage.Create(m_Page);
+        }
+
+        public Page RetrieveOne(int m_Id)
+        {
+            Page m_Page = DBPage.RetrieveOne(m_Id);
+            m_Page.TemplateName = DBPage.GetTemplateName(m_Page.TemplateId);
+
+            return m_Page;
+        }
+
+        public List<Page> RetrieveAll(int m_Id)
+        {
+            List<Page> m_Pages = DBPage.RetrieveAll(m_Id);
+            return m_Pages;
+        }
+
+        public void Update(Page m_Page)
+        {
+            DBPage.Update(m_Page);
+        }
+
+        public bool TrashCan(int m_Id)
+        {
+            if (DBPage.TrashCan(m_Id))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void Delete(int m_Id)
+        {
 
         }
 
-        public Page Retrieve(int m_ID)
+        public int Publish(int id)
         {
-            object myObject = new object();
-            return (Page)myObject;
+            int ParentId = DBPage.Publish(id);
+
+            return ParentId;
         }
 
-        public bool Update(Page m_Page)
+        public void LockPage(int pid)
         {
-            return true;
+            DBPage.lockPage(pid);
         }
 
-        public void Delete(int m_ID)
+        public void UnlockPage(int pid)
         {
-
+            DBPage.unlockPage(pid);
         }
     }
 }

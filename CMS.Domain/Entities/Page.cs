@@ -3,21 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CMS.Domain.Abstract;
+using System.ComponentModel.DataAnnotations;
 
 namespace CMS.Domain.Entities
 {
     public class Page
     {
+        private int id;
         private int pageID;
+        private int parentId;
+        private int contentGroup;
+        private int templateId;
+        private string templateName;
         private string pageTitle;
         private string navigationName;
-        private string publishDate;
-        private string expireDate;
+        private DateTime publishDate;
+        private DateTime expireDate;
         private string content;
-        private string reviewSchedule;
         private string metaDescription;
         private string metaKeywords;
-        private IPageRepository m_PageRepository;
+        private int pageWorkFlowState;
+        private int lockedBy;
+        private string lockedByName;
+
+        public int Id
+        {
+            get 
+            { 
+                return id; 
+            }
+            set 
+            { 
+                id = value; 
+            }
+        }
 
         public int PageID
         {
@@ -25,7 +44,63 @@ namespace CMS.Domain.Entities
             { 
                 return pageID; 
             }
+            set
+            {
+                pageID = value;
+            }
         }
+
+        public int ParentId
+        {
+            get 
+            { 
+                return parentId; 
+            }
+            set 
+            { 
+                parentId = value; 
+            }
+        }
+
+        [Required(ErrorMessage = "Please select a Content Group")]
+        public int ContentGroup
+        {
+            get 
+            { 
+                return contentGroup; 
+            }
+            set 
+            { 
+                contentGroup = value; 
+            }
+        }
+
+        [Required(ErrorMessage = "Please select a Template")]
+        public int TemplateId
+        {
+            get 
+            { 
+                return templateId; 
+            }
+            set 
+            { 
+                templateId = value; 
+            }
+        }
+
+        public string TemplateName
+        {
+            get 
+            { 
+                return templateName; 
+            }
+            set 
+            { 
+                templateName = value; 
+            }
+        }
+
+        [Required(ErrorMessage = "Please Enter a Page Title")]
         public string PageTitle
         {
             get 
@@ -37,6 +112,8 @@ namespace CMS.Domain.Entities
                 pageTitle = value; 
             }
         }
+
+        [Required(ErrorMessage = "Please Enter a Navigation Name")]
         public string NavigationName
         {
             get 
@@ -48,7 +125,9 @@ namespace CMS.Domain.Entities
                 navigationName = value; 
             }
         }
-        public string PublishDate
+
+        [Required(ErrorMessage = "Please select a Publish Date")]
+        public DateTime PublishDate
         {
             get 
             { 
@@ -59,7 +138,8 @@ namespace CMS.Domain.Entities
                 publishDate = value; 
             }
         }
-        public string ExpireDate
+        
+        public DateTime ExpireDate
         {
             get 
             { 
@@ -70,6 +150,7 @@ namespace CMS.Domain.Entities
                 expireDate = value; 
             }
         }
+
         public string Content
         {
             get 
@@ -81,17 +162,7 @@ namespace CMS.Domain.Entities
                 content = value; 
             }
         }
-        public string ReviewSchedule
-        {
-            get 
-            { 
-                return reviewSchedule; 
-            }
-            set 
-            { 
-                reviewSchedule = value; 
-            }
-        }
+
         public string MetaDescription
         {
             get 
@@ -103,6 +174,7 @@ namespace CMS.Domain.Entities
                 metaDescription = value; 
             }
         }
+
         public string MetaKeywords
         {
             get 
@@ -115,9 +187,47 @@ namespace CMS.Domain.Entities
             }
         }
 
-        public Page(IPageRepository m_Page)
+        public int PageWorkFlowState
         {
-            m_PageRepository = m_Page;
+            get 
+            { 
+                return pageWorkFlowState; 
+            }
+            set 
+            { 
+                pageWorkFlowState = value; 
+            }
+        }
+
+        public int LockedBy
+        {
+            get 
+            { 
+                return lockedBy; 
+            }
+            set 
+            { 
+                lockedBy = value; 
+            }
+        }
+
+        public string LockedByName
+        {
+            get 
+            { 
+                return lockedByName; 
+            }
+            set 
+            { 
+                lockedByName = value; 
+            }
+        }
+
+        public Page()
+        {
+            content = string.Empty;
+            metaDescription = string.Empty;
+            metaKeywords = string.Empty;
         }
     }
 }

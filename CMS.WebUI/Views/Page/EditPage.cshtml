@@ -1,0 +1,113 @@
+﻿@model CMS.Domain.Entities.Page
+@{
+    ViewBag.Title = "Edit - Pages";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script>
+    $(function () {
+        $("#PublishDate").datepicker();
+    });
+
+    $(function () {
+        $("#ExpireDate").datepicker();
+    });
+</script>
+
+<div class="header">
+    <h1 class="page-title">Edit Page</h1>
+</div>
+
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+    <form action="/Page/EditPage" method="post" id="pageEdit">
+        <input type="hidden" name="Id" id="Id" value="@Model.Id" />
+        <input type="hidden" name="PageID" id="PageID" value="@Model.PageID" />
+        <input type="hidden" name="ParentId" id="ParentId" value="@Model.ParentId" />
+        <div class="formlabel">Content Group:</div>
+        <div class="formfield"><select name="ContentGroup">
+            <option value="">-- Select a Content Group --</option>
+            @foreach (var GroupName in ViewBag.myContentGroups)
+                {
+                    if (GroupName.GroupID == Model.ContentGroup)
+                    {
+                        <option value="@GroupName.GroupID" selected="selected">@GroupName.ContentGroupName</option>
+                    }
+                    else
+                    {
+                        <option value="@GroupName.GroupID">@GroupName.ContentGroupName</option>
+                    }
+                 }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Template:</div>
+        <div class="formfield"><select name="TemplateId">
+            <option value="">-- Select a Template --</option>
+            @foreach (var Template in ViewBag.Templates)
+                {
+                    if (Template.TemplateId == Model.TemplateId)
+                    {
+                        <option value="@Template.TemplateId" selected="selected">@Template.TemplateName</option>
+                    }
+                    else
+                    {
+                        <option value="@Template.TemplateId">@Template.TemplateName</option>
+                    }
+                 }
+
+                               </select></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Page Title:</div>
+        <div class="formfield"><input type="text" name="PageTitle" value="@Model.PageTitle" /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Navigation Name:</div>
+        <div class="formfield"><input type="text" name="NavigationName" value="@Model.NavigationName" /></div>
+        <div class="clear">&nbsp;</div>
+        
+        <div class="formlabel">Publish Date:</div>
+        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="@Model.PublishDate" /></div>
+        <div class="clear">&nbsp;</div>
+
+
+        @if(@Model.ParentId > 0)
+        {
+            <div class="formlabel">Expiration Date:</div>
+            <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" readonly="readonly" value="@Model.ExpireDate" /></div>
+            <div class="clear">&nbsp;</div>
+        }
+
+        <textarea name="Content" id="Content" style="width: 80%">@Model.Content</textarea>
+        
+        <script>
+            CKEDITOR.replace('Content', {
+                "extraPlugins": "imagebrowser",
+                "imageBrowser_listUrl": "/Content/images/images_list.json"
+            }, '');
+            </script>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+
+        <div class="formlabel">Review Schedule:</div>
+        <div class="formfield"><input type="text" name="review_schedule" readonly="readonly" />&nbsp; <i class="icon-calendar icon-2x"></i></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Meta Description:</div>
+        <div class="formfield"><textarea cols="20" rows="5" name="MetaDescription">@Model.MetaDescription</textarea></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Meta Keywords:</div>
+        <div class="formfield"><textarea cols="20" rows="5" name="MetaKeywords">@Model.MetaKeywords</textarea></div>
+        <div class="clear">&nbsp;</div>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+        <button form="pageEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+    </form>
+
+
+</div>
+

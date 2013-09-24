@@ -10,9 +10,11 @@ namespace CMS.Domain.Abstract
     public interface IEventRepository
     {
         bool Create(Event m_Event);
-        Event RetrieveOne(int m_Eid);
-        List<Event> RetrieveAll();
+        Event RetrieveOne(string m_Eid);
+        List<Event> RetrieveAll(string mDate);
         bool Update(Event m_Event);
-        bool Delete(int m_Eid);
+        bool Delete(string m_Eid);
+        bool EventStartTimeErrorChecking(Event m_Event);
+        bool EventEndTimeErrorChecking(Event m_Event);
     }
 }

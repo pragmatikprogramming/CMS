@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Edit - FAQ Questions";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Name = HttpContext.Current.Session["Name"];
+}
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id) {
+        myID = id;
+    }
+
+</script>
+
+<div class="header">
+    <h1 class="page-title">Edit FAQ Question</h1>
+</div>
+
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+        <form action="/FAQ/FAQQuestionEdit" method="post" id="faqQuestionEdit">
+            <input type="hidden" name="FaqID" value="@Model.FaqID" />
+            <input type="hidden" name="QID" value="@Model.QID" />
+            Question:<br style="line-height: 40px;"/>
+            <textarea cols="80" rows="5" name="FaqQuestion">@Model.FaqQuestion</textarea><br/>
+            Answer:<br />
+            <div style="line-height: 30px;">&nbsp;</div>
+            <textarea name="FaqAnswer" id="FaqAnswer" style="width: 80%">@Model.FaqAnswer</textarea>
+        
+            <script>
+                CKEDITOR.replace('FaqAnswer', {
+                    "extraPlugins": "imagebrowser",
+                    "imageBrowser_listUrl": "/Content/images/images_list.json"
+                }, '');
+            </script>
+            
+            <div style="line-height: 30px;">&nbsp;</div>
+            <button form="faqQuestionEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+            <a href="#myModal" data-toggle="modal" class="btn" onclick="doWork(@Model.QID);" >Delete</a>
+        </form>
+    </div>
+</div>
+<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3 id="myModalLabel">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/FAQ/FAQQuestionDelete/@Model.FaqID/' + myID;">Delete</button>
+    </div>
+</div>

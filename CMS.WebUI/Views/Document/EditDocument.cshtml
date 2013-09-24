@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Edit - Document";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Name = HttpContext.Current.Session["Name"];
+}
+
+<div class="header">
+    <h1 class="page-title">Edit a Document</h1>
+</div>
+
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+    <form action="/Document/EditDocument" method="post" id="documentEdit" enctype = "multipart/form-data">
+        <input type="hidden" name="ParentId" value="@Model.ParentId" id="ParentId" />
+        <input type="hidden" name="OldName" value="@Model.Name" id="OldName" />
+        <input type="hidden" name="FileType" value="@Model.FileType" id="FileType" />
+        <input type="hidden" name="Id" value="@Model.Id" id="Id" />
+        <div class="formlabel">Content Group:</div>
+        <div class="formfield">
+            <select name="ContentGroup" id="ContentGroup">
+                <option value="">-- Select a Content Group --</option>
+                @foreach (var GroupName in ViewBag.myContentGroups)
+                {
+                    if (GroupName.GroupID == Model.ContentGroup)
+                    {
+                        <option value="@GroupName.GroupID" selected="selected">@GroupName.ContentGroupName</option>
+                    }
+                    else
+                    {
+                        <option value="@GroupName.GroupID">@GroupName.ContentGroupName</option>
+                    }
+                 }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Document Name:</div>
+        <div class="formfield"><input type="text" class="input-xlarge" name="Name" value="@Model.Name"></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">File Upload:</div>
+        <div class="formfield"><input type="file" class="input-xlarge" name="fileUpload" id="fileUpload" value="" /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+        <button form="documentEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+    </form>
+</div>
+
+

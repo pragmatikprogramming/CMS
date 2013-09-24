@@ -12,13 +12,14 @@
     <meta name="author" content="">
 
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/solano-style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/general-style.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/theme.css" />
     <link rel="stylesheet" href="~/Content/font-awesome.css" />
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     
     <script src="~/Content/CKEditor/ckeditor.js"></script>
 
@@ -67,32 +68,26 @@
     
     <div class="navbar">
         <div class="navbar-inner">
-                <ul class="nav pull-right">
-                    
-                    
+                <ul class="nav pull-right">    
                     <li id="fat-menu" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-user"></i> @ViewBag.Name
                             <i class="icon-caret-down"></i>
                         </a>
-
                         <ul class="dropdown-menu">
                             <li><a tabindex="-1" href="sign-in.html">Logout</a></li>
                         </ul>
                     </li>
                     
                 </ul>
-                <a class="brand" href="index.html"><img src="~/Content/images/logo-tagline.png" width="149" height="20" alt="Logo"></a>
+                <a class="brand" href="index.html"><!--<img src="~/Content/images/logo-tagline.png" width="149" height="20" alt="Logo">--></a>
         </div>
     </div>
     
     <div class="sidebar-nav">
         <a href="/Admin" class="nav-header"><i class="icon-home"></i>Dashboard</a>
        
-        <a href="#pages-menu" class="nav-header" data-toggle="collapse"><i class="icon-book"></i>Pages</a>
-        <ul id="pages-menu" class="nav nav-list collapse">
-            <li ><a href="/Admin/PagesCreate">Add New</a></li>
-        </ul>
+        <a href="/Page" class="nav-header" ><i class="icon-book"></i>Pages</a>
 
         <a href="#blog-menu" class="nav-header" data-toggle="collapse"><i class="icon-bullhorn"></i>Blog</a>
         <ul id="blog-menu" class="nav nav-list collapse">
@@ -110,11 +105,15 @@
        
 
         <a href="#" class="nav-header" ><i class="icon-sitemap"></i>Menus</a>
-	    <a href="/Admin/MediaManager" class="nav-header" ><i class="icon-picture"></i>Media</a>
+	    <a href="#media-menu" class="nav-header" data-toggle="collapse"><i class="icon-picture"></i>Media</a>
+        <ul id="media-menu" class="nav nav-list collapse">
+            <li><a href="/Gallery">Image Gallery</a></li>
+            <li><a href="/Document">Document Repository</a></li>
+        </ul>
         <a href="#extensions-menu" class="nav-header" data-toggle="collapse"><i class="icon-puzzle-piece"></i>Extensions</a>
         <ul id="extensions-menu" class="nav nav-list collapse">
-            <li ><a href="#">Calendar</a></li>
-            <li ><a href="#">FAQ</a></li>
+            <li ><a href="/Calendar/">Calendar</a></li>
+            <li ><a href="/FAQ/">FAQ</a></li>
         </ul>
         
         <a href="#" class="nav-header" ><i class="icon-question-sign"></i>Help</a>
@@ -130,7 +129,7 @@
     <footer>
         <hr>
             <p class="pull-right">Privacy Policy</p>
-            <p>&copy; 2013 Solano County Library</p>
+            <p>&copy; </p>
     </footer>
 
 

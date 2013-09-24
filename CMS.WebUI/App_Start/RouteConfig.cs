@@ -18,6 +18,12 @@ namespace CMS.WebUI
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "DeleteFAQQuestion",
+                url: "{controller}/{action}/{faqid}/{id}",
+                defaults: new { controller = "FAQ", action = "Index", faqid = 0, id = UrlParameter.Optional }
+            );
         }
     }
 }

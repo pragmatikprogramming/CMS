@@ -35,6 +35,12 @@ namespace CMS.WebUI.Infrastructure
         {
             kernel.Bind<IUserRepository>().To<UserRepository>();
             kernel.Bind<IEventRepository>().To<EventRepository>();
+            kernel.Bind<IFAQRepository>().To<FAQRepository>();
+            kernel.Bind<IGalleryRepository>().To<GalleryRepository>();
+            kernel.Bind<IImageRepository>().To<ImageRepository>();
+            kernel.Bind<IFolderRepository>().To<FolderRepository>();
+            kernel.Bind<IDocumentRepository>().To <DocumentRepository>();
+            kernel.Bind<IPageRepository>().To<PageRepository>();
         }
     }
 }

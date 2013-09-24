@@ -16,23 +16,76 @@ namespace CMS.Domain.Models
             return true;
         }
 
-        public Event RetrieveOne(int m_Eid)
+        public Event RetrieveOne(string m_Eid)
         {
-            object myObject = new object();
-            return (Event)myObject;
+            Event m_Event = new Event();
+            m_Event = DBEvent.RetrieveOne(m_Eid);
+
+            return m_Event;
         }
 
-        public List<Event> RetrieveAll()
+        public List<Event> RetrieveAll(string myDate)
         {
-            List<Event> myList = new List<Event>();
-            return myList;
+            DateTime resultDate;
+            List<Event> myEvents = new List<Event>();
+
+            if (string.IsNullOrEmpty(myDate))
+            {
+                resultDate = DateTime.Today;
+            }
+            else
+            {
+                resultDate = DateTime.Parse(myDate);
+            }
+
+            myEvents = DBEvent.RetrieveAll(resultDate);
+
+            return myEvents;
         }
         public bool Update(Event m_Event)
         {
+            DBEvent.Update(m_Event);
             return true;
         }
-        public bool Delete(int m_Eid)
+        public bool Delete(string m_Eid)
         {
+            DBEvent.Delete(m_Eid);
+            return true;
+        }
+
+        public bool EventStartTimeErrorChecking(Event m_Event)
+        {
+            if (m_Event.EventStartHour != -1 && (m_Event.EventStartMin == -1 || m_Event.AmpmStart == "-1"))
+            {
+                return false;
+            }
+            if (m_Event.EventStartMin != -1 && (m_Event.EventStartHour == -1 || m_Event.AmpmStart == "-1"))
+            {
+                return false;
+            }
+            if (m_Event.AmpmStart != "-1" && (m_Event.EventStartHour == -1 || m_Event.EventStartMin == -1))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool EventEndTimeErrorChecking(Event m_Event)
+        {
+            if (m_Event.EventEndHour != -1 && (m_Event.EventEndMin == -1 || m_Event.AmpmEnd == "-1"))
+            {
+                return false;     
+            }
+            if (m_Event.EventEndMin != -1 && (m_Event.EventEndHour == -1 || m_Event.AmpmEnd == "-1"))
+            {
+                return false;
+            }
+            if (m_Event.AmpmEnd != "-1" && (m_Event.EventEndHour == -1 || m_Event.EventEndMin == -1))
+            {
+                return false;
+            }
+
             return true;
         }
     }

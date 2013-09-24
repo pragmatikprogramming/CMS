@@ -1,0 +1,272 @@
+﻿@{
+    ViewBag.Title = "Edit Event";
+    ViewBag.Name = HttpContext.Current.Session["Name"];
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id) {
+        myID = id;
+    }
+</script>
+<script>
+    $(function () {
+
+        $("#EventStartDate").datepicker();
+    });
+
+    $(function () {
+        $("#EventEndDate").datepicker();
+    });
+</script>
+
+<div class="header">
+    <h1 class="page-title">Edit Calendar Event</h1>
+</div>
+
+<div class="formcontainer">
+    <div class="btn-toolbar">
+        <button class="btn btn-primary" form="eventEdit"><i class="icon-save"></i> Save</button>
+        <a href="#myModal" data-toggle="modal" class="btn" onclick="doWork(@Model.EventID);" >Delete</a>
+        <div class="btn-group"></div>
+    </div>
+    <div style="line-height: 25px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+    <form action="/Calendar/Edit" method="post" id="eventEdit">
+        <input type="hidden" name="EventID" id="EventID" value="@Model.EventID" />
+        <div class="formlabel">Content Group:</div>
+        <div class="formfield">
+            <select name="ContentGroup">
+                <option value="">-- Select a Content Group --</option>
+                @foreach (var GroupName in ViewBag.myContentGroups)
+                {
+                    if (GroupName.GroupID == Model.ContentGroup)
+                    {
+                        <option value="@GroupName.GroupID" selected="selected">@GroupName.ContentGroupName</option>
+                    }
+                    else
+                    {
+                        <option value="@GroupName.GroupID">@GroupName.ContentGroupName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Event Title:</div>
+        <div class="formfield"><input type="text" name="EventTitle" id="EventTitle" value="@Model.EventTitle"/></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Event Start Date:</div>
+        <div class="formfield"><input type="text" name="EventStartDate" id="EventStartDate" value="
+            @if(Model.EventStartDate != DateTime.Parse("1/1/0001 12:00:00 AM"))
+            {
+                @Model.EventStartDate.ToString("M/dd/yyyy");
+            }" /></div>
+        <div class="formlabel">Event Start Time:</div>
+        <div class="formfield">
+            <select name="EventStartHour" id="EventStartHour" style="width: 75px;">
+                <option value="-1"></option>
+                @for (var i = 1; i <= 12; i++)
+                {
+                    if (Model.EventStartHour == i)
+                    {
+                        <option value="@i" selected="selected">@i</option>
+                    }
+                    else
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="EventStartMin" id="EventStartMin" style="width: 75px">
+                <option value="-1"></option>
+                 @if (Model.EventStartMin == 0 && Model.EventStartHour > 0)
+                {
+                    <option value="0" selected="selected">00</option>
+                }
+                else
+                {
+                    <option value="0">00</option>
+                }
+                @if (Model.EventStartMin == 15 && Model.EventStartHour > 0)
+                {
+                    <option value="15" selected="selected">15</option>
+                }
+                else
+                {
+                    <option value="15">15</option>
+                }
+                @if (Model.EventStartMin == 30 && Model.EventStartHour > 0)
+                {
+                    <option value="30" selected="selected">30</option>
+                }
+                else
+                {
+                    <option value="30">30</option>
+                }
+                @if (Model.EventStartMin == 45 && Model.EventStartHour > 0)
+                {
+                    <option value="45" selected="selected">45</option>
+                }
+                else
+                {
+                    <option value="45">45</option>
+                }
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="AmpmStart" id="AmpmStart" style="width: 75px">
+                <option value="-1"></option>
+                @if (Model.AmpmStart == "am" && Model.EventStartHour > 0)
+                {
+                    <option value="am" selected="selected">AM</option>
+                }
+                else
+                {
+                    <option value="am" >AM</option>
+                }
+                @if (Model.AmpmStart == "pm" && Model.EventStartHour > 0)
+                {
+                    <option value="pm" selected="selected">PM</option>
+                }
+                else
+                {
+                    <option value="pm">PM</option>
+                }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Event End Date:</div>
+        <div class="formfield"><input type="text" name="EventEndDate" id="EventEndDate" value="
+            @if(Model.EventEndDate != DateTime.Parse("1/1/0001 12:00:00 AM"))
+            {
+                @Model.EventEndDate.ToString("M/dd/yyyy");
+            }"/></div>
+
+        <div class="formlabel">Event End Time:</div>
+        <div class="formfield">
+            <select name="EventEndHour" id="EventEndHour" style="width: 75px;">
+                <option value="-1"></option>
+                @for (var i = 1; i <= 12; i++)
+                {
+                    if (Model.EventEndHour == i)
+                    {
+                        <option value="@i" selected="selected">@i</option>
+                    }
+                    else
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="EventEndMin" id="EventEndMin" style="width: 75px">
+                <option value="-1"></option>
+                @if (Model.EventEndMin == 0 && Model.EventEndHour > 0)
+                {
+                    <option value="0" selected="selected">00</option>
+                }
+                else
+                {
+                    <option value="0">00</option>
+                }
+                @if (Model.EventEndMin == 15 && Model.EventEndHour > 0)
+                {
+                    <option value="15" selected="selected">15</option>
+                }
+                else
+                {
+                    <option value="15">15</option>
+                }
+                @if (Model.EventEndMin == 30 && Model.EventEndHour > 0)
+                {
+                    <option value="30" selected="selected">30</option>
+                }
+                else
+                {
+                    <option value="30">30</option>
+                }
+                @if (Model.EventEndMin == 45 && Model.EventEndHour > 0)
+                {
+                    <option value="45" selected="selected">45</option>
+                }
+                else
+                {
+                    <option value="45">45</option>
+                }
+            </select>
+        </div>
+        <div class="formfield">
+            <select name="AmpmEnd" id="AmpmEnd" style="width: 75px">
+                <option value="-1"></option>
+                @if (Model.AmpmEnd == "am" && Model.EventEndHour > 0)
+                {
+                    <option value="am" selected="selected">AM</option>
+                }
+                else
+                {
+                    <option value="am" >AM</option>
+                }
+                @if (Model.AmpmEnd == "pm" && Model.EventEndHour > 0)
+                {
+                    <option value="pm" selected="selected">PM</option>
+                }
+                else
+                {
+                    <option value="pm">PM</option>
+                }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Branch:</div>
+        <div class="formfield">
+            <select name="Branch" id="Branch">
+                <option value="">-- Select a Branch --</option>
+                @foreach (var location in ViewBag.Branchs)
+                {
+                    if (Model.Branch == location.Id)
+                    {
+                        <option value="@location.Id" selected="selected">@location.BranchName</option>
+                    }
+                    else
+                    {
+                        <option value="@location.Id">@location.BranchName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+        <textarea name="Body" id="Body" style="width: 80%">@Model.Body</textarea>
+        
+        <script>
+            CKEDITOR.replace('Body', {
+                "extraPlugins": "imagebrowser",
+                "imageBrowser_listUrl": "/Content/images/images_list.json"
+            }, '');
+            </script>
+       
+        <div style="line-height: 30px;">&nbsp;</div>
+        <button form="eventEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+    </form>
+</div>
+
+<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+            <h3 id="myModalLabel">Delete Confirmation</h3>
+        </div>
+        <div class="modal-body"> 
+            <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/Calendar/Delete/' + myID;" >Delete</button>
+        </div>
+</div>
