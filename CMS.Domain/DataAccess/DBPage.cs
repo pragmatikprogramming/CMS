@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using CMS.Domain.Entities;
 using System.Data.SqlClient;
 using CMS.Domain.HelperClasses;
@@ -45,7 +46,7 @@ namespace CMS.Domain.DataAccess
 
             conn.Open();
 
-            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy)";
+            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
             SqlCommand insertPage = new SqlCommand(queryString, conn);
             insertPage.Parameters.AddWithValue("pageId", m_PageId);
             insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -59,6 +60,8 @@ namespace CMS.Domain.DataAccess
             insertPage.Parameters.AddWithValue("metaKeywords", m_Page.MetaKeywords ?? string.Empty);
             insertPage.Parameters.AddWithValue("parentId", m_Page.ParentId);
             insertPage.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
+            insertPage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
+            insertPage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
             insertPage.ExecuteNonQuery();
 
             conn.Close();
@@ -69,7 +72,16 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Pages WHERE id = @id AND pageWorkFlowState != 4";
+            string queryString;
+            string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+            if (action == "PagePreview")
+            {
+                queryString = "SELECT * FROM CMS_Pages WHERE id = @id";
+            }
+            else
+            {
+                queryString = "SELECT * FROM CMS_Pages WHERE id = @id AND pageWorkFlowState != 4";
+            }
             SqlCommand getPages = new SqlCommand(queryString, conn);
             getPages.Parameters.AddWithValue("id", m_Id);
             SqlDataReader pageDataReader = getPages.ExecuteReader();
@@ -153,7 +165,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_Page.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, expireDate = @expireDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy WHERE id = @id and pageId = @pageId";
+                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, expireDate = @expireDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate WHERE id = @id and pageId = @pageId";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
 
                 updatePage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -169,12 +181,14 @@ namespace CMS.Domain.DataAccess
                 updatePage.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
                 updatePage.Parameters.AddWithValue("id", m_Page.Id);
                 updatePage.Parameters.AddWithValue("PageId", m_Page.PageID);
+                updatePage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
+                updatePage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
 
                 updatePage.ExecuteNonQuery();
             }
             else if (m_Page.PageWorkFlowState == 2 || m_Page.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy)";
+                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy)";
                 SqlCommand insertPage = new SqlCommand(queryString, conn);
                 insertPage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -188,6 +202,8 @@ namespace CMS.Domain.DataAccess
                 insertPage.Parameters.AddWithValue("metaKeywords", m_Page.MetaKeywords ?? string.Empty);
                 insertPage.Parameters.AddWithValue("parentId", m_Page.ParentId);
                 insertPage.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
+                insertPage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
+                insertPage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
                 insertPage.ExecuteNonQuery();
             }
             else
@@ -208,6 +224,8 @@ namespace CMS.Domain.DataAccess
             getNumChildren.Parameters.AddWithValue("parentId", m_ID);
             int numChildren = (int)getNumChildren.ExecuteScalar();
 
+            Page m_Page = DBPage.RetrieveOne(m_ID);
+
             if (numChildren == 0)
             {
                 queryString = "UPDATE CMS_Pages SET pageWorkFlowState = 4 WHERE pageId = @pageId";
@@ -215,10 +233,12 @@ namespace CMS.Domain.DataAccess
                 updatePage.Parameters.AddWithValue("pageId", m_ID);
                 updatePage.ExecuteNonQuery();
 
-                queryString = "INSERT INTO CMS_TrashCan(cmsType, cmsTypeId, dateDeleted) VALUES('CMS_Pages', @id, @dateDeleted)";
+                queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_Pages', @objectName, @deleteDate, @deletedBy, 'pageId', 'Page')";
                 SqlCommand insertTrash = new SqlCommand(queryString, conn);
-                insertTrash.Parameters.AddWithValue("id", m_ID);
-                insertTrash.Parameters.AddWithValue("dateDeleted", DateTime.Now);
+                insertTrash.Parameters.AddWithValue("objectId", m_ID);
+                insertTrash.Parameters.AddWithValue("objectName", m_Page.PageTitle);
+                insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+                insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
                 insertTrash.ExecuteNonQuery();
             }
             else

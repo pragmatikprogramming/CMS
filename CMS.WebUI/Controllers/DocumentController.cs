@@ -96,7 +96,7 @@ namespace CMS.WebUI.Controllers
 
             if (!DBFolder.FolderCheckChildren(id))
             {
-                ModelState.AddModelError("Name", "The folder you are trying to delete contains content. Please delete the content prior to deleting the folder.");
+                ModelState.AddModelError("Name", "The folder you are trying to delete contains content that has not been permanently deleted. Please delete the content prior to deleting the folder.");
             }
 
             if (ModelState.IsValid)

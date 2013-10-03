@@ -16,7 +16,7 @@ namespace CMS.Domain.Models
             return true;
         }
 
-        public Event RetrieveOne(string m_Eid)
+        public Event RetrieveOne(int m_Eid)
         {
             Event m_Event = new Event();
             m_Event = DBEvent.RetrieveOne(m_Eid);
@@ -47,7 +47,7 @@ namespace CMS.Domain.Models
             DBEvent.Update(m_Event);
             return true;
         }
-        public bool Delete(string m_Eid)
+        public bool Delete(int m_Eid)
         {
             DBEvent.Delete(m_Eid);
             return true;
@@ -87,6 +87,21 @@ namespace CMS.Domain.Models
             }
 
             return true;
+        }
+
+        public void LockEvent(int id)
+        {
+            DBEvent.LockEvent(id);
+        }
+
+        public void UnlockEvent(int id)
+        {
+            DBEvent.UnlockEvent(id);
+        }
+
+        public void PublishEvent(int id)
+        {
+            DBEvent.PublishEvent(id);
         }
     }
 }

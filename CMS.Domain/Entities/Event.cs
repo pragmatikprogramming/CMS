@@ -21,6 +21,11 @@ namespace CMS.Domain.Entities
         private string ampmEnd;
         private int branch;
         private string body;
+        private int pageWorkFlowState;
+        private int lockedBy;
+        private int lastModifiedBy;
+        private DateTime lastModifiedDate;
+
 
         public int EventID
         {
@@ -181,6 +186,54 @@ namespace CMS.Domain.Entities
             set 
             { 
                 ampmEnd = value; 
+            }
+        }
+
+        public int PageWorkFlowState
+        {
+            get 
+            { 
+                return pageWorkFlowState; 
+            }
+            set 
+            { 
+                pageWorkFlowState = value; 
+            }
+        }
+
+        public int LockedBy
+        {
+            get 
+            { 
+                return lockedBy; 
+            }
+            set 
+            { 
+                lockedBy = value; 
+            }
+        }
+
+        public int LastModifiedBy
+        {
+            get 
+            { 
+                return lastModifiedBy; 
+            }
+            set 
+            { 
+                lastModifiedBy = value; 
+            }
+        }
+
+        public DateTime LastModifiedDate
+        {
+            get 
+            { 
+                return lastModifiedDate; 
+            }
+            set 
+            { 
+                lastModifiedDate = value; 
             }
         }
     }

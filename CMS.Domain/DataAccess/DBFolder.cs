@@ -30,7 +30,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Folders WHERE id = @id";
+            string queryString = "SELECT * FROM CMS_Folders WHERE id = @id AND pageWorkFlowState != 4";
             SqlCommand getFolder = new SqlCommand(queryString, conn);
             getFolder.Parameters.AddWithValue("id", id);
             SqlDataReader folderDataReader = getFolder.ExecuteReader();
@@ -53,7 +53,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Folders WHERE parentId = @parentId";
+            string queryString = "SELECT * FROM CMS_Folders WHERE parentId = @parentId AND pageWorkFlowState != 4";
             SqlCommand getFolders = new SqlCommand(queryString, conn);
             getFolders.Parameters.AddWithValue("parentId", id);
 
@@ -92,15 +92,40 @@ namespace CMS.Domain.DataAccess
 
         public static void Delete(int id)
         {
+            Folder m_Folder = DBFolder.RetrieveOne(id);
+
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "DELETE FROM CMS_Folders WHERE id = @id";
+            string queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_Folders', @objectName, @deleteDate, @deletedBy, 'id', 'Folder')";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", m_Folder.Id);
+            insertTrash.Parameters.AddWithValue("objectName", m_Folder.Name);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+            insertTrash.ExecuteNonQuery();
+
+            queryString = "UPDATE CMS_Folders SET pageWorkFlowState = 4 WHERE id = @id";
             SqlCommand deleteFolder = new SqlCommand(queryString, conn);
             deleteFolder.Parameters.AddWithValue("id", id);
             deleteFolder.ExecuteNonQuery();
 
             conn.Close();
+        }
+
+        public static int GetParentId(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT parentId FROM CMS_Folders WHERE id = @id";
+            SqlCommand getParentId = new SqlCommand(queryString, conn);
+            getParentId.Parameters.AddWithValue("id", id);
+            int m_ParentId = (int)getParentId.ExecuteScalar();
+
+            conn.Close();
+
+            return m_ParentId;
         }
 
         public static string FolderPath(int parentId)

@@ -65,7 +65,7 @@ namespace CMS.Domain.Models
 
         public void Delete(int id)
         {
-
+            DBImage.Delete(id);
         }
     }
 }

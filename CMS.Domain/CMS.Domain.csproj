@@ -121,26 +121,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IAdminRepository.cs" />
     <Compile Include="Abstract\IDocumentRepository.cs" />
     <Compile Include="Abstract\IEventRepository.cs" />
     <Compile Include="Abstract\IFAQRepository.cs" />
     <Compile Include="Abstract\IFolderRepository.cs" />
     <Compile Include="Abstract\IGalleryRepository.cs" />
     <Compile Include="Abstract\IImageRepository.cs" />
+    <Compile Include="Abstract\IMenuItemRepository.cs" />
+    <Compile Include="Abstract\IMenuRepository.cs" />
     <Compile Include="Abstract\IPageRepository.cs" />
+    <Compile Include="Abstract\ITrashRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="DataAccess\DBAdmin.cs" />
     <Compile Include="DataAccess\DBDocument.cs" />
     <Compile Include="DataAccess\DBFolder.cs" />
     <Compile Include="DataAccess\DBEvent.cs" />
     <Compile Include="DataAccess\DBFAQ.cs" />
     <Compile Include="DataAccess\DBGallery.cs" />
     <Compile Include="DataAccess\DBImage.cs" />
+    <Compile Include="DataAccess\DBMenu.cs" />
+    <Compile Include="DataAccess\DBMenuItem.cs" />
     <Compile Include="DataAccess\DBPage.cs" />
+    <Compile Include="DataAccess\DBTrash.cs" />
     <Compile Include="DataAccess\DBUser.cs" />
+    <Compile Include="Entities\Admin.cs" />
     <Compile Include="Entities\Branch.cs" />
     <Compile Include="Entities\ContentGroup.cs" />
     <Compile Include="Entities\Document.cs" />
@@ -150,8 +159,11 @@
     <Compile Include="Entities\Folder.cs" />
     <Compile Include="Entities\Gallery.cs" />
     <Compile Include="Entities\Image.cs" />
+    <Compile Include="Entities\Menu.cs" />
+    <Compile Include="Entities\MenuItem.cs" />
     <Compile Include="Entities\Page.cs" />
     <Compile Include="Entities\Template.cs" />
+    <Compile Include="Entities\Trash.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,13 +174,17 @@
     <Compile Include="HelperClasses\Logger.cs" />
     <Compile Include="HelperClasses\SessionHandler.cs" />
     <Compile Include="HelperClasses\Utility.cs" />
+    <Compile Include="Models\AdminRepository.cs" />
     <Compile Include="Models\DocumentRepository.cs" />
     <Compile Include="Models\EventRepository.cs" />
     <Compile Include="Models\FAQRepository.cs" />
     <Compile Include="Models\FolderRepository.cs" />
     <Compile Include="Models\GalleryRepository.cs" />
     <Compile Include="Models\ImageRepository.cs" />
+    <Compile Include="Models\MenuItemRepository.cs" />
+    <Compile Include="Models\MenuRepository.cs" />
     <Compile Include="Models\PageRepository.cs" />
+    <Compile Include="Models\TrashRepository.cs" />
     <Compile Include="Models\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -41,6 +41,10 @@ namespace CMS.WebUI.Infrastructure
             kernel.Bind<IFolderRepository>().To<FolderRepository>();
             kernel.Bind<IDocumentRepository>().To <DocumentRepository>();
             kernel.Bind<IPageRepository>().To<PageRepository>();
+            kernel.Bind<ITrashRepository>().To<TrashRepository>();
+            kernel.Bind<IMenuRepository>().To<MenuRepository>();
+            kernel.Bind<IMenuItemRepository>().To<MenuItemRepository>();
+            kernel.Bind<IAdminRepository>().To<AdminRepository>();
         }
     }
 }

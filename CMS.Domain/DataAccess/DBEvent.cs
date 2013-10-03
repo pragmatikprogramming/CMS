@@ -10,13 +10,22 @@ namespace CMS.Domain.DataAccess
 {
     public class DBEvent
     {
-        public static Event RetrieveOne(string id)
+        public static Event RetrieveOne(int id)
         {
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
             string queryString;
-            queryString = "SELECT * FROM CMS_Events WHERE id = @id";
+            string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+            if (action == "PagePreview")
+            {
+                queryString = "SELECT * FROM CMS_Events WHERE id = @id";
+            }
+            else
+            {
+                queryString = "SELECT * FROM CMS_Events WHERE id = @id AND pageWorkFlowState != 4";
+            }
+            
             SqlCommand getEvent = new SqlCommand(queryString, conn);
 
             getEvent.Parameters.AddWithValue("id", id);
@@ -34,6 +43,8 @@ namespace CMS.Domain.DataAccess
                 m_Event.EventEndDate = myEvent.GetDateTime(4);
                 m_Event.Branch = myEvent.GetInt32(5);
                 m_Event.Body = myEvent.GetString(6);
+                m_Event.PageWorkFlowState = myEvent.GetInt32(7);
+                m_Event.LockedBy = myEvent.GetInt32(8);
 
                 if(m_Event.EventStartDate.Hour >= 12)
                 {
@@ -86,7 +97,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_Events SET contentGroup = @contentGroup, eventTitle = @eventTitle, eventStartDate = @eventStartDate, eventEndDate = @eventEndDate, branch = @branch, body = @body WHERE id = @EventID";
+            string queryString = "UPDATE CMS_Events SET contentGroup = @contentGroup, eventTitle = @eventTitle, eventStartDate = @eventStartDate, eventEndDate = @eventEndDate, branch = @branch, body = @body, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate WHERE id = @EventID";
             SqlCommand updateEvent = new SqlCommand(queryString, conn);
 
             string myStartTime = string.Empty;
@@ -108,23 +119,37 @@ namespace CMS.Domain.DataAccess
             updateEvent.Parameters.AddWithValue("branch", m_Event.Branch);
             updateEvent.Parameters.AddWithValue("body", m_Event.Body);
             updateEvent.Parameters.AddWithValue("EventID", m_Event.EventID);
+            updateEvent.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
+            updateEvent.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
+            updateEvent.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
 
             updateEvent.ExecuteNonQuery();
 
             conn.Close();
         }
 
-        public static void Delete(string id)
+        public static void Delete(int id)
         {
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
+            Event m_Event = DBEvent.RetrieveOne(id);
+
             string queryString;
-            queryString = "DELETE FROM CMS_Events WHERE id = @id";
+            queryString = "UPDATE CMS_Events SET pageWorkFlowState = 4 WHERE id = @id";
             SqlCommand deleteEvent = new SqlCommand(queryString, conn);
 
             deleteEvent.Parameters.AddWithValue("id", id);
             deleteEvent.ExecuteNonQuery();
+
+            queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_Events', @objectName, @deleteDate, @deletedBy, 'id', 'Calendar')";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", m_Event.EventID);
+            insertTrash.Parameters.AddWithValue("objectName", m_Event.EventTitle);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+
+            insertTrash.ExecuteNonQuery();
 
             conn.Close();
         }
@@ -135,7 +160,7 @@ namespace CMS.Domain.DataAccess
             conn.Open();
 
             string queryString;
-            queryString = "INSERT INTO CMS_Events(contentGroup, eventTitle, eventStartDate, eventEndDate, branch, body) VALUES(@contentGroup, @eventTitle, @eventStartDate, @eventEndDate, @branch, @body)";
+            queryString = "INSERT INTO CMS_Events(contentGroup, eventTitle, eventStartDate, eventEndDate, branch, body, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@contentGroup, @eventTitle, @eventStartDate, @eventEndDate, @branch, @body, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
             SqlCommand createEvent = new SqlCommand(queryString, conn);
 
             string myStartTime = string.Empty;
@@ -155,6 +180,10 @@ namespace CMS.Domain.DataAccess
             createEvent.Parameters.AddWithValue("eventEndDate", DateTime.Parse(m_Event.EventEndDate.ToString("MM/dd/yyyy") + myEndTime));
             createEvent.Parameters.AddWithValue("branch", m_Event.Branch);
             createEvent.Parameters.AddWithValue("body", m_Event.Body);
+            createEvent.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
+            createEvent.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
+            createEvent.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
+            
 
             createEvent.ExecuteNonQuery();
 
@@ -169,9 +198,9 @@ namespace CMS.Domain.DataAccess
             conn.Open();
 
             string queryString;
-            queryString = "SELECT id, eventTitle from CMS_Events WHERE @searchDate >= eventStartDate AND @searchDate <= eventEndDate";
+            queryString = "SELECT id, eventTitle, pageWorkFlowState, lockedBy from CMS_Events WHERE @searchDateStart >= eventStartDate AND @searchDate <= eventEndDate AND pageWorkFlowState != 4";
             SqlCommand getEvent = new SqlCommand(queryString, conn);
-            
+            getEvent.Parameters.AddWithValue("searchDateStart", DateTime.Parse(searchDate.ToString("MM/dd/yyyy") + " 11:59:59"));
             getEvent.Parameters.AddWithValue("searchDate", searchDate);
 
             SqlDataReader eventReader = getEvent.ExecuteReader();
@@ -181,6 +210,8 @@ namespace CMS.Domain.DataAccess
                 Event tempEvent = new Event();
                 tempEvent.EventID = eventReader.GetInt32(0);
                 tempEvent.EventTitle = eventReader.GetString(1);
+                tempEvent.PageWorkFlowState = eventReader.GetInt32(2);
+                tempEvent.LockedBy = eventReader.GetInt32(3);
                 myEvents.Add(tempEvent);
             }
 
@@ -188,6 +219,46 @@ namespace CMS.Domain.DataAccess
             return myEvents;
         }
 
+        public static void LockEvent(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "UPDATE CMS_Events SET lockedBy = @lockedBy WHERE id = @id";
+            SqlCommand updateEvent = new SqlCommand(queryString, conn);
+            updateEvent.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
+            updateEvent.Parameters.AddWithValue("id", id);
+            updateEvent.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static void UnlockEvent(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "UPDATE CMS_Events SET lockedBy = 0 WHERE id = @id";
+            SqlCommand updateEvent = new SqlCommand(queryString, conn);
+            updateEvent.Parameters.AddWithValue("id", id);
+            updateEvent.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static void PublishEvent(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "UPDATE CMS_Events SET pageWorkFlowState = 2, lockedBy = 0 WHERE id = @id";
+            SqlCommand updateEvent = new SqlCommand(queryString, conn);
+            updateEvent.Parameters.AddWithValue("id", id);
+            updateEvent.ExecuteNonQuery();
+
+
+            conn.Close();
+        }
         public static List<Branch> BranchNames()
         {
             List<Branch> m_Branchs = new List<Branch>();

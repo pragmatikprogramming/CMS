@@ -63,8 +63,8 @@ namespace CMS.WebUI.Controllers
         [ValidateInput(false)]
         public ActionResult Add(Event m_Event)
         {
-            ViewBag.Branchs = DBEvent.BranchNames();
-            ViewBag.myContentGroups = DBEvent.ContentGroups();
+            ViewBag.Branchs = Utility.BranchNames();
+            ViewBag.myContentGroups = Utility.ContentGroups();
 
             if (!EventRepository.EventStartTimeErrorChecking(m_Event))
             {
@@ -90,14 +90,22 @@ namespace CMS.WebUI.Controllers
 
         [CMSAuth]
         [HttpGet]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             Event m_Event = EventRepository.RetrieveOne(id);
 
-            ViewBag.myContentGroups = DBEvent.ContentGroups();
-            ViewBag.Branchs = DBEvent.BranchNames();
+            ViewBag.myContentGroups = Utility.ContentGroups();
+            ViewBag.Branchs = Utility.BranchNames();
 
-            return View("Edit", m_Event);
+            if (m_Event.LockedBy > 0 && m_Event.LockedBy != (int)System.Web.HttpContext.Current.Session["uid"])
+            {
+                return RedirectToAction("Index", "Calendar");
+            }
+            else
+            {
+                EventRepository.LockEvent(id);
+                return View("Edit", m_Event);
+            }
         }
         
         [CMSAuth]
@@ -105,8 +113,8 @@ namespace CMS.WebUI.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(Event m_Event)
         {
-            ViewBag.myContentGroups = DBEvent.ContentGroups();
-            ViewBag.Branchs = DBEvent.BranchNames();
+            ViewBag.myContentGroups = Utility.ContentGroups();
+            ViewBag.Branchs = Utility.BranchNames();
 
             if (!EventRepository.EventStartTimeErrorChecking(m_Event))
             {
@@ -116,6 +124,11 @@ namespace CMS.WebUI.Controllers
             if (!EventRepository.EventEndTimeErrorChecking(m_Event))
             {
                 ModelState.AddModelError("EventEndHour", "A complete end time including AM or PM is required");
+            }
+
+            if (m_Event.LockedBy > 0 && m_Event.LockedBy != (int)System.Web.HttpContext.Current.Session["uid"])
+            {
+                ModelState.AddModelError("EventTitle", "This Event is currently locked and not editable");
             }
 
             if (ModelState.IsValid)
@@ -131,7 +144,7 @@ namespace CMS.WebUI.Controllers
 
         [CMSAuth]
         [HttpGet]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             EventRepository.Delete(id);
 
@@ -145,6 +158,26 @@ namespace CMS.WebUI.Controllers
             myEvents = EventRepository.RetrieveAll(myDate);
 
             return PartialView("CalendarData", myEvents);
+        }
+
+        [CMSAuth]
+        public ActionResult EventPublish(int id)
+        {
+            EventRepository.PublishEvent(id);
+            return RedirectToAction("Index", "Calendar");
+        }
+
+        [CMSAuth]
+        public ActionResult EventUnlock(int id)
+        {
+            EventRepository.UnlockEvent(id);
+            return RedirectToAction("Index", "Calendar");
+        }
+
+        [CMSAuth]
+        public ActionResult EventPreview()
+        {
+            return View("Interior");
         }
     }
 }

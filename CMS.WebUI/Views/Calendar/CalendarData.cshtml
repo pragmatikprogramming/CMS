@@ -14,7 +14,11 @@
     <thead>
         <tr>
             <th>Event Title</th>
-            <th style="width: 36px;"></th>
+            <th style="width: 10px;padding: 2px;"></th>
+            <th style="width: 10px;padding: 2px;"></th>
+            <th style="width: 10px;padding: 2px;"></th>
+            <th style="width: 10px;padding: 2px;"></th>
+            <th style="width: 10px;padding: 2px;"></th>
         </tr>
     </thead>
     <tbody>
@@ -22,8 +26,25 @@
     {
         <tr>
             <td>@p.EventTitle</td>
-            <td>
+            <td style="padding: 2px;">
+                @if(p.LockedBy > 0)
+                {
+                    <a href="/Calendar/EventUnlock/@p.EventID"><i class="icon-lock"></i></a>
+                }
+            </td>
+            <td style="padding: 2px;">
+                @if(p.PageWorkFlowState == 1)
+                {
+                    <a href="/Calendar/EventPublish/@p.EventID"><i class="icon-book"></i></a>
+                }
+            </td>
+            <td style="padding: 2px;">
+                <a href="/Calendar/EventPreview/@p.EventID"><i class="icon-picture"></i></a>
+            </td>
+            <td style="padding: 2px;">
                 <a href="/Calendar/Edit/@p.EventID"><i class="icon-pencil"></i></a>
+            </td>
+            <td style="padding: 2px;">
                 <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@p.EventID);"><i class="icon-remove"></i></a>
             </td>
         </tr>

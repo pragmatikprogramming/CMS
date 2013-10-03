@@ -11,6 +11,7 @@ namespace CMS.Domain.Entities
         private int faqID;  
         private string faqName;
         private int contentGroup;
+        private int pageWorkFlowState;
 
         public int FaqID
         {
@@ -46,6 +47,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 contentGroup = value; 
+            }
+        }
+
+        public int PageWorkFlowState
+        {
+            get 
+            { 
+                return pageWorkFlowState; 
+            }
+            set 
+            { 
+                pageWorkFlowState = value; 
             }
         }
     }

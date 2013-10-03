@@ -72,10 +72,14 @@ namespace CMS.Domain.Models
 
         public void Delete(int id)
         {
-            Folder m_Folder = DBFolder.RetrieveOne(id);
-            DBFolder.Delete(id);
+            //Folder m_Folder = DBFolder.RetrieveOne(id);
 
-            string path;
+            if (DBFolder.FolderCheckChildren(id))
+            {
+                DBFolder.Delete(id);
+            }
+
+            /*string path;
 
             if (m_Folder.ParentId != 0)
             {
@@ -85,9 +89,9 @@ namespace CMS.Domain.Models
             else
             {
                 path = m_Folder.Name;
-            }
+            }*/
 
-            Directory.Delete(ConfigurationManager.AppSettings["Documents"] + "\\" + path);
+            //Directory.Delete(ConfigurationManager.AppSettings["Documents"] + "\\" + path);
         }
     }
 }

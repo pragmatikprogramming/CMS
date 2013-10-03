@@ -25,6 +25,9 @@ namespace CMS.Domain.Entities
         private int pageWorkFlowState;
         private int lockedBy;
         private string lockedByName;
+        private string lastModifiedBy;
+        private string lastModifiedDate;
+
 
         public int Id
         {
@@ -220,6 +223,30 @@ namespace CMS.Domain.Entities
             set 
             { 
                 lockedByName = value; 
+            }
+        }
+
+        public string LastModifiedBy
+        {
+            get 
+            { 
+                return lastModifiedBy; 
+            }
+            set 
+            { 
+                lastModifiedBy = value; 
+            }
+        }
+
+        public string LastModifiedDate
+        {
+            get 
+            { 
+                return lastModifiedDate; 
+            }
+            set 
+            { 
+                lastModifiedDate = value; 
             }
         }
 

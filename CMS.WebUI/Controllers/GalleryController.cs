@@ -195,10 +195,13 @@ namespace CMS.WebUI.Controllers
         }
 
         [CMSAuth]
-        [HttpPost]
+        [HttpGet]
         public ActionResult DeleteImage(int id)
         {
-            return View();
+            Image m_Image = ImageRepository.RetrieveOne(id);
+            ImageRepository.Delete(id);
+
+            return RedirectToAction("Images", "Gallery", new { id = m_Image.ParentId });
         }
     }
 }

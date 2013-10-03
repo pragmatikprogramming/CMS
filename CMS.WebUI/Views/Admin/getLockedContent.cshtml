@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+
+<table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Locked By</th>
+                                <th style="width: 15px;">&nbsp;</th>
+                                <th style="width: 15px;">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach(var page in Model)
+                        {
+                            <tr>
+                                <td>@page.ObjectName</td>
+                                <td>@page.ObjectType</td>
+                                <td>@page.LockedByName</td>
+                                <td><a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#LockedContent" href="/Admin/UnlockContent/@page.ObjectType/@page.ObjectId"><i class="icon-lock" title="Unlock" alt="Unlock"></i></a></td>
+                                @if(page.ObjectType == "Page")
+                                {
+                                    <td><a href="/Page/PagePreview/@page.ObjectId" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
+                                }
+                                else if (page.ObjectType == "Calendar")
+                                {
+                                    <td><a href="/Calendar/EventPreview/@page.ObjectId" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
+                                }
+                            </tr> 
+                        }  
+                        </tbody>
+                    </table>

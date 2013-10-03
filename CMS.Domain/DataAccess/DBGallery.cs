@@ -30,7 +30,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Gallery WHERE id = @id";
+            string queryString = "SELECT * FROM CMS_Gallery WHERE id = @id AND pageWorkFlowState != 4";
             SqlCommand getGallery = new SqlCommand(queryString, conn);
             getGallery.Parameters.AddWithValue("id", id);
             
@@ -55,7 +55,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Gallery";
+            string queryString = "SELECT * FROM CMS_Gallery WHERE pageWorkFlowState != 4";
             SqlCommand getGalleries = new SqlCommand(queryString, conn);
 
             SqlDataReader m_Galleries = getGalleries.ExecuteReader();
@@ -97,10 +97,20 @@ namespace CMS.Domain.DataAccess
 
         public static void Delete(int id)
         {
+            Gallery m_Gallery = DBGallery.RetrieveOne(id);
+
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "DELETE FROM CMS_Gallery WHERE id = @id";
+            string queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_Gallery', @objectName, @deleteDate, @deletedBy, 'id', 'Gallery')";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", m_Gallery.Id);
+            insertTrash.Parameters.AddWithValue("objectName", m_Gallery.Name);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+            insertTrash.ExecuteNonQuery();
+
+            queryString = "UPDATE CMS_Gallery SET pageWorkFlowState = 4 WHERE id = @id";
             SqlCommand deleteGallery = new SqlCommand(queryString, conn);
             deleteGallery.Parameters.AddWithValue("id", id);
             deleteGallery.ExecuteNonQuery();

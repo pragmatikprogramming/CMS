@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="block">
+            <a href="#page-stats" class="block-heading">Awaiting Approval</a>
+            <div id="page-stats" class="block-body collapse in">
+                <div class="stat-widget-container" style="margin-top: 20px; margin-bottom: 20px;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Last Modified</th>
+                                <th>Modified By</th>
+                                <th>Locked By</th>
+                                <th style="width: 15px;">&nbsp;</th>
+                                <th style="width: 15px;">&nbsp;</th>
+                                <th style="width: 15px;">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach(var page in Model)
+                        {
+                            <tr>
+                                <td>@page.ObjectName</td>
+                                <td>@page.ObjectType</td>
+                                <td>@page.LastModifiedDate</td>
+                                <td>@page.LastModifiedName</td>
+                                <td>@page.LockedByName</td>
+                                @if(page.ObjectType == "Page")
+                                {
+                                    <td><a href="/Page/PagePublish/@page.ObjectId"><i class="icon-book" title="Publish" alt="Publish"></i></a></td>
+                                    <td><a href="/Page/PagePreview/@page.ObjectId" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
+                                    <td><a href="/Page/EditPage/@page.ObjectId"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+                                }
+                                else if (page.ObjectType == "Calendar")
+                                {
+                                    <td><a href="/Calendar/PagePublish/@page.ObjectId"><i class="icon-book" title="Publish" alt="Publish"></i></a></td>
+                                    <td><a href="/Calendar/EventPreview/@page.ObjectId" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
+                                    <td><a href="/Calendar/Edit/@page.ObjectId"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+                                }
+                            </tr> 
+                        }
+                        </tbody>
+                    </table>
+                       
+
+                   
+                    <div>
+                        <div class="clear">&nbsp;</div>
+                        <div class="dashboardapprpag" style="">
+                            <!--<div class="pagination">
+                                <ul>
+                                    <li><a href="#">Prev</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">Next</a></li>
+                                </ul>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

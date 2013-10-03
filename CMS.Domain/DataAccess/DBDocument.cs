@@ -32,7 +32,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Documents where id = @id";
+            string queryString = "SELECT * FROM CMS_Documents where id = @id AND pageWorkFlowState != 4";
             SqlCommand getDocument = new SqlCommand(queryString, conn);
             getDocument.Parameters.AddWithValue("id", id);
             SqlDataReader documentReader = getDocument.ExecuteReader();
@@ -58,7 +58,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Documents where parentId = @parentId";
+            string queryString = "SELECT * FROM CMS_Documents where parentId = @parentId AND pageWorkFlowState != 4";
             SqlCommand getDocuments = new SqlCommand(queryString, conn);
             getDocuments.Parameters.AddWithValue("parentId", id);
             SqlDataReader documentsReader = getDocuments.ExecuteReader();
@@ -103,10 +103,21 @@ namespace CMS.Domain.DataAccess
 
         public static void Delete(int id)
         {
+            Document m_Document = DBDocument.RetrieveOne(id);
+
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "DELETE FROM CMS_Documents where id = @id";
+            string queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_Documents', @objectName, @deleteDate, @deletedBy, 'id', @objectType)";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", m_Document.Id);
+            insertTrash.Parameters.AddWithValue("objectName", m_Document.Name);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+            insertTrash.Parameters.AddWithValue("objectType", m_Document.FileType);
+            insertTrash.ExecuteNonQuery();
+
+            queryString = "UPDATE CMS_Documents SET pageWorkFlowState = 4 WHERE id = @id";
             SqlCommand deleteDocument = new SqlCommand(queryString, conn);
             deleteDocument.Parameters.AddWithValue("id", id);
             deleteDocument.ExecuteNonQuery();
@@ -114,6 +125,19 @@ namespace CMS.Domain.DataAccess
             conn.Close();
         }
 
+        public static int GetParentId(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
 
+            string queryString = "SELECT parentId FROM CMS_Documents WHERE id = @id";
+            SqlCommand getParentId = new SqlCommand(queryString, conn);
+            getParentId.Parameters.AddWithValue("id", id);
+            int m_ParentId = (int)getParentId.ExecuteScalar();
+
+            conn.Close();
+
+            return m_ParentId;
+        }
     }
 }

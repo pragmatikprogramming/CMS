@@ -12,13 +12,18 @@ namespace CMS.WebUI.Controllers
 {
     public class AdminController : Controller
     {
-        //
-        // GET: /Admin/
+        IAdminRepository AdminRepository;
+        ITrashRepository TrashRepository;
 
-        public ViewResult Login()
+        public AdminController(IAdminRepository AdminRepo, ITrashRepository TrashRepo)
         {
-            int id = 0;
-            int.TryParse((string)Url.RequestContext.RouteData.Values["id"], out id);
+            AdminRepository = AdminRepo;
+            TrashRepository = TrashRepo;
+        }
+
+        public ViewResult Login(int id = 0)
+        {
+            
             ViewBag.id = id;
             return View("Login");
         }
@@ -60,14 +65,65 @@ namespace CMS.WebUI.Controllers
             return View();
         }
 
-        public ViewResult PagesCreate()
+        [CMSAuth]
+        public ActionResult getAwaitingApproval(int id = 0)
         {
-            return View("PagesCreate");
+            List<Admin> m_Admin = AdminRepository.getAwaitingApproval(id);
+            return View("getAwaitingApproval", m_Admin);
         }
 
-        public ViewResult MediaManager()
+        [CMSAuth]
+        public ActionResult getTrash()
         {
-            return View("MediaManager");
+            List<Trash> m_Trash = TrashRepository.RetrieveAll();
+
+            return View("getTrash", m_Trash);
         }
+
+        [CMSAuth]
+        public ActionResult getLockedContent(int pageNum = 0, int objectId = 0)
+        {
+            List<Admin> m_Admin = AdminRepository.getLockedContent(pageNum);
+
+            return View("getLockedContent", m_Admin);
+        }
+
+        [CMSAuth]
+        public ActionResult TrashRestore(int id = 0)
+        {
+            AdminRepository.TrashRestore(id);
+
+            List<Trash> m_Trash = TrashRepository.RetrieveAll();
+
+            return View("getTrash", m_Trash);
+           
+        }
+
+        [CMSAuth]
+        public ActionResult UnlockContent(string faqid, int id = 0)
+        {
+            AdminRepository.UnlockContent(faqid, id);
+            List<Admin> m_Admin = AdminRepository.getLockedContent(0);
+
+            return View("getLockedContent", m_Admin);
+        }
+
+        [CMSAuth]
+        public ActionResult Preview(string faqid, int id = 0)
+        {
+            string objectType = faqid;
+
+            if (objectType == "Page")
+            {
+                return RedirectToAction("PagePreview", "Page", new { id = id });
+            }
+            else if (objectType == "Calendar")
+            {
+                return RedirectToAction("EventPreview", "Calendar", new { id = id });
+            }
+
+            return View();
+        }
+
     }
 }

@@ -130,7 +130,9 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\TrashController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2214,6 +2216,7 @@
     <Content Include="Content\CKEditor\skins\moonocolor\images\mini.png" />
     <Content Include="Content\CKEditor\skins\moonocolor\skin.js" />
     <Content Include="Content\CKEditor\styles.js" />
+    <Content Include="Content\css\calendar.css" />
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\style - Copy.css" />
     <Content Include="Content\css\style.css" />
@@ -2236,6 +2239,7 @@
     <Content Include="Content\images\bluegirl.jpg" />
     <Content Include="Content\images\check-out-img.jpg" />
     <Content Include="Content\images\comment-icon.jpg" />
+    <Content Include="Content\images\calendarAdd.png" />
     <Content Include="Content\images\dig_img.jpg" />
     <Content Include="Content\images\excelIcon.jpg" />
     <Content Include="Content\images\favicon.png" />
@@ -2347,8 +2351,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\PagesCreate.cshtml" />
-    <Content Include="Views\Admin\MediaManager.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\User\UserAdd.cshtml" />
     <Content Include="Views\User\Manage.cshtml" />
@@ -2379,13 +2381,25 @@
     <Content Include="Views\Page\EditPage.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Views\Shared\Home.cshtml" />
-    <Content Include="Views\Shared\Interior.cshtml" />
+    <Content Include="Views\Shared\Catalog.cshtml" />
     <Content Include="Views\Shared\_LayoutKids.cshtml" />
     <Content Include="Views\Shared\Kids.cshtml" />
     <Content Include="Views\Shared\_LayoutTeens.cshtml" />
     <Content Include="Views\Shared\Teens.cshtml" />
     <Content Include="Views\Shared\_LayoutELibrary.cshtml" />
     <Content Include="Views\Shared\eLibrary.cshtml" />
+    <Content Include="Views\Trash\Trash.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\AddMenu.cshtml" />
+    <Content Include="Views\Menu\EditMenu.cshtml" />
+    <Content Include="Views\Menu\MenuItem.cshtml" />
+    <Content Include="Views\Menu\AddMenuItem.cshtml" />
+    <Content Include="Views\Menu\EditMenuItem.cshtml" />
+    <Content Include="Views\Admin\getAwaitingApproval.cshtml" />
+    <Content Include="Views\Admin\getTrash.cshtml" />
+    <Content Include="Views\Admin\getLockedContent.cshtml" />
+    <Content Include="Views\Admin\Preview.cshtml" />
+    <Content Include="Views\Shared\Interior.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

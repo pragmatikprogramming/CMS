@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+
+<table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Deleted By</th>
+                        <th style="width: 13px;"</th>
+                        <th style="width: 13px;"</th>
+                        <!--<th style="width: 13px;"</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var trash in Model)
+                {
+                    <tr>
+                        <td>@trash.ObjectName</td>
+                        <td>@trash.ObjectType</td>
+                        <td>@trash.DeletedByName</td>
+                        <td><a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#TrashCan" href="/Admin/TrashRestore/@trash.Id"><i class="icon-undo" title="Restore" alt="Restore"></i></a></td>
+                        <td>
+                            @if(trash.ObjectType == "Page" || trash.ObjectType == "Calendar")
+                            {
+                                <a href="/Admin/Preview/@trash.ObjectType/@trash.ObjectId" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a>
+                            }
+                        </td>
+                        <!--<td><a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@trash.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>-->
+                    </tr>   
+                }
+                </tbody>
+            </table>
+        

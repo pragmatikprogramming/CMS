@@ -36,7 +36,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Images WHERE id = @id";
+            string queryString = "SELECT * FROM CMS_Images WHERE id = @id AND pageWorkFlowState != 4";
             SqlCommand getImage = new SqlCommand(queryString, conn);
             getImage.Parameters.AddWithValue("id", id);
 
@@ -63,7 +63,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Images where parentId = @id";
+            string queryString = "SELECT * FROM CMS_Images where parentId = @id AND pageWorkFlowState != 4";
             SqlCommand getImages = new SqlCommand(queryString, conn);
             getImages.Parameters.AddWithValue("id", id);
 
@@ -81,14 +81,14 @@ namespace CMS.Domain.DataAccess
                 m_Image.ParentId = allImages.GetInt32(4);
                 m_Image.ContentGroup = allImages.GetInt32(5);
 
-                Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
+                /*Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
                 string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
                 System.Drawing.Image myImage = System.Drawing.Image.FromFile(path);
                 
                 var ratio = 100 / myImage.Width;
 
                 m_Image.Width = (int)myImage.Width * ratio;
-                m_Image.Height = (int)myImage.Height * ratio;
+                m_Image.Height = (int)myImage.Height * ratio;*/
 
                 m_Images.Add(m_Image);
             }
@@ -115,6 +115,45 @@ namespace CMS.Domain.DataAccess
             updateImage.ExecuteNonQuery();
 
             conn.Close();
+        }
+
+        public static void Delete(int id)
+        {
+            Image m_Image = DBImage.RetrieveOne(id);
+
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "UPDATE CMS_Images SET pageWorkFlowState = 4 WHERE id = @id";
+            SqlCommand updateImage = new SqlCommand(queryString, conn);
+            updateImage.Parameters.AddWithValue("id", id);
+            updateImage.ExecuteNonQuery();
+
+            queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_Images', @objectName, @deleteDate, @deletedBy, 'id', @objectType)";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", m_Image.Id);
+            insertTrash.Parameters.AddWithValue("objectName", m_Image.Name);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+            insertTrash.Parameters.AddWithValue("objectType", m_Image.FileType);
+            insertTrash.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static int GetParentId(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT parentId FROM CMS_Images WHERE id = @id";
+            SqlCommand getImage = new SqlCommand(queryString, conn);
+            getImage.Parameters.AddWithValue("id", id);
+            int parentId = (int)getImage.ExecuteScalar();
+
+            conn.Close();
+
+            return parentId;
         }
     }
 }

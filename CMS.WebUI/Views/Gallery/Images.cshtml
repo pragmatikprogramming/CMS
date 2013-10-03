@@ -27,7 +27,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="width: 30px;"></th>
+                        <th style="width: 100px;"></th>
                         <th>Image Name</th>
                         <th style="width: 36px;"></th>
                     </tr>
@@ -36,7 +36,7 @@
                 @foreach (var image in Model)
                 {
                     <tr>
-                        <td><img src="~/Content/Galleries/@ViewBag.GalleryName/@image.Name.@image.FileType" /><!--<img src="/Content/images/imageIcon.png" />--></td>
+                        <td><img src="~/Galleries/@ViewBag.GalleryName/@image.Name.@image.FileType" /><!--<img src="/Content/images/imageIcon.png" />--></td>
                         <td>@image.Name</td>
                         <td>
                             <a href="/Gallery/EditImage/@image.Id"><i class="icon-pencil"></i></a>

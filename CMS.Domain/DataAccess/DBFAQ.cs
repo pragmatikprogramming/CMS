@@ -31,7 +31,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FAQs WHERE id = @id";
+            string queryString = "SELECT * FROM CMS_FAQs WHERE id = @id AND pageWorkFlowState != 4";
             SqlCommand getFAQ = new SqlCommand(queryString, conn);
             getFAQ.Parameters.AddWithValue("id", m_FaqID);
 
@@ -54,7 +54,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FAQs";
+            string queryString = "SELECT * FROM CMS_FAQs WHERE pageWorkFlowState != 4";
             SqlCommand getFAQs = new SqlCommand(queryString, conn);
             SqlDataReader m_FAQs = getFAQs.ExecuteReader();
 
@@ -93,10 +93,20 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "DELETE FROM CMS_FAQs WHERE id = @id";
+            FAQ m_FAQ = DBFAQ.RetrieveOneFAQ(m_FaqID);
+
+            string queryString = "UPDATE CMS_FAQs SET pageWorkFlowState = 4 WHERE id = @id";
             SqlCommand deleteFAQ = new SqlCommand(queryString, conn);
             deleteFAQ.Parameters.AddWithValue("id", m_FaqID);
             deleteFAQ.ExecuteNonQuery();
+
+            queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_FAQs', @objectName, @deleteDate, @deletedBy, 'id', 'FAQ')";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", m_FAQ.FaqID);
+            insertTrash.Parameters.AddWithValue("objectName", m_FAQ.FaqName);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+            insertTrash.ExecuteNonQuery();
 
             conn.Close();
         }
@@ -124,7 +134,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FAQQuestions WHERE id = @id";
+            string queryString = "SELECT * FROM CMS_FAQQuestions WHERE id = @id AND pageWorkFlowState != 4";
             SqlCommand getFAQQuestion = new SqlCommand(queryString, conn);
             getFAQQuestion.Parameters.AddWithValue("id", m_FaqQuestionID);
             SqlDataReader myFAQQuestion = getFAQQuestion.ExecuteReader();
@@ -148,7 +158,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FAQQuestions WHERE faqID = @faqID";
+            string queryString = "SELECT * FROM CMS_FAQQuestions WHERE faqID = @faqID AND pageWorkFlowState != 4";
             SqlCommand getFAQQuestions = new SqlCommand(queryString, conn);
             getFAQQuestions.Parameters.AddWithValue("faqID", m_FaqID);
 
@@ -192,10 +202,21 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "DELETE FROM CMS_FAQQuestions WHERE id = @id";
+            FAQQuestions m_FAQQuestion = DBFAQ.RetrieveOneFAQQuestion(m_QID);
+
+            string queryString = "UPDATE CMS_FAQQuestions SET pageWorkFlowState = 4 WHERE id = @id";
             SqlCommand deleteFAQQuestion = new SqlCommand(queryString, conn);
             deleteFAQQuestion.Parameters.AddWithValue("id", m_QID);
             deleteFAQQuestion.ExecuteNonQuery();
+
+            queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_FAQQuestions', @objectName, @deleteDate, @deletedBy, 'id', 'FAQ Question')";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", m_FAQQuestion.FaqID);
+            insertTrash.Parameters.AddWithValue("objectName", m_FAQQuestion.FaqQuestion);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+            insertTrash.ExecuteNonQuery();
+
 
             conn.Close();
         }

@@ -66,7 +66,6 @@ namespace CMS.Domain.Models
             if (m_Count <= 0)
             {
                 DBGallery.Delete(Id);
-                Directory.Delete(path);
                 return true;
             }
             else
