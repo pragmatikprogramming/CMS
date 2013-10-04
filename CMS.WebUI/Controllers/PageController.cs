@@ -214,5 +214,13 @@ namespace CMS.WebUI.Controllers
 
             return View(m_Page.TemplateName);
         }
+
+        [CMSAuth]
+        public ActionResult getContent(int id = 0)
+        {
+            Page m_Page = PageRepository.RetrieveOne(id);
+
+            return View("getContent", m_Page);
+        }
     }
 }

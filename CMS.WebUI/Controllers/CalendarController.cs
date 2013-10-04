@@ -175,9 +175,20 @@ namespace CMS.WebUI.Controllers
         }
 
         [CMSAuth]
-        public ActionResult EventPreview()
+        public ActionResult EventPreview(int id = 0)
         {
+            ViewBag.EventId = id;
+            ViewBag.MyAction = "getContent";
+
             return View("Interior");
+        }
+
+        [CMSAuth]
+        public ActionResult getContent(int id = 0)
+        {
+            Event m_Event = EventRepository.RetrieveOne(id);
+
+            return View("getContent", m_Event);
         }
     }
 }

@@ -54,7 +54,7 @@
                             }
 
                         </td>
-                        <td>
+                        <td style="text-align: right;">
                             @if (page.LockedBy > 0 && page.LockedBy == ViewBag.m_SessionId)
                             {
                                 <a href="/Page/PageUnlock/@page.Id"><i class="icon-lock" title="Unlock" alt="Unlock"></i></a>
@@ -71,17 +71,6 @@
                 }
                 </tbody>
             </table>
-        </div>
-        
-        <div class="pagination">
-            <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Next</a></li>
-            </ul>
         </div>
         <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">

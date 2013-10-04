@@ -4,7 +4,9 @@
 }
 
 <div class="left_part">
-    
+    <div style="margin-top: 30px;">
+        @Html.Action("getContent", new { id = ViewBag.EventId })
+    </div>
 </div><!--end left_part-->
             
 <div class="right_part">

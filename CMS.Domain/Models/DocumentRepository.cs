@@ -82,7 +82,7 @@ namespace CMS.Domain.Models
             Document m_Document = DBDocument.RetrieveOne(id);
             DBDocument.Delete(id);
 
-            if (m_Document.ParentId != 0)
+            /*if (m_Document.ParentId != 0)
             {
                 path = DBFolder.FolderPath(m_Document.ParentId);
                 path += "\\" + m_Document.Name;
@@ -92,7 +92,7 @@ namespace CMS.Domain.Models
                 path = m_Document.Name;
             }
 
-            File.Delete(ConfigurationManager.AppSettings["Documents"] + "\\" + path + "." + m_Document.FileType);
+            File.Delete(ConfigurationManager.AppSettings["Documents"] + "\\" + path + "." + m_Document.FileType);*/
 
             return true;
         }

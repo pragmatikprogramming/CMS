@@ -124,6 +124,8 @@ namespace CMS.Domain.DataAccess
 
         public static void userUpdate(User m_User)
         {
+            string passWord = BCrypt.HashPassword(m_User.PassWord, ConfigurationManager.AppSettings["Salt"]);
+
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
@@ -146,7 +148,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_User.PassWord != "1111")
             {
-                updateUser.Parameters.AddWithValue("passWord", m_User.PassWord);
+                updateUser.Parameters.AddWithValue("passWord", passWord);
             }
 
             updateUser.ExecuteNonQuery();
