@@ -126,7 +126,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BlogPostController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
@@ -2402,6 +2404,12 @@
     <Content Include="Views\Shared\Interior.cshtml" />
     <Content Include="Views\Calendar\getContent.cshtml" />
     <Content Include="Views\Page\getContent.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\AddCategory.cshtml" />
+    <Content Include="Views\Category\EditCategory.cshtml" />
+    <Content Include="Views\BlogPost\Index.cshtml" />
+    <Content Include="Views\BlogPost\AddBlogPost.cshtml" />
+    <Content Include="Views\BlogPost\EditBlogPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

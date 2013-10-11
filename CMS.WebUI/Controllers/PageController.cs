@@ -174,7 +174,7 @@ namespace CMS.WebUI.Controllers
         {
             Page m_Page = PageRepository.RetrieveOne(id);
 
-            if(!PageRepository.TrashCan(m_Page.PageID))
+            if(!PageRepository.TrashCan(m_Page.Id))
             {
                 ModelState.AddModelError("ParentId", "This page has subchildren. Delete all childred before deleting this page!");
             }
@@ -211,16 +211,9 @@ namespace CMS.WebUI.Controllers
         public ActionResult PagePreview(int id = 0)
         {
             Page m_Page = PageRepository.RetrieveOne(id);
+            ViewBag.Content = m_Page.Content;
 
             return View(m_Page.TemplateName);
-        }
-
-        [CMSAuth]
-        public ActionResult getContent(int id = 0)
-        {
-            Page m_Page = PageRepository.RetrieveOne(id);
-
-            return View("getContent", m_Page);
         }
     }
 }

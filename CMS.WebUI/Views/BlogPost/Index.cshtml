@@ -1,0 +1,98 @@
+﻿@model IEnumerable<CMS.Domain.Entities.BlogPost>
+@{
+    ViewBag.Title = "Blog Posts";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h2>Blog Posts</h2>
+</div>
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id) {
+        myID = id;
+    }
+
+</script>
+<div class="container-fluid">
+    <div class="row-fluid">            
+        <div class="btn-toolbar">
+            <a href="/BlogPost/AddBlogPost"><button class="btn btn-primary"><i class="icon-plus"></i> Add Blog Post</button></a>
+            <!--<a href="/BlogPost/AddBlogPost/"><img src="~/Content/images/addDocument.png" />Add Blog Post</a>-->
+            <div class="btn-group">
+            </div>
+        </div>
+        <div style="color: red">@Html.ValidationSummary()</div>
+        <div class="well">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Blog Title</th>
+                        <th>Locked By</th>
+                        <th>Page Status</th>
+                        <th style="width: 15px; text-align: right;"></th>
+                        <th style="width: 15px; text-align: right;"></th>
+                        <th style="width: 15px; text-align: right;"></th>
+                        <th style="width: 15px; text-align: right;"></th>
+                        <th style="width: 15px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var blog in Model)
+                {
+                    <tr>
+                        <td><a href="/BlogPost/Index/@blog.BlogId">@blog.Title</a></td>
+                        <td>@blog.LockedByName</td>
+                        <td>
+                            @if(blog.PageWorkFlowState == 1)
+                            {
+                                @:Unpublished
+                            }
+                            else if(blog.PageWorkFlowState ==2)
+                            {
+                                @:Published
+                            }
+                            else if(blog.PageWorkFlowState == 3)
+                            {
+                                @:Expired
+                            }
+
+                        </td>
+                        <td style="text-align: right;">
+                            @if (blog.LockedBy > 0 && blog.LockedBy == ViewBag.m_SessionId)
+                            {
+                                <a href="/BlogPost/BlogUnlock/@blog.BlogId"><i class="icon-lock" title="Unlock" alt="Unlock"></i></a>
+                            }
+                        </td>
+                        <td>
+                            @if(blog.PageWorkFlowState == 1)
+                            {
+                                <a href="/BlogPost/BlogPublish/@blog.Id"><i class="icon-book" title="Publish" alt="Publish"></i></a>
+                            }
+                        </td>
+                        <td><a href="/BlogPost/BlogPreview/@blog.Id" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
+                        <td><a href="/BlogPost/EditBlogPost/@blog.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+                        <td><a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@blog.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>
+                    </tr>   
+                }
+                </tbody>
+            </table>
+        </div>
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="myModalLabel">Delete Confirmation</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the Blog Post?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/BlogPost/BlogDelete/' + myID;">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+

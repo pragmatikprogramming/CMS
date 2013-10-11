@@ -18,7 +18,8 @@
 <div class="container-fluid">
     <div class="row-fluid">            
         <div class="btn-toolbar">
-            <a href="/Page/AddPage/@ViewBag.ParentId"><img src="~/Content/images/addDocument.png" />Add Page</a>
+            <a href="/Page/AddPage/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-plus"></i> Add Page</button></a>
+            <!--<a href="/Page/AddPage/@ViewBag.ParentId"><img src="~/Content/images/addDocument.png" />Add Page</a>-->
             <div class="btn-group">
             </div>
         </div>
@@ -30,7 +31,12 @@
                         <th>Page Title</th>
                         <th>Locked By</th>
                         <th>Page Status</th>
-                        <th style="width: 85px; text-align: right;"></th>
+                        <th style="width: 13px; text-align: right;">&nbsp;</th>
+                        <th style="width: 13px; text-align: right;">&nbsp;</th>
+                        <th style="width: 13px; text-align: right;">&nbsp;</th>
+                        <th style="width: 13px; text-align: right;">&nbsp;</th>
+                        <th style="width: 13px; text-align: right;">&nbsp;</th>
+                        <th style="width: 13px; text-align: right;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,14 +65,16 @@
                             {
                                 <a href="/Page/PageUnlock/@page.Id"><i class="icon-lock" title="Unlock" alt="Unlock"></i></a>
                             }
+                        </td>
+                        <td>
                             @if(page.PageWorkFlowState == 1)
                             {
                                 <a href="/Page/PagePublish/@page.Id"><i class="icon-book" title="Publish" alt="Publish"></i></a>
                             }
-                            <a href="/Page/PagePreview/@page.Id" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a>
-                            <a href="/Page/EditPage/@page.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a>
-                            <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@page.PageID);"><i class="icon-remove" title="Delete" alt="Delete"></i></a>
                         </td>
+                        <td><a href="/Page/PagePreview/@page.Id" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
+                        <td><a href="/Page/EditPage/@page.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+                        <td><a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@page.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>
                     </tr>   
                 }
                 </tbody>
@@ -78,7 +86,7 @@
                 <h3 id="myModalLabel">Delete Confirmation</h3>
             </div>
             <div class="modal-body">
-                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the Page?</p>
             </div>
 
             <div class="modal-footer">

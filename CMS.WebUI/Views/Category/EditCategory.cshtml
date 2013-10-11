@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Edit - Category";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Name = HttpContext.Current.Session["Name"];
+}
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id)
+    {
+        myID = id;
+    }
+
+</script>
+<div class="header">
+    <h1 class="page-title">Edit Category</h1>
+</div>
+
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+        <form action="/Category/EditCategory" method="post" id="categoryEdit">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="formlabel">Category Name:</div>
+            <div class="formfield"><input type="text" class="input-xlarge" name="CategoryTitle" value="@Model.CategoryTitle"></div>
+            <div class="clear">&nbsp;</div>
+            <div style="line-height: 30px;">&nbsp;</div>
+            <button form="categoryEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+        </form>
+    </div>
+</div>
+
+

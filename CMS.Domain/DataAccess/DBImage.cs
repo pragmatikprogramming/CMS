@@ -81,14 +81,14 @@ namespace CMS.Domain.DataAccess
                 m_Image.ParentId = allImages.GetInt32(4);
                 m_Image.ContentGroup = allImages.GetInt32(5);
 
-                /*Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
+                Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
                 string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
                 System.Drawing.Image myImage = System.Drawing.Image.FromFile(path);
                 
                 var ratio = 100 / myImage.Width;
 
                 m_Image.Width = (int)myImage.Width * ratio;
-                m_Image.Height = (int)myImage.Height * ratio;*/
+                m_Image.Height = (int)myImage.Height * ratio;
 
                 m_Images.Add(m_Image);
             }

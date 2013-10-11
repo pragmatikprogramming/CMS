@@ -122,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAdminRepository.cs" />
+    <Compile Include="Abstract\IBlogPostRepository.cs" />
+    <Compile Include="Abstract\ICategoryRepository.cs" />
     <Compile Include="Abstract\IDocumentRepository.cs" />
     <Compile Include="Abstract\IEventRepository.cs" />
     <Compile Include="Abstract\IFAQRepository.cs" />
@@ -138,6 +140,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="DataAccess\DBAdmin.cs" />
+    <Compile Include="DataAccess\DBBlogPost.cs" />
+    <Compile Include="DataAccess\DBCategory.cs" />
     <Compile Include="DataAccess\DBDocument.cs" />
     <Compile Include="DataAccess\DBFolder.cs" />
     <Compile Include="DataAccess\DBEvent.cs" />
@@ -150,6 +154,8 @@
     <Compile Include="DataAccess\DBTrash.cs" />
     <Compile Include="DataAccess\DBUser.cs" />
     <Compile Include="Entities\Admin.cs" />
+    <Compile Include="Entities\BlogPost.cs" />
+    <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Branch.cs" />
     <Compile Include="Entities\ContentGroup.cs" />
     <Compile Include="Entities\Document.cs" />
@@ -175,6 +181,8 @@
     <Compile Include="HelperClasses\SessionHandler.cs" />
     <Compile Include="HelperClasses\Utility.cs" />
     <Compile Include="Models\AdminRepository.cs" />
+    <Compile Include="Models\BlogPostRepository.cs" />
+    <Compile Include="Models\CategoryRepository.cs" />
     <Compile Include="Models\DocumentRepository.cs" />
     <Compile Include="Models\EventRepository.cs" />
     <Compile Include="Models\FAQRepository.cs" />

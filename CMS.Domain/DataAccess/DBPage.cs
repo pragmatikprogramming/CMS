@@ -216,26 +216,28 @@ namespace CMS.Domain.DataAccess
 
         public static bool TrashCan(int m_ID)
         {
+            Page m_Page = DBPage.RetrieveOne(m_ID);
+
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
             string queryString = "SELECT COUNT(*) FROM CMS_Pages WHERE parentId = @parentId";
             SqlCommand getNumChildren = new SqlCommand(queryString, conn);
-            getNumChildren.Parameters.AddWithValue("parentId", m_ID);
+            getNumChildren.Parameters.AddWithValue("parentId", m_Page.PageID);
             int numChildren = (int)getNumChildren.ExecuteScalar();
 
-            Page m_Page = DBPage.RetrieveOne(m_ID);
+            
 
             if (numChildren == 0)
             {
                 queryString = "UPDATE CMS_Pages SET pageWorkFlowState = 4 WHERE pageId = @pageId";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
-                updatePage.Parameters.AddWithValue("pageId", m_ID);
+                updatePage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 updatePage.ExecuteNonQuery();
 
                 queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_Pages', @objectName, @deleteDate, @deletedBy, 'pageId', 'Page')";
                 SqlCommand insertTrash = new SqlCommand(queryString, conn);
-                insertTrash.Parameters.AddWithValue("objectId", m_ID);
+                insertTrash.Parameters.AddWithValue("objectId", m_Page.PageID);
                 insertTrash.Parameters.AddWithValue("objectName", m_Page.PageTitle);
                 insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
                 insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);

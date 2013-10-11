@@ -15,6 +15,9 @@
     }
 
 </script>
+<style type="text/css">
+    img { -ms-interpolation-mode: bicubic; }
+</style>
 <div class="container-fluid">
     <div class="row-fluid">            
         <div class="btn-toolbar">
@@ -36,7 +39,7 @@
                 @foreach (var image in Model)
                 {
                     <tr>
-                        <td><img src="~/Galleries/@ViewBag.GalleryName/@image.Name.@image.FileType" /><!--<img src="/Content/images/imageIcon.png" />--></td>
+                        <td><img src="~/Galleries/@ViewBag.GalleryName/@image.Name.@image.FileType"   /><!--<img src="/Content/images/imageIcon.png" />--></td>
                         <td>@image.Name</td>
                         <td>
                             <a href="/Gallery/EditImage/@image.Id"><i class="icon-pencil"></i></a>
@@ -53,7 +56,7 @@
                 <h3 id="myModalLabel">Delete Confirmation</h3>
             </div>
             <div class="modal-body">
-                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the Image?</p>
             </div>
 
             <div class="modal-footer">

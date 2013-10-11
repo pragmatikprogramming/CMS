@@ -1,10 +1,12 @@
-﻿@{
-    ViewBag.Title = "Menu Item";
+﻿@model IEnumerable<CMS.Domain.Entities.Category>
+@{
+    ViewBag.Title = "Admin - Manage Categories";
+    ViewBag.Name = HttpContext.Current.Session["Name"];
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="header">
-    <h2>Menu Items</h2>
+    <h2>Categories</h2>
 </div>
 <script type="text/javascript">
     var myID = 0;
@@ -18,7 +20,7 @@
 <div class="container-fluid">
     <div class="row-fluid">            
         <div class="btn-toolbar">
-            <a href="/Menu/AddMenuItem/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-plus"></i> New Menu Item</button></a>
+            <a href="/Category/AddCategory"><button class="btn btn-primary"><i class="icon-plus"></i> New Category</button></a>
             <div class="btn-group">
             </div>
         </div>
@@ -27,18 +29,18 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Menu Item Name</th>
+          <th>Category Name</th>
           <th style="width: 36px;"></th>
         </tr>
       </thead>
       <tbody>
-          @foreach (var menuItem in Model)
+          @foreach (var category in Model)
           {
                 <tr>
-                    <td>@menuItem.MenuItemName</td>
+                    <td>@category.CategoryTitle</td>
                     <td>
-                       <a href="/Menu/EditMenuItem/@menuItem.Id"><i class="icon-pencil"></i></a>
-                       <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@menuItem.Id);"><i class="icon-remove"></i></a>
+                       <a href="/Category/EditCategory/@category.Id"><i class="icon-pencil"></i></a>
+                       <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@category.Id);"><i class="icon-remove"></i></a>
                     </td>
                 </tr>
           }
@@ -47,30 +49,19 @@
 
 
         </div>
-        <div class="pagination">
-            <ul>
-                <li><a href="#">Prev</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">Next</a></li>
-            </ul>
-        </div>
         <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h3 id="myModalLabel">Delete Confirmation</h3>
             </div>
             <div class="modal-body">
-                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the Menu Item?</p>
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the Category?</p>
             </div>
 
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/Menu/DeleteMenuItem/' + myID;">Delete</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/Category/DeleteCategory/' + myID;">Delete</button>
             </div>
         </div>
     </div>
 </div>
-

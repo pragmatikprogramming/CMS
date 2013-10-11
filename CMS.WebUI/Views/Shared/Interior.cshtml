@@ -5,7 +5,7 @@
 
 <div class="left_part">
     <div style="margin-top: 30px;">
-        @Html.Action("getContent", new { id = ViewBag.EventId })
+        @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Content)) 
     </div>
 </div><!--end left_part-->
             

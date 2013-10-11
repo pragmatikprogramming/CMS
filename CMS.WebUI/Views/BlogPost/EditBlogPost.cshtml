@@ -1,0 +1,107 @@
+﻿@model CMS.Domain.Entities.BlogPost
+@{
+    ViewBag.Title = "Edit - Blog Post";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script>
+    $(function () {
+        $("#PublishDate").datepicker();
+    });
+</script>
+
+<div class="header">
+    <h1 class="page-title">Edit Blog Post</h1>
+</div>
+
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+    <form action="/BlogPost/EditBlogPost" method="post" id="blogpostEdit">
+        <input type="hidden" name="Id" id="Id" value="@Model.Id" />
+        <input type="hidden" name="BlogId" id="BlogId" value="@Model.BlogId" />
+        <div class="formlabel">Content Group:</div>
+        <div class="formfield"><select name="ContentGroup">
+            <option value="">-- Select a Content Group --</option>
+            @foreach (var GroupName in ViewBag.myContentGroups)
+                {
+                    if (GroupName.GroupID == Model.ContentGroup)
+                    {
+                        <option value="@GroupName.GroupID" selected="selected">@GroupName.ContentGroupName</option>
+                    }
+                    else
+                    {
+                        <option value="@GroupName.GroupID">@GroupName.ContentGroupName</option>
+                    }
+                 }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Page Title:</div>
+        <div class="formfield"><input type="text" name="Title" value="@Model.Title" /></div>
+        <div class="clear">&nbsp;</div>
+        
+        <div class="formlabel">Publish Date:</div>
+        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="@Model.PublishDate" /></div>
+        <div class="clear">&nbsp;</div>
+
+        <textarea name="Content" id="Content" style="width: 80%">@Model.Content</textarea>
+        
+        <script>
+            CKEDITOR.replace('Content', {
+                "extraPlugins": "imagebrowser",
+                "imageBrowser_listUrl": "/Content/images/images_list.json"
+            }, '');
+            </script>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+        <div class="formlabel">Categories:</div>
+        <div class="formfield">
+            @foreach (var cat in ViewBag.Categories)
+            {
+                <div style="float: left; padding-right: 25px;">
+                @if (Model.Categories.Contains(cat.Id))
+                {
+                    <label><input type="checkbox" name="Categories" id="Categories" value="@cat.Id" checked="checked"/> @cat.CategoryTitle</label>
+                }
+                else
+                {
+                    <label><input type="checkbox" name="Categories" id="Categories" value="@cat.Id" /> @cat.CategoryTitle</label>
+                }
+                </div>
+            }
+        </div>
+        <div class="clear">&nbsp;</div>
+        <div style="line-height: 30px;">&nbsp;</div>
+        <div class="formlabel">&nbsp;</div>
+        <div class="formfield">
+            <select name="Comments">
+                @if(Model.Comments == 1)
+                {
+                    <option value="1" selected="selected">Comments On</option>
+                }
+                else
+                {
+                    <option value="1" >Comments On</option>
+                }
+                @if(Model.Comments == 0)
+                {
+                    <option value="0" selected="selected">Comments Off</option>
+                }
+                else
+                {
+                    <option value="0">Comments Off</option>
+                }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+        <div class="formlabel"><button form="blogpostEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+    </form>
+
+
+</div>
+
+
