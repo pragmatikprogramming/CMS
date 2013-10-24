@@ -30,7 +30,10 @@
       <thead>
         <tr>
           <th>FAQ Questions</th>
-          <th style="width: 36px;"></th>
+          <th style="width: 13px;"></th>
+            <th style="width: 13px;"></th>
+            <th style="width: 13px;"></th>
+            <th style="width: 13px;"></th>
         </tr>
       </thead>
       <tbody>
@@ -38,10 +41,10 @@
           {
                 <tr>
                     <td>@faq.FaqQuestion</td>
-                    <td>
-                       <a href="/FAQ/FAQQuestionEdit/@faq.FaqID/@faq.QID"><i class="icon-pencil"></i></a>
-                       <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@faq.QID);"><i class="icon-remove"></i></a>
-                    </td>
+                    <td><a href="/FAQ/sortUp/@faq.QID"><i class="icon-arrow-up" title="Preview" alt="Preview"></i></a></td>
+                    <td><a href="/FAQ/sortDown/@faq.QID"><i class="icon-arrow-down" title="Preview" alt="Preview"></i></a></td>
+                    <td><a href="/FAQ/FAQQuestionEdit/@faq.FaqID/@faq.QID"><i class="icon-pencil"></i></a></td>
+                    <td><a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@faq.QID);"><i class="icon-remove"></i></a></td>
                 </tr>
           }
       </tbody>

@@ -36,5 +36,15 @@ namespace CMS.Domain.Models
         {
             DBMenuItem.Delete(id);
         }
+
+        public void sortUp(int id)
+        {
+            DBMenuItem.sortUp(id);
+        }
+
+        public void sortDown(int id)
+        {
+            DBMenuItem.sortDown(id);
+        }
     }
 }

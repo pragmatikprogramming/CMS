@@ -14,11 +14,13 @@ namespace CMS.WebUI.Controllers
     public class PageController : Controller
     {
         IPageRepository PageRepository;
+        IJSONRepository JSONRepository;
 
         
-        public PageController(IPageRepository PageRepo)
+        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo)
         {
             PageRepository = PageRepo;
+            JSONRepository = JSONRepo;
         }
 
         [HttpGet]
@@ -116,8 +118,7 @@ namespace CMS.WebUI.Controllers
         [ValidateInput(false)]
         public ActionResult EditPage(Page m_Page)
         {
-            m_Page.PageWorkFlowState = Utility.GetPageWorkFlowStatus(m_Page.Id);
-            m_Page.LockedBy = Utility.GetLockedBy(m_Page.Id);
+            
 
             if (m_Page.ParentId > 0)
             {
@@ -213,7 +214,25 @@ namespace CMS.WebUI.Controllers
             Page m_Page = PageRepository.RetrieveOne(id);
             ViewBag.Content = m_Page.Content;
 
-            return View(m_Page.TemplateName);
+            return View(m_Page.TemplateName, m_Page);
+        }
+
+        [HttpGet]
+        [CMSAuth]
+        public ActionResult OrderUp(int id)
+        {
+            Page m_Page = PageRepository.RetrieveOne(id);
+            PageRepository.sortUp(id);
+            return RedirectToAction("Index", "Page", new { id = m_Page.ParentId });
+        }
+
+        [HttpGet]
+        [CMSAuth]
+        public ActionResult OrderDown(int id)
+        {
+            Page m_Page = PageRepository.RetrieveOne(id);
+            PageRepository.sortDown(id);
+            return RedirectToAction("Index", "Page", new { id = m_Page.ParentId });
         }
     }
 }

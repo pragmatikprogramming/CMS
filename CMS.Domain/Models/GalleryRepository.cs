@@ -15,7 +15,8 @@ namespace CMS.Domain.Models
         public void CreateGallery(Gallery m_Gallery)
         {
             DBGallery.Create(m_Gallery);
-            Directory.CreateDirectory(ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name); 
+            Directory.CreateDirectory(ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name);
+            Directory.CreateDirectory(ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs");
         }
 
         public Gallery RetrieveOne(int id)

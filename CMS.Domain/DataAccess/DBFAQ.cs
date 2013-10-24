@@ -119,11 +119,14 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CMS_FAQQuestions(faqID, faqQuestion, faqAnswer) VALUES(@faqID, @faqQuestion, @faqAnswer)";
+            int sortOrder = getSortOrder(m_FAQQuestion.FaqID);
+
+            string queryString = "INSERT INTO CMS_FAQQuestions(faqID, faqQuestion, faqAnswer, sortOrder) VALUES(@faqID, @faqQuestion, @faqAnswer, @sortOrder)";
             SqlCommand insertFAQQuestion = new SqlCommand(queryString, conn);
             insertFAQQuestion.Parameters.AddWithValue("faqID", m_FAQQuestion.FaqID);
             insertFAQQuestion.Parameters.AddWithValue("faqQuestion", m_FAQQuestion.FaqQuestion);
             insertFAQQuestion.Parameters.AddWithValue("faqAnswer", m_FAQQuestion.FaqAnswer);
+            insertFAQQuestion.Parameters.AddWithValue("sortOrder", sortOrder);
             insertFAQQuestion.ExecuteNonQuery();
 
             conn.Close();
@@ -147,6 +150,7 @@ namespace CMS.Domain.DataAccess
                 tempQuestion.FaqID = myFAQQuestion.GetInt32(1);
                 tempQuestion.FaqQuestion = myFAQQuestion.GetString(2);
                 tempQuestion.FaqAnswer = myFAQQuestion.GetString(3);
+                tempQuestion.SortOrder = myFAQQuestion.GetInt32(4);
             }
 
             conn.Close();
@@ -158,7 +162,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FAQQuestions WHERE faqID = @faqID AND pageWorkFlowState != 4";
+            string queryString = "SELECT * FROM CMS_FAQQuestions WHERE faqID = @faqID AND pageWorkFlowState != 4 ORDER BY sortOrder";
             SqlCommand getFAQQuestions = new SqlCommand(queryString, conn);
             getFAQQuestions.Parameters.AddWithValue("faqID", m_FaqID);
 
@@ -217,6 +221,108 @@ namespace CMS.Domain.DataAccess
             insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
             insertTrash.ExecuteNonQuery();
 
+
+            conn.Close();
+        }
+
+        public static int getSortOrder(int faqId)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT TOP 1 sortOrder FROM CMS_FAQQuestions WHERE faqID = @faqId ORDER BY sortOrder DESC";
+            SqlCommand getSortOrder = new SqlCommand(queryString, conn);
+            getSortOrder.Parameters.AddWithValue("faqId", faqId);
+            object sortOrder = getSortOrder.ExecuteScalar();
+            int m_sortOrder = 0;
+
+            if (sortOrder == null)
+            {
+                m_sortOrder = 1;
+            }
+            else
+            {
+                m_sortOrder = Convert.ToInt32(sortOrder);
+                m_sortOrder++;
+            }
+
+            conn.Close();
+
+            return m_sortOrder;
+        }
+
+        public static void sortUp(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            FAQQuestions m_FAQQuestion = DBFAQ.RetrieveOneFAQQuestion(id);
+            int oldSortOrder = m_FAQQuestion.SortOrder;
+            int newSortOrder = oldSortOrder - 1;
+
+            //check boundaries of sort to make sure they are valid
+
+            string queryString = "SELECT TOP 1 id FROM CMS_FAQQuestions WHERE faqID = @faqID and sortOrder = @sortOrder ORDER BY id DESC";
+            SqlCommand getId = new SqlCommand(queryString, conn);
+            getId.Parameters.AddWithValue("faqID", m_FAQQuestion.FaqID);
+            getId.Parameters.AddWithValue("sortOrder", newSortOrder);
+
+            object myId = getId.ExecuteScalar();
+
+            if (myId != null)
+            {
+                int m_id = Convert.ToInt32(myId);
+                FAQQuestions o_FAQQuestion = DBFAQ.RetrieveOneFAQQuestion(m_id);
+
+                queryString = "UPDATE CMS_FAQQuestions SET sortOrder = @sortOrder, pageWorkFlowState = 2 WHERE id = @id";
+                SqlCommand updatePage = new SqlCommand(queryString, conn);
+                updatePage.Parameters.AddWithValue("sortOrder", newSortOrder);
+                updatePage.Parameters.AddWithValue("id", m_FAQQuestion.QID);
+                updatePage.ExecuteNonQuery();
+
+                SqlCommand updatePage2 = new SqlCommand(queryString, conn);
+                updatePage2.Parameters.AddWithValue("sortOrder", oldSortOrder);
+                updatePage2.Parameters.AddWithValue("id", o_FAQQuestion.QID);
+                updatePage2.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+
+        public static void sortDown(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            FAQQuestions m_FAQQuestion = DBFAQ.RetrieveOneFAQQuestion(id);
+            int oldSortOrder = m_FAQQuestion.SortOrder;
+            int newSortOrder = oldSortOrder + 1;
+
+            //check boundaries of sort to make sure they are valid
+
+            string queryString = "SELECT TOP 1 id FROM CMS_FAQQuestions WHERE faqID = @faqID and sortOrder = @sortOrder ORDER BY id DESC";
+            SqlCommand getId = new SqlCommand(queryString, conn);
+            getId.Parameters.AddWithValue("faqID", m_FAQQuestion.FaqID);
+            getId.Parameters.AddWithValue("sortOrder", newSortOrder);
+
+            object myId = getId.ExecuteScalar();
+
+            if (myId != null)
+            {
+                int m_id = Convert.ToInt32(myId);
+                FAQQuestions o_FAQQuestion = DBFAQ.RetrieveOneFAQQuestion(m_id);
+
+                queryString = "UPDATE CMS_FAQQuestions SET sortOrder = @sortOrder, pageWorkFlowState = 1 WHERE id = @id";
+                SqlCommand updatePage = new SqlCommand(queryString, conn);
+                updatePage.Parameters.AddWithValue("sortOrder", newSortOrder);
+                updatePage.Parameters.AddWithValue("id", m_FAQQuestion.QID);
+                updatePage.ExecuteNonQuery();
+
+                SqlCommand updatePage2 = new SqlCommand(queryString, conn);
+                updatePage2.Parameters.AddWithValue("sortOrder", oldSortOrder);
+                updatePage2.Parameters.AddWithValue("id", o_FAQQuestion.QID);
+                updatePage2.ExecuteNonQuery();
+            }
 
             conn.Close();
         }

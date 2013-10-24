@@ -47,11 +47,11 @@
                 {
                     if (Template.TemplateId == Model.TemplateId)
                     {
-                        <option value="@Template.TemplateId" selected="selected">@Template.TemplateName</option>
+                        <option value="@Template.TemplateId" selected="selected">@Template.FriendlyName</option>
                     }
                     else
                     {
-                        <option value="@Template.TemplateId">@Template.TemplateName</option>
+                        <option value="@Template.TemplateId">@Template.FriendlyName</option>
                     }
                  }
 
@@ -83,7 +83,7 @@
         <script>
             CKEDITOR.replace('Content', {
                 "extraPlugins": "imagebrowser",
-                "imageBrowser_listUrl": "/Content/images/images_list.json"
+                "imageBrowser_listUrl": "/JSON/getImages"
             }, '');
             </script>
 

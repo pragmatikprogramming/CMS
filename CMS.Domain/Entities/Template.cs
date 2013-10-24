@@ -9,6 +9,7 @@ namespace CMS.Domain.Entities
     {
         private int templateId;
         private string templateName;
+        private string friendlyName;
 
         public int TemplateId
         {
@@ -31,6 +32,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 templateName = value; 
+            }
+        }
+
+        public string FriendlyName
+        {
+            get 
+            { 
+                return friendlyName; 
+            }
+            set 
+            { 
+                friendlyName = value; 
             }
         }
     }

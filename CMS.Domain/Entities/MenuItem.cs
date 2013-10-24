@@ -13,6 +13,7 @@ namespace CMS.Domain.Entities
         private string menuItemName;
         private string linkUrl;
         private int pageWorkFlowState;
+        private int sortOrder;
 
         public int Id
         {
@@ -73,6 +74,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 pageWorkFlowState = value; 
+            }
+        }
+
+        public int SortOrder
+        {
+            get 
+            { 
+                return sortOrder; 
+            }
+            set 
+            { 
+                sortOrder = value; 
             }
         }
     }

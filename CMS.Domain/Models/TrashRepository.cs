@@ -42,7 +42,7 @@ namespace CMS.Domain.Models
             if (m_Trash.ObjectTable == "CMS_Gallery")
             {
                 string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Trash.ObjectName;
-                Directory.Delete(path);
+                Directory.Delete(path, true);
             }
 
             if (m_Trash.ObjectTable == "CMS_Images")

@@ -171,5 +171,27 @@ namespace CMS.WebUI.Controllers
             return RedirectToAction("FAQQuestions", "FAQ", new { id = FAQID });
             
         }
+
+        [CMSAuth]
+        [HttpGet]
+        public ActionResult sortUp(int id)
+        {
+            FAQQuestions m_Question = DBFAQ.RetrieveOneFAQQuestion(id);
+
+            FAQRepository.sortUp(id);
+
+            return RedirectToAction("FAQQuestions", "FAQ", new {id = m_Question.FaqID});
+        }
+
+        [CMSAuth]
+        [HttpGet]
+        public ActionResult sortDown(int id)
+        {
+            FAQQuestions m_Question = DBFAQ.RetrieveOneFAQQuestion(id);
+
+            FAQRepository.sortDown(id);
+
+            return RedirectToAction("FAQQuestions", "FAQ", new { id = m_Question.FaqID });
+        }
     }
 }

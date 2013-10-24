@@ -14,5 +14,7 @@ namespace CMS.Domain.Abstract
         List<MenuItem> RetrieveAll(int parentId);
         void Update(MenuItem m_MenuItem);
         void Delete(int id);
+        void sortUp(int id);
+        void sortDown(int id);
     }
 }

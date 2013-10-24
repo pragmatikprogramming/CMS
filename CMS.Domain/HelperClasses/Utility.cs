@@ -87,6 +87,7 @@ namespace CMS.Domain.HelperClasses
                 Template temp = new Template();
                 temp.TemplateId = templateReader.GetInt32(0);
                 temp.TemplateName = templateReader.GetString(1);
+                temp.FriendlyName = templateReader.GetString(2);
 
                 m_Templates.Add(temp);
             }

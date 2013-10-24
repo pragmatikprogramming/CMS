@@ -27,6 +27,9 @@ namespace CMS.Domain.Entities
         private string lockedByName;
         private string lastModifiedBy;
         private string lastModifiedDate;
+        private int sortOrder;
+
+        
 
 
         public int Id
@@ -247,6 +250,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 lastModifiedDate = value; 
+            }
+        }
+
+        public int SortOrder
+        {
+            get 
+            { 
+                return sortOrder; 
+            }
+            set 
+            { 
+                sortOrder = value; 
             }
         }
 

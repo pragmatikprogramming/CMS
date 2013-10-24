@@ -5,6 +5,7 @@ using System.Web;
 using CMS.Domain.Abstract;
 using CMS.Domain.Entities;
 using CMS.Domain.DataAccess;
+using CMS.Domain.HelperClasses;
 
 
 namespace CMS.Domain.Models
@@ -32,6 +33,11 @@ namespace CMS.Domain.Models
 
         public void Update(Page m_Page)
         {
+            Page tempPage = DBPage.RetrieveOne(m_Page.Id);
+            m_Page.SortOrder = tempPage.SortOrder;
+            m_Page.PageWorkFlowState = tempPage.PageWorkFlowState;
+            m_Page.LockedBy = Utility.GetLockedBy(m_Page.Id);
+
             DBPage.Update(m_Page);
         }
 
@@ -67,6 +73,16 @@ namespace CMS.Domain.Models
         public void UnlockPage(int pid)
         {
             DBPage.unlockPage(pid);
+        }
+
+        public void sortUp(int id)
+        {
+            DBPage.sortUp(id);
+        }
+
+        public void sortDown(int id)
+        {
+            DBPage.sortDown(id);
         }
     }
 }

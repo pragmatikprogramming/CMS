@@ -71,5 +71,15 @@ namespace CMS.Domain.Models
 
             return true;
         }
+
+        public void sortUp(int id)
+        {
+            DBFAQ.sortUp(id);
+        }
+
+        public void sortDown(int id)
+        {
+            DBFAQ.sortDown(id);
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -44,9 +47,11 @@ namespace CMS.Domain.DataAccess
                 m_PageId++;
             }
 
+            int sortOrder = getSortOrder(m_Page.ParentId);
+
             conn.Open();
 
-            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
+            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder)";
             SqlCommand insertPage = new SqlCommand(queryString, conn);
             insertPage.Parameters.AddWithValue("pageId", m_PageId);
             insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -62,6 +67,7 @@ namespace CMS.Domain.DataAccess
             insertPage.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
             insertPage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
             insertPage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
+            insertPage.Parameters.AddWithValue("sortOrder", sortOrder);
             insertPage.ExecuteNonQuery();
 
             conn.Close();
@@ -74,9 +80,14 @@ namespace CMS.Domain.DataAccess
 
             string queryString;
             string action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+            string controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
             if (action == "PagePreview")
             {
                 queryString = "SELECT * FROM CMS_Pages WHERE id = @id";
+            }
+            else if (controller == "Home")
+            {
+                queryString = "SELECT * FROM CMS_Pages WHERE pageId = @id AND pageWorkFlowState = 2 ORDER BY publishDate DESC";
             }
             else
             {
@@ -104,6 +115,7 @@ namespace CMS.Domain.DataAccess
                 m_Page.ParentId = pageDataReader.GetInt32(11);
                 m_Page.PageWorkFlowState = pageDataReader.GetInt32(12);
                 m_Page.LockedBy = pageDataReader.GetInt32(13);
+                m_Page.SortOrder = pageDataReader.GetInt32(16);
                 m_Page.LockedByName = DBPage.GetLockedByName(m_Page.LockedBy);
             }
 
@@ -116,7 +128,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Pages WHERE parentId = @parentId AND pageWorkFlowState != 4 order by pageId, publishDate, id DESC";
+            string queryString = "SELECT * FROM CMS_Pages WHERE parentId = @parentId AND pageWorkFlowState != 4 order by sortOrder, pageId, id DESC";
             SqlCommand getPages = new SqlCommand(queryString, conn);
             getPages.Parameters.AddWithValue("parentId", m_Id);
             SqlDataReader pagesDataReader = getPages.ExecuteReader();
@@ -142,6 +154,7 @@ namespace CMS.Domain.DataAccess
                 tempPage.ParentId = pagesDataReader.GetInt32(11);
                 tempPage.PageWorkFlowState = pagesDataReader.GetInt32(12);
                 tempPage.LockedBy = pagesDataReader.GetInt32(13);
+                tempPage.SortOrder = pagesDataReader.GetInt32(16);
                 tempPage.LockedByName = DBPage.GetLockedByName(tempPage.LockedBy);
 
                 if (previousPageId != tempPage.PageID)
@@ -188,7 +201,7 @@ namespace CMS.Domain.DataAccess
             }
             else if (m_Page.PageWorkFlowState == 2 || m_Page.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy)";
+                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder)";
                 SqlCommand insertPage = new SqlCommand(queryString, conn);
                 insertPage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -204,6 +217,7 @@ namespace CMS.Domain.DataAccess
                 insertPage.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
                 insertPage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
                 insertPage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
+                insertPage.Parameters.AddWithValue("sortOrder", m_Page.SortOrder);
                 insertPage.ExecuteNonQuery();
             }
             else
@@ -341,6 +355,123 @@ namespace CMS.Domain.DataAccess
             m_LockPage.ExecuteNonQuery();
 
             conn.Close();
+        }
+
+        public static int getSortOrder(int parentId)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT TOP 1 sortOrder FROM CMS_Pages WHERE parentId = @parentId ORDER BY sortOrder DESC";
+            SqlCommand getSortOrder = new SqlCommand(queryString, conn);
+            getSortOrder.Parameters.AddWithValue("parentId", parentId);
+            object sortOrder = getSortOrder.ExecuteScalar();
+            int m_sortOrder = 0;
+
+            if (sortOrder == null)
+            {
+                m_sortOrder = 1;
+            }
+            else
+            {
+                m_sortOrder = Convert.ToInt32(sortOrder);
+                m_sortOrder++;
+            }
+
+            conn.Close();
+
+            return m_sortOrder;
+        }
+
+        public static void sortUp(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            Page m_Page = DBPage.RetrieveOne(id);
+            int oldSortOrder = m_Page.SortOrder;
+            int newSortOrder = oldSortOrder - 1;
+
+            //check boundaries of sort to make sure they are valid
+
+            string queryString = "SELECT TOP 1 id FROM CMS_Pages WHERE parentId = @parentId and sortOrder = @sortOrder ORDER BY id DESC";
+            SqlCommand getId = new SqlCommand(queryString, conn);
+            getId.Parameters.AddWithValue("parentId", m_Page.ParentId);
+            getId.Parameters.AddWithValue("sortOrder", newSortOrder);
+
+            object myId = getId.ExecuteScalar();
+
+            if (myId != null)
+            {
+                int m_id = Convert.ToInt32(myId);
+                Page o_Page = DBPage.RetrieveOne(m_id);
+
+                queryString = "UPDATE CMS_Pages SET sortOrder = @sortOrder WHERE pageId = @pageId";
+                SqlCommand updatePage = new SqlCommand(queryString, conn);
+                updatePage.Parameters.AddWithValue("sortOrder", newSortOrder);
+                updatePage.Parameters.AddWithValue("pageId", m_Page.PageID);
+                updatePage.ExecuteNonQuery();
+
+                SqlCommand updatePage2 = new SqlCommand(queryString, conn);
+                updatePage2.Parameters.AddWithValue("sortOrder", oldSortOrder);
+                updatePage2.Parameters.AddWithValue("pageId", o_Page.PageID);
+                updatePage2.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+
+        public static void sortDown(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            Page m_Page = DBPage.RetrieveOne(id);
+            int oldSortOrder = m_Page.SortOrder;
+            int newSortOrder = oldSortOrder + 1;
+
+            //check boundaries of sort to make sure they are valid
+
+            string queryString = "SELECT TOP 1 id FROM CMS_Pages WHERE parentId = @parentId and sortOrder = @sortOrder ORDER BY id DESC";
+            SqlCommand getId = new SqlCommand(queryString, conn);
+            getId.Parameters.AddWithValue("parentId", m_Page.ParentId);
+            getId.Parameters.AddWithValue("sortOrder", newSortOrder);
+
+            object myId = getId.ExecuteScalar();
+
+            if (myId != null)
+            {
+                int m_id = Convert.ToInt32(myId);
+                Page o_Page = DBPage.RetrieveOne(m_id);
+
+                queryString = "UPDATE CMS_Pages SET sortOrder = @sortOrder WHERE pageId = @pageId";
+                SqlCommand updatePage = new SqlCommand(queryString, conn);
+                updatePage.Parameters.AddWithValue("sortOrder", newSortOrder);
+                updatePage.Parameters.AddWithValue("pageId", m_Page.PageID);
+                updatePage.ExecuteNonQuery();
+
+                SqlCommand updatePage2 = new SqlCommand(queryString, conn);
+                updatePage2.Parameters.AddWithValue("sortOrder", oldSortOrder);
+                updatePage2.Parameters.AddWithValue("pageId", o_Page.PageID);
+                updatePage2.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+
+        public static int getNumChildren(int parentId)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT COUNT(*) FROM CMS_Pages WHERE parentId = @parentId";
+            SqlCommand getNumChildren = new SqlCommand(queryString, conn);
+            getNumChildren.Parameters.AddWithValue("parentId", parentId);
+            int numChildren = (int)getNumChildren.ExecuteScalar();
+
+            conn.Close();
+
+            return numChildren;
         }
     }
 }

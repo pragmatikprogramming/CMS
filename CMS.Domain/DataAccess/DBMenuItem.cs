@@ -15,11 +15,14 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CMS_MenuItems(parentId, menuItemName, linkUrl, pageWorkFlowState) VALUES(@parentId, @menuItemName, @linkUrl, 0)";
+            int sortOrder = getSortOrder(m_MenuItem.ParentId);
+
+            string queryString = "INSERT INTO CMS_MenuItems(parentId, menuItemName, linkUrl, pageWorkFlowState, sortOrder) VALUES(@parentId, @menuItemName, @linkUrl, 0, @sortOrder)";
             SqlCommand insertMenuItem = new SqlCommand(queryString, conn);
             insertMenuItem.Parameters.AddWithValue("parentId", m_MenuItem.ParentId);
             insertMenuItem.Parameters.AddWithValue("menuItemName", m_MenuItem.MenuItemName);
             insertMenuItem.Parameters.AddWithValue("linkUrl", m_MenuItem.LinkUrl);
+            insertMenuItem.Parameters.AddWithValue("sortOrder", sortOrder);
             insertMenuItem.ExecuteNonQuery();
 
             conn.Close();
@@ -44,6 +47,7 @@ namespace CMS.Domain.DataAccess
                 m_MenuItem.MenuItemName = menuDateReader.GetString(2);
                 m_MenuItem.LinkUrl = menuDateReader.GetString(3);
                 m_MenuItem.PageWorkFlowState = menuDateReader.GetInt32(4);
+                m_MenuItem.SortOrder = menuDateReader.GetInt32(5);
             }
 
             conn.Close();
@@ -55,7 +59,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_MenuItems WHERE parentId = @parentId AND pageWorkFlowState != 4";
+            string queryString = "SELECT * FROM CMS_MenuItems WHERE parentId = @parentId AND pageWorkFlowState != 4 ORDER BY sortOrder";
             SqlCommand getMenuItems = new SqlCommand(queryString, conn);
             getMenuItems.Parameters.AddWithValue("parentId", id);
             SqlDataReader menuDataReader = getMenuItems.ExecuteReader();
@@ -112,6 +116,108 @@ namespace CMS.Domain.DataAccess
             insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
             insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
             insertTrash.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static int getSortOrder(int parentId)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT TOP 1 sortOrder FROM CMS_MenuItems WHERE parentId = @parentId ORDER BY sortOrder DESC";
+            SqlCommand getSortOrder = new SqlCommand(queryString, conn);
+            getSortOrder.Parameters.AddWithValue("parentId", parentId);
+            object sortOrder = getSortOrder.ExecuteScalar();
+            int m_sortOrder = 0;
+
+            if (sortOrder == null)
+            {
+                m_sortOrder = 1;
+            }
+            else
+            {
+                m_sortOrder = Convert.ToInt32(sortOrder);
+                m_sortOrder++;
+            }
+
+            conn.Close();
+
+            return m_sortOrder;
+        }
+
+        public static void sortUp(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            MenuItem m_MenuItem = DBMenuItem.RetrieveOne(id);
+            int oldSortOrder = m_MenuItem.SortOrder;
+            int newSortOrder = oldSortOrder - 1;
+
+            //check boundaries of sort to make sure they are valid
+
+            string queryString = "SELECT TOP 1 id FROM CMS_MenuItems WHERE parentId = @parentId and sortOrder = @sortOrder ORDER BY id DESC";
+            SqlCommand getId = new SqlCommand(queryString, conn);
+            getId.Parameters.AddWithValue("parentId", m_MenuItem.ParentId);
+            getId.Parameters.AddWithValue("sortOrder", newSortOrder);
+
+            object myId = getId.ExecuteScalar();
+
+            if (myId != null)
+            {
+                int m_id = Convert.ToInt32(myId);
+                MenuItem o_MenuItem = DBMenuItem.RetrieveOne(m_id);
+
+                queryString = "UPDATE CMS_MenuItems SET sortOrder = @sortOrder WHERE id = @id";
+                SqlCommand updatePage = new SqlCommand(queryString, conn);
+                updatePage.Parameters.AddWithValue("sortOrder", newSortOrder);
+                updatePage.Parameters.AddWithValue("id", m_MenuItem.Id);
+                updatePage.ExecuteNonQuery();
+
+                SqlCommand updatePage2 = new SqlCommand(queryString, conn);
+                updatePage2.Parameters.AddWithValue("sortOrder", oldSortOrder);
+                updatePage2.Parameters.AddWithValue("id", o_MenuItem.Id);
+                updatePage2.ExecuteNonQuery();
+            }
+
+            conn.Close();
+        }
+
+        public static void sortDown(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            MenuItem m_MenuItem = DBMenuItem.RetrieveOne(id);
+            int oldSortOrder = m_MenuItem.SortOrder;
+            int newSortOrder = oldSortOrder + 1;
+
+            //check boundaries of sort to make sure they are valid
+
+            string queryString = "SELECT TOP 1 id FROM CMS_MenuItems WHERE parentId = @parentId and sortOrder = @sortOrder ORDER BY id DESC";
+            SqlCommand getId = new SqlCommand(queryString, conn);
+            getId.Parameters.AddWithValue("parentId", m_MenuItem.ParentId);
+            getId.Parameters.AddWithValue("sortOrder", newSortOrder);
+
+            object myId = getId.ExecuteScalar();
+
+            if (myId != null)
+            {
+                int m_id = Convert.ToInt32(myId);
+                MenuItem o_MenuItem = DBMenuItem.RetrieveOne(m_id);
+
+                queryString = "UPDATE CMS_MenuItems SET sortOrder = @sortOrder WHERE id = @id";
+                SqlCommand updatePage = new SqlCommand(queryString, conn);
+                updatePage.Parameters.AddWithValue("sortOrder", newSortOrder);
+                updatePage.Parameters.AddWithValue("id", m_MenuItem.Id);
+                updatePage.ExecuteNonQuery();
+
+                SqlCommand updatePage2 = new SqlCommand(queryString, conn);
+                updatePage2.Parameters.AddWithValue("sortOrder", oldSortOrder);
+                updatePage2.Parameters.AddWithValue("id", o_MenuItem.Id);
+                updatePage2.ExecuteNonQuery();
+            }
 
             conn.Close();
         }

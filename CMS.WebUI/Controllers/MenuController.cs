@@ -147,5 +147,31 @@ namespace CMS.WebUI.Controllers
             MenuItemRepository.Delete(id);
             return RedirectToAction("MenuItems", "Menu", new { id = m_MenuItem.ParentId });
         }
+
+        [CMSAuth]
+        [HttpGet]
+        public ActionResult sortUp(int id)
+        {
+            MenuItem m_MenuItem = MenuItemRepository.RetrieveOne(id);
+            MenuItemRepository.sortUp(id);
+            return RedirectToAction("MenuItems", "Menu", new { id = m_MenuItem.ParentId });
+        }
+
+        [CMSAuth]
+        [HttpGet]
+        public ActionResult sortDown(int id)
+        {
+            MenuItem m_MenuItem = MenuItemRepository.RetrieveOne(id);
+            MenuItemRepository.sortDown(id);
+            return RedirectToAction("MenuItems", "Menu", new { id = m_MenuItem.ParentId });
+        }
+
+        [CMSAuth]
+        public ActionResult getLinkUrl(int id)
+        {
+            ViewBag.myId = id;
+            return View("getLinkUrl");
+        }
+        
     }
 }

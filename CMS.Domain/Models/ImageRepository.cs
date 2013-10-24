@@ -22,7 +22,12 @@ namespace CMS.Domain.Models
 
             Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
             string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
+            string thumbPath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs\\" + m_Image.Name + "_thumb." + m_Image.FileType;
             myFile.SaveAs(path);
+
+            System.Drawing.Image myImage = System.Drawing.Image.FromFile(path);
+            System.Drawing.Image thumb = myImage.GetThumbnailImage(100,100,()=>false, IntPtr.Zero);
+            thumb.Save(thumbPath);
 
         }
 

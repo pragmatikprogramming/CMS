@@ -132,6 +132,8 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JSONController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\TrashController.cs" />
@@ -140,6 +142,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CMSAuthAttribute.cs" />
+    <Compile Include="Infrastructure\CustomHelper.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2383,7 +2386,7 @@
     <Content Include="Views\Page\EditPage.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Views\Shared\Home.cshtml" />
-    <Content Include="Views\Shared\Catalog.cshtml" />
+    <Content Include="Views\Shared\HomeSubMenu.cshtml" />
     <Content Include="Views\Shared\_LayoutKids.cshtml" />
     <Content Include="Views\Shared\Kids.cshtml" />
     <Content Include="Views\Shared\_LayoutTeens.cshtml" />
@@ -2401,7 +2404,7 @@
     <Content Include="Views\Admin\getTrash.cshtml" />
     <Content Include="Views\Admin\getLockedContent.cshtml" />
     <Content Include="Views\Admin\Preview.cshtml" />
-    <Content Include="Views\Shared\Interior.cshtml" />
+    <Content Include="Views\Shared\HomeInterior.cshtml" />
     <Content Include="Views\Calendar\getContent.cshtml" />
     <Content Include="Views\Page\getContent.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
@@ -2410,6 +2413,7 @@
     <Content Include="Views\BlogPost\Index.cshtml" />
     <Content Include="Views\BlogPost\AddBlogPost.cshtml" />
     <Content Include="Views\BlogPost\EditBlogPost.cshtml" />
+    <Content Include="Views\Menu\getLinkUrl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

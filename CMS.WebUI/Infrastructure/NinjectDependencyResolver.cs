@@ -47,6 +47,7 @@ namespace CMS.WebUI.Infrastructure
             kernel.Bind<IAdminRepository>().To<AdminRepository>();
             kernel.Bind<ICategoryRepository>().To<CategoryRepository>();
             kernel.Bind<IBlogPostRepository>().To<BlogPostRepository>();
+            kernel.Bind<IJSONRepository>().To<JSONRepository>();
         }
     }
 }

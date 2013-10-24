@@ -20,5 +20,7 @@ namespace CMS.Domain.Abstract
         List<FAQQuestions> RetrieveAllFAQQuestions(int FaqID);
         bool UpdateFAQQuestion(FAQQuestions m_FAQQuestion);
         bool DeleteFAQQuestion(int m_FaqQuestionID);
+        void sortUp(int id);
+        void sortDown(int id);
     }
 }

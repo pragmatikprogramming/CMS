@@ -130,6 +130,7 @@
     <Compile Include="Abstract\IFolderRepository.cs" />
     <Compile Include="Abstract\IGalleryRepository.cs" />
     <Compile Include="Abstract\IImageRepository.cs" />
+    <Compile Include="Abstract\IJSONRepository.cs" />
     <Compile Include="Abstract\IMenuItemRepository.cs" />
     <Compile Include="Abstract\IMenuRepository.cs" />
     <Compile Include="Abstract\IPageRepository.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="DataAccess\DBFAQ.cs" />
     <Compile Include="DataAccess\DBGallery.cs" />
     <Compile Include="DataAccess\DBImage.cs" />
+    <Compile Include="DataAccess\DBJSON.cs" />
     <Compile Include="DataAccess\DBMenu.cs" />
     <Compile Include="DataAccess\DBMenuItem.cs" />
     <Compile Include="DataAccess\DBPage.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Entities\Folder.cs" />
     <Compile Include="Entities\Gallery.cs" />
     <Compile Include="Entities\Image.cs" />
+    <Compile Include="Entities\JSONImages.cs" />
     <Compile Include="Entities\Menu.cs" />
     <Compile Include="Entities\MenuItem.cs" />
     <Compile Include="Entities\Page.cs" />
@@ -189,6 +192,7 @@
     <Compile Include="Models\FolderRepository.cs" />
     <Compile Include="Models\GalleryRepository.cs" />
     <Compile Include="Models\ImageRepository.cs" />
+    <Compile Include="Models\JSONRepository.cs" />
     <Compile Include="Models\MenuItemRepository.cs" />
     <Compile Include="Models\MenuRepository.cs" />
     <Compile Include="Models\PageRepository.cs" />

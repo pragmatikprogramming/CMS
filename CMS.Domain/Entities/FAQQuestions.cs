@@ -13,6 +13,9 @@ namespace CMS.Domain.Entities
         private string faqQuestion;
         private string faqAnswer;
         private int pageWorkFlowState;
+        private int sortOrder;
+
+        
 
 
         public int QID
@@ -27,7 +30,7 @@ namespace CMS.Domain.Entities
             }
         }
 
-        [Required(ErrorMessage = "Something terrible happened during validatin.  Please contact your administrator")]
+        [Required(ErrorMessage = "Something terrible happened during validation.  Please contact your administrator")]
         public int FaqID
         {
             get 
@@ -75,6 +78,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 pageWorkFlowState = value; 
+            }
+        }
+
+        public int SortOrder
+        {
+            get 
+            { 
+                return sortOrder; 
+            }
+            set 
+            { 
+                sortOrder = value; 
             }
         }
     }

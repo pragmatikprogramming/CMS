@@ -1,8 +1,14 @@
-﻿@{
+﻿@using CMS.WebUI.Infrastructure
+@{
     ViewBag.Title = "EditMenuItem";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<style type="text/css">
+    ul {
+        list-style-type: none;
+    }
 
+</style>
 <div class="header">
     <h1 class="page-title">Edit a custom Menu Item</h1>
 </div>
@@ -18,9 +24,15 @@
         <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Link Url:</div>
-        <div class="formfield"><input type="text" class="input-xlarge" name="LinkUrl" value="@Model.LinkUrl" /></div>
+        <div class="formfield" id="linkurl"><input type="text" class="input-xlarge" name="LinkUrl" value="@Model.LinkUrl" /></div>
         <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">&nbsp;</div>
+        <div class="formfield">@Html.Menu()</div>
+        <div class="clear">&nbsp;</div>
+
         <div style="line-height: 30px;">&nbsp;</div>
-        <button form="menuItemEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+        <div class="formlabel">&nbsp;</div>
+        <div class="formfield"><button form="menuItemEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
     </form>
 </div>

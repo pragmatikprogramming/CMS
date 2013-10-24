@@ -39,7 +39,7 @@
                 @foreach (var image in Model)
                 {
                     <tr>
-                        <td><img src="~/Galleries/@ViewBag.GalleryName/@image.Name.@image.FileType"   /><!--<img src="/Content/images/imageIcon.png" />--></td>
+                        <td><img src="~/Galleries/@ViewBag.GalleryName/thumbs/@(image.Name)_thumb.@(image.FileType)"   /><!--<img src="/Content/images/imageIcon.png" />--></td>
                         <td>@image.Name</td>
                         <td>
                             <a href="/Gallery/EditImage/@image.Id"><i class="icon-pencil"></i></a>

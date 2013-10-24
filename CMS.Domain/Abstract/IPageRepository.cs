@@ -18,5 +18,7 @@ namespace CMS.Domain.Abstract
         int Publish(int m_Id);
         void LockPage(int pid);
         void UnlockPage(int pid);
+        void sortUp(int id);
+        void sortDown(int id);
     }
 }
