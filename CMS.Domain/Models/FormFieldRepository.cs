@@ -52,16 +52,19 @@ namespace CMS.Domain.Models
         {
             DBFormField.DeleteChildren(m_FormField.Id);
 
-            foreach (string label in childrenTitle)
+            if (childrenTitle != null)
             {
-                if (label.Length > 0)
+                foreach (string label in childrenTitle)
                 {
-                    FormField temp = new FormField();
-                    temp.Label = label;
-                    temp.FieldType = m_FormField.FieldType;
-                    temp.ParentId = m_FormField.Id;
+                    if (label.Length > 0)
+                    {
+                        FormField temp = new FormField();
+                        temp.Label = label;
+                        temp.FieldType = m_FormField.FieldType;
+                        temp.ParentId = m_FormField.Id;
 
-                    DBFormField.Create(temp);
+                        DBFormField.Create(temp);
+                    }
                 }
             }
 
