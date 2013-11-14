@@ -70,5 +70,12 @@ namespace CMS.Domain.Models
             List<Category> m_Categories = DBBlogPost.getCategories();
             return m_Categories;
         }
+
+        public List<BlogPost> RetrieveAllByCategory(int Category)
+        {
+            List<BlogPost> m_BlogPosts = DBBlogPost.RetrieveAllByCategory(Category);
+
+            return m_BlogPosts;
+        }
     }
 }

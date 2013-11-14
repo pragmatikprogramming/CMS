@@ -28,8 +28,14 @@ namespace CMS.WebUI
 
             routes.MapRoute(
                 name: "DeleteFAQQuestion",
-                url: "{controller}/{action}/{faqid}/{id}",
-                defaults: new { controller = "FAQ", action = "Index", faqid = 0, id = UrlParameter.Optional }
+                url: "{controller}/{action}/{parentId}/{id}",
+                defaults: new { controller = "FAQ", action = "Index", parentId = 0, id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Three Values",
+                url: "{controller}/{action}/{parentId}/{id}/{value}",
+                defaults: new { controller = "Form", action = "Index", parentId = 0, id = 0, value = UrlParameter.Optional }
             );
         }
     }

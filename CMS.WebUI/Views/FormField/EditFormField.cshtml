@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Edit Form Field";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.m_Count = 0;
+}
+
+<div class="header">
+    <h1 class="page-title">Edit a Form Field</h1>
+</div>
+<div class="container-fluid">   
+<div class="row-fluid">  
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+    
+    <div class="formlabel">Field Type:</div>
+    <div class="formfield">
+    <select disabled="disabled">
+        <option value="">Select a field type</option>
+        @foreach (var fieldType in ViewBag.FieldTypes)
+        {
+            if (fieldType.Key == Model.FieldType)
+            {
+                <option value="@fieldType.Key" selected="selected">@fieldType.Value</option>
+            }
+            else
+            {
+                <option value="@fieldType.Key">@fieldType.Value</option>
+            }
+        }
+    </select>
+    </div>
+    <div class="clear">&nbsp;</div>
+    <form action="/FormField/EditFormField" method="post" id="formFieldEdit">
+        <div class="formlabel">Validation Type:</div>
+        <div class="formfield">
+            <select name="ValidationType">
+                <option value="0">-- select a validation type --</option>
+            @foreach(var valType in ViewBag.ValidationTypes)
+            {
+                if (Model.ValidationType == valType.Key)
+                {
+                    <option value="@valType.Key" selected="selected">@valType.Value</option>
+                }
+                else
+                {
+                    <option value="@valType.Key">@valType.Value</option>
+                }
+            }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+        <div id="myForm">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="FieldType" value="@Model.FieldType" />
+            <div class="formlabel">Label Text:</div>
+            <div class="formfield"><input type="text" class="input-xlarge" name="Label" value="@Model.Label"></div>
+            <div class="clear">&nbsp;</div>
+            @foreach (var m_option in Model.Children)
+            {
+                if (Model.FieldType == 3)
+                {
+                    <div class="formlabel">Checkbox Text:</div>
+                    <div class="formfield">
+                        <input type="text" class="input-xlarge" name="childrenTitle" value="@m_option.Label" />
+                        @if (ViewBag.m_Count == 0)
+                        {
+                            ViewBag.m_Count = 1;
+                            <a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/checkbox">Add more options</a>
+                        }
+                    </div>
+                }
+                else if (Model.FieldType == 4)
+                {
+                    <div class="formlabel">Radio Text:</div>
+                    <div class="formfield">
+                        <input type="text" class="input-xlarge" name="childrenTitle" value="@m_option.Label" />
+                        @if (ViewBag.m_Count == 0)
+                        {
+                            ViewBag.m_Count = 1;
+                            <a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/radio">Add more options</a>
+                        }
+                    </div>
+                }
+                else if (Model.FieldType == 5)
+                {
+                    <div class="formlabel">Option Text:</div>
+                    <div class="formfield">
+                        <input type="text" class="input-xlarge" name="childrenTitle" value="@m_option.Label" />
+                        @if (ViewBag.m_Count == 0)
+                        {
+                            ViewBag.m_Count = 1;
+                            <a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/select">Add more options</a>
+                        }
+                    </div>
+                }
+
+                <div class="clear">&nbsp;</div>
+            }
+            @if (ViewBag.m_Count == 0 && (Model.FieldType == 5 || Model.FieldType == 4 || Model.FieldType == 3))
+            {
+                <div class="formlabel">Option Text:</div>
+                <div class="formfield"><input type="text" class="input-xlarge" name="childrenTitle" value="" />&nbsp;&nbsp;<a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/select">Add more options</a></div>
+                <div class="clear">&nbsp;</div>
+            }                
+        </div>
+        <div style="line-height: 30px;">&nbsp;</div>
+        <div class="formlabel">&nbsp;</div>
+        <div class="formfield"><button form="formFieldEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+    </form>
+</div>
+

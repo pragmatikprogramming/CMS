@@ -63,74 +63,75 @@
   <!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
   <!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
   <!--[if (gt IE 9)|!(IE)]><!--> 
-  <body class=""> 
+<body class=""> 
   <!--<![endif]-->
     
     <div class="navbar">
         <div class="navbar-inner">
-                <ul class="nav pull-right">    
-                    <li id="fat-menu" class="dropdown">
-                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user"></i> @ViewBag.Name
-                            <i class="icon-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="">Logout</a></li>
-                        </ul>
-                    </li>
-                    
-                </ul>
-                <a class="brand" href="index.html"><!--<img src="~/Content/images/logo-tagline.png" width="149" height="20" alt="Logo">--></a>
-        </div>
-    </div>
+            <ul class="nav pull-right">    
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i> @ViewBag.Name
+                        <i class="icon-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="/Admin/Logout/">Logout</a></li>
+                    </ul>
+                </li>    
+            </ul>
+            <a class="brand" href="index.html"><!--<img src="~/Content/images/logo-tagline.png" width="149" height="20" alt="Logo">--></a>
+        </div><!-- end navbar-inner-->
+    </div><!-- end navbar -->
     
     <div class="sidebar-nav">
         <a href="/Admin" class="nav-header"><i class="icon-home"></i>Dashboard</a>
-       
         <a href="/Page" class="nav-header" ><i class="icon-book"></i>Pages</a>
-
         <a href="#blog-menu" class="nav-header" data-toggle="collapse"><i class="icon-bullhorn"></i>Blog</a>
-        <ul id="blog-menu" class="nav nav-list collapse">
-            <li ><a href="/BlogPost/">Blog Posts</a></li>
-            <li ><a href="/Category/">Categories</a></li>
-        </ul>
-
+            <ul id="blog-menu" class="nav nav-list collapse">
+                <li ><a href="/BlogPost/">Blog Posts</a></li>
+                <li ><a href="/Category/">Categories</a></li>
+            </ul>
         <a href="#users-menu" class="nav-header" data-toggle="collapse"><i class="icon-group"></i>Users</a>
-        <ul id="users-menu" class="nav nav-list collapse">
-            <li ><a href="/User/Add">Add User</a></li>
-            <li ><a href="/User/Manage">Manage Users</a></li>
-        </ul>
-        
-       
-
+            <ul id="users-menu" class="nav nav-list collapse">
+                <li ><a href="/User/Add">Add User</a></li>
+                <li ><a href="/User/Manage">Manage Users</a></li>
+            </ul>
         <a href="/Menu/" class="nav-header" ><i class="icon-sitemap"></i>Menus</a>
 	    <a href="#media-menu" class="nav-header" data-toggle="collapse"><i class="icon-picture"></i>Media</a>
-        <ul id="media-menu" class="nav nav-list collapse">
-            <li><a href="/Gallery">Image Gallery</a></li>
-            <li><a href="/Document">Document Repository</a></li>
-        </ul>
+            <ul id="media-menu" class="nav nav-list collapse">
+                <li><a href="/Gallery">Image Gallery</a></li>
+                <li><a href="/Document">Document Repository</a></li>
+            </ul>
         <a href="#extensions-menu" class="nav-header" data-toggle="collapse"><i class="icon-puzzle-piece"></i>Extensions</a>
-        <ul id="extensions-menu" class="nav nav-list collapse">
-            <li ><a href="/Calendar/">Calendar</a></li>
-            <li ><a href="/FAQ/">FAQ</a></li>
+            <ul id="extensions-menu" class="nav nav-list collapse">
+                <li ><a href="/Calendar/">Calendar</a></li>
+                <li ><a href="/FAQ/">FAQ</a></li>
+                <li><a href="#form-builder" data-toggle="collapse" >Form Builder</a>
+                    <ul id="form-builder" class="nave nave-list collapse">
+                        <li><a href="/FormField/">Form Fields</a></li>
+                        <li><a href="/Form/">Forms</a></li>
+                    </ul>
+                </li>
+            </ul>
+        <a href="#widgets-menu" class="nav-header" data-toggle="collapse"><i class="icon-gear"></i>Widgets</a>
+        <ul id="widgets-menu" class="nav nav-list collapse">
+            <li><a href="/HTMLWidget/">HTML Widgets</a></li>
         </ul>
         <a href="/Trash/" class="nav-header"><i class="icon-trash"></i>Recycle Bin</a>
         <a href="#" class="nav-header" ><i class="icon-question-sign"></i>Help</a>
-    </div>
-    
-
+    </div><!-- end sidebar-nav-->
     
     <div class="content">
+
         @RenderBody()                
-    </div>
     
-
-    <footer>
-        <hr>
-            <p class="pull-right">Privacy Policy</p>
-            <p>&copy; </p>
-    </footer>
-
+            <footer>
+                <hr>
+                <p class="pull-right">Privacy Policy</p>
+                <p>&copy; </p>
+            </footer>
+        </div><!-- end row-fluid inside of view -->
+    </div><!-- end content -->
 
     <script src="~/Content/bootstrap.js"></script>
     <script type="text/javascript">
@@ -138,8 +139,7 @@
         $(function () {
             $('.demo-cancel-click').click(function () { return false; });
         });
-    </script>
-    
+    </script> 
   </body>
 </html>
 

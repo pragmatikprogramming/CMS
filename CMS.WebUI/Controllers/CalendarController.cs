@@ -180,7 +180,7 @@ namespace CMS.WebUI.Controllers
             Event m_Event = EventRepository.RetrieveOne(id);
             ViewBag.Content = m_Event.Body;
 
-            return View("Interior");
+            return View("HomeInterior");
         }
 
         [CMSAuth]

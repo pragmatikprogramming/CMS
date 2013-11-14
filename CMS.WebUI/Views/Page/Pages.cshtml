@@ -17,6 +17,7 @@
 
 </script>
 <div class="container-fluid">
+    <div class="row-fluid">
     <div class="row-fluid">            
         <div class="btn-toolbar">
             <a href="/Page/AddPage/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-plus"></i> Add Page</button></a>
@@ -65,8 +66,8 @@
                             }
 
                         </td>
-                        <td><a href="/Page/OrderUp/@page.Id"><i class="icon-arrow-up" title="Preview" alt="Preview"></i></a></td>
-                        <td><a href="/Page/OrderDown/@page.Id"><i class="icon-arrow-down" title="Preview" alt="Preview"></i></a></td>
+                        <td><a href="/Page/OrderUp/@page.Id"><i class="icon-arrow-up" title="Sort Up" alt="Sort Up"></i></a></td>
+                        <td><a href="/Page/OrderDown/@page.Id"><i class="icon-arrow-down" title="Sort Down" alt="Sort Down"></i></a></td>
                         <td style="text-align: right;">
                             @if (page.LockedBy > 0 && page.LockedBy == ViewBag.m_SessionId)
                             {

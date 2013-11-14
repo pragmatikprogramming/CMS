@@ -139,5 +139,20 @@ namespace CMS.Domain.DataAccess
 
             return m_ParentId;
         }
+
+        public static void MoveDoc(int parentId, int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "UPDATE CMS_Documents SET parentId = @parentId WHERE id = @id";
+            SqlCommand updateDoc = new SqlCommand(queryString, conn);
+            updateDoc.Parameters.AddWithValue("parentId", parentId);
+            updateDoc.Parameters.AddWithValue("id", id);
+            updateDoc.ExecuteNonQuery();
+
+            conn.Close();
+
+        }
     }
 }

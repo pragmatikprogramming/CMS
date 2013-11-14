@@ -85,9 +85,9 @@ namespace CMS.Domain.DataAccess
             {
                 queryString = "SELECT * FROM CMS_Pages WHERE id = @id";
             }
-            else if (controller == "Home")
+            else if (controller == "Home" || controller == "")
             {
-                queryString = "SELECT * FROM CMS_Pages WHERE pageId = @id AND pageWorkFlowState = 2 ORDER BY publishDate DESC";
+                queryString = "SELECT * FROM CMS_Pages WHERE pageId = @id AND pageWorkFlowState = 2 ORDER BY id DESC";
             }
             else
             {

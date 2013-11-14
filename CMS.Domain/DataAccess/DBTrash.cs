@@ -137,6 +137,35 @@ namespace CMS.Domain.DataAccess
             deleteTrash.ExecuteNonQuery();
 
             conn.Close();
+
+            if (m_Trash.ObjectTable == "CMS_Forms")
+            {
+                conn.Open();
+
+                queryString = "DELETE FROM CMS_FormToFormFields WHERE formId = @formId";
+                SqlCommand deleteForm = new SqlCommand(queryString, conn);
+                deleteForm.Parameters.AddWithValue("formId", m_Trash.ObjectId);
+                deleteForm.ExecuteNonQuery();
+
+                conn.Close();
+            }
+
+            if (m_Trash.ObjectTable == "CMS_FormFields")
+            {
+                conn.Open();
+
+                queryString = "DELETE FROM CMS_FormToFormFields WHERE formFieldId = @id";
+                SqlCommand deleteFormField = new SqlCommand(queryString, conn);
+                deleteFormField.Parameters.AddWithValue("id", m_Trash.ObjectId);
+                deleteFormField.ExecuteNonQuery();
+
+                queryString = "DELETE FROM CMS_FormFields WHERE parentId = @id";
+                SqlCommand deleteChildren = new SqlCommand(queryString, conn);
+                deleteChildren.Parameters.AddWithValue("id", m_Trash.ObjectId);
+                deleteChildren.ExecuteNonQuery();
+
+                conn.Close();
+            }
         }
     }
 }

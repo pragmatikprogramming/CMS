@@ -27,7 +27,7 @@ namespace CMS.WebUI.Infrastructure
             }
             else
             {
-                m_BreadCrumb = "<a href='/Page/Index/" + m_Page.ParentId.ToString() +"'>" + getBreadCrumb(m_Page.ParentId) + "</a>" + " > " + m_Page.NavigationName;
+                m_BreadCrumb = getBreadCrumb(m_Page.ParentId) + " > " +  m_Page.NavigationName;
                 m_BreadCrumb = "<a href='/Page/Index/0'>Root > </a>" + m_BreadCrumb;
             }
 
@@ -41,12 +41,12 @@ namespace CMS.WebUI.Infrastructure
 
             if (m_Page.ParentId == 0)
             {
-                return m_Page.NavigationName;
+                return "<a href='/Page/Index/" + m_Page.PageID + "'>" + m_Page.NavigationName + "</a>";
             }
             else
             {
-                m_BreadCrumb = "<a href='/Page/Index/" + parentId.ToString() + "'>" + getBreadCrumb(m_Page.ParentId) + "</a>";
-                m_BreadCrumb += " > <a href='/Page/Index/" + parentId.ToString() + "'>" + m_Page.NavigationName + "</a>";
+                m_BreadCrumb = "<a href='/Page/Index/" + parentId.ToString() + "'>" + m_Page.NavigationName + "</a>";
+                m_BreadCrumb = getBreadCrumb(m_Page.ParentId) + " > " + m_BreadCrumb;
             }
 
             return m_BreadCrumb;
@@ -103,6 +103,49 @@ namespace CMS.WebUI.Infrastructure
             Menu += "</ul>";
 
             return Menu;
+        }
+
+        public static MvcHtmlString FolderBreadCrumb(this HtmlHelper html, int parentId)
+        {
+            string path = "";
+
+            Folder m_Folder = new Folder();
+            m_Folder = DBFolder.RetrieveOne(parentId);
+
+            if (parentId == 0)
+            {
+                path = "Root";
+            }
+            else if (m_Folder.ParentId == 0)
+            {
+                path = "<a href='/Document/Index/0' >Root</a> > " + m_Folder.Name;
+            }
+            else
+            {
+                path = m_Folder.Name; 
+                path = "<a href='/Document/Index/0' >Root</a> > " + getFolderBreadCrumb(m_Folder.ParentId) + " > " + path;
+            }
+
+            MvcHtmlString m_String = new MvcHtmlString(path);
+            return m_String;
+        }
+
+        private static string getFolderBreadCrumb(int parentId)
+        {
+            string m_BreadCrumb = "";
+            Folder m_Folder = DBFolder.RetrieveOne(parentId);
+
+            if (m_Folder.ParentId == 0)
+            {
+                return "<a href='/Document/Index/" + m_Folder.Id + "'>" + m_Folder.Name + "</a>";
+            }
+            else
+            {
+                m_BreadCrumb = "<a href='/Document/Index/" + m_Folder.Id + "'>" + m_Folder.Name + "</a>";
+                m_BreadCrumb = getFolderBreadCrumb(m_Folder.ParentId) + " > " + m_BreadCrumb;
+            }
+
+            return m_BreadCrumb;
         }
     }
 }

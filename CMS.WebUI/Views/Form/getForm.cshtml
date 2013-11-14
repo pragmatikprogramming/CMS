@@ -1,0 +1,54 @@
+﻿<style type="text/css">
+    .formlabel {
+    width: 30%;
+    text-align: right;
+    float: left;
+}
+
+.formfield {
+    text-align: left;
+    padding-left: 15px;
+    float: left;
+}
+
+</style>
+
+<form action="" method="post">
+    @foreach (var formField in Model.FormFields)
+    {
+        <div class="formlabel">
+            @if(formField.IsRequired == 1)
+            {
+                <font style="color:red;">*</font>
+            }
+                
+            @formField.Label:
+
+        </div>
+        
+        if (formField.FieldType == 5)
+        {
+            <div class="formfield">
+                <select name="@formField.Label">
+                    @foreach(var child in formField.Children)
+                    {
+                        <option value="@child.Label">@child.Label</option>   
+                    }
+                </select>
+            </div>
+        }
+        else if (formField.FieldType == 2)
+        {
+            <div class="formfield"><textarea rows="5" cols="30" name="@formField.Label" id="@formField.Label"></textarea></div>
+        }
+        else if(formField.FieldType == 7)
+        {
+            <div class="formfield"><input type="submit" value="@formField.Label" /></div>
+        }
+        else
+        {
+            <div class="formfield"><input type="@formField.FieldType" class="input-xlarge" name="@formField.Label" value=""></div>
+            <div class="clear">&nbsp;</div>
+        }
+    }
+</form>

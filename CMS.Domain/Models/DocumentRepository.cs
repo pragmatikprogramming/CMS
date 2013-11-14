@@ -96,5 +96,38 @@ namespace CMS.Domain.Models
 
             return true;
         }
+
+        public void MoveDoc(int parentId, int id)
+        {
+            string oldPath = "";
+
+            Document m_Document = DBDocument.RetrieveOne(id);
+
+            if (m_Document.ParentId != 0)
+            {
+                oldPath = DBFolder.FolderPath(m_Document.ParentId);
+                oldPath += "\\" + m_Document.Name + "." + m_Document.FileType;
+            }
+            else
+            {
+                oldPath = m_Document.Name + "." + m_Document.FileType;
+            }
+
+            string newPath = "";
+
+            if (parentId != 0)
+            {
+                newPath = DBFolder.FolderPath(parentId);
+                newPath += "\\" + m_Document.Name + "." + m_Document.FileType;
+            }
+            else
+            {
+                newPath = m_Document.Name + "." + m_Document.FileType;
+            }
+
+            DBDocument.MoveDoc(parentId, id);
+
+            File.Move(ConfigurationManager.AppSettings["Documents"] + "\\" + oldPath, ConfigurationManager.AppSettings["Documents"] + "\\" + newPath);
+        }
     }
 }

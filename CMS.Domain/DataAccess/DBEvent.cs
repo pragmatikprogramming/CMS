@@ -45,6 +45,7 @@ namespace CMS.Domain.DataAccess
                 m_Event.Body = myEvent.GetString(6);
                 m_Event.PageWorkFlowState = myEvent.GetInt32(7);
                 m_Event.LockedBy = myEvent.GetInt32(8);
+                m_Event.FeaturedEvent = myEvent.GetInt32(11);
 
                 if(m_Event.EventStartDate.Hour >= 12)
                 {
@@ -97,7 +98,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_Events SET contentGroup = @contentGroup, eventTitle = @eventTitle, eventStartDate = @eventStartDate, eventEndDate = @eventEndDate, branch = @branch, body = @body, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate WHERE id = @EventID";
+            string queryString = "UPDATE CMS_Events SET contentGroup = @contentGroup, eventTitle = @eventTitle, eventStartDate = @eventStartDate, eventEndDate = @eventEndDate, branch = @branch, body = @body, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, featuredEvent = @featuredEvent WHERE id = @EventID";
             SqlCommand updateEvent = new SqlCommand(queryString, conn);
 
             string myStartTime = string.Empty;
@@ -122,6 +123,7 @@ namespace CMS.Domain.DataAccess
             updateEvent.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
             updateEvent.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
             updateEvent.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
+            updateEvent.Parameters.AddWithValue("featuredEvent", m_Event.FeaturedEvent);
 
             updateEvent.ExecuteNonQuery();
 
@@ -160,7 +162,7 @@ namespace CMS.Domain.DataAccess
             conn.Open();
 
             string queryString;
-            queryString = "INSERT INTO CMS_Events(contentGroup, eventTitle, eventStartDate, eventEndDate, branch, body, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@contentGroup, @eventTitle, @eventStartDate, @eventEndDate, @branch, @body, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
+            queryString = "INSERT INTO CMS_Events(contentGroup, eventTitle, eventStartDate, eventEndDate, branch, body, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, featuredEvent) VALUES(@contentGroup, @eventTitle, @eventStartDate, @eventEndDate, @branch, @body, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @featuredEvent)";
             SqlCommand createEvent = new SqlCommand(queryString, conn);
 
             string myStartTime = string.Empty;
@@ -183,6 +185,7 @@ namespace CMS.Domain.DataAccess
             createEvent.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
             createEvent.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
             createEvent.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
+            createEvent.Parameters.AddWithValue("featuredEvent", m_Event.FeaturedEvent);
             
 
             createEvent.ExecuteNonQuery();

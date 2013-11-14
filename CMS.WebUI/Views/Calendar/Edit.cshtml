@@ -24,7 +24,8 @@
 <div class="header">
     <h1 class="page-title">Edit Calendar Event</h1>
 </div>
-
+<div class="container-fluid">   
+<div class="row-fluid">  
 <div class="formcontainer">
     <div class="btn-toolbar">
         <button class="btn btn-primary" form="eventEdit"><i class="icon-save"></i> Save</button>
@@ -253,6 +254,16 @@
             </script>
        
         <div style="line-height: 30px;">&nbsp;</div>
+
+        <div class="formlabel">Featured Event:</div>
+        <div class="formfield"><input type="checkbox" name="FeaturedEvent" id="FeaturedEvent" value="1" @if(Model.FeaturedEvent == 1)
+                                                                                                        { 
+                                                                                                            @:checked="checked" 
+                                                                                                        } /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+
         <button form="eventEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
     </form>
 </div>

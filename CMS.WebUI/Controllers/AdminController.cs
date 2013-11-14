@@ -28,6 +28,13 @@ namespace CMS.WebUI.Controllers
             return View("Login");
         }
 
+        [CMSAuth]
+        public void LogOut()
+        {
+            Session.Clear();
+            Response.Redirect("/Admin/Login");
+        }
+
         [HttpPost]
         public void Process(string userName, string passWord)
         {

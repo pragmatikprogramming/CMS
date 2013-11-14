@@ -1,0 +1,37 @@
+﻿@foreach (var blog in Model)
+                {
+                    <tr>
+                        <td><a href="/BlogPost/Index/@blog.BlogId">@blog.Title</a></td>
+                        <td>@blog.LockedByName</td>
+                        <td>
+                            @if(blog.PageWorkFlowState == 1)
+                            {
+                                @:Unpublished
+                            }
+                            else if(blog.PageWorkFlowState ==2)
+                            {
+                                @:Published
+                            }
+                            else if(blog.PageWorkFlowState == 3)
+                            {
+                                @:Expired
+                            }
+
+                        </td>
+                        <td style="text-align: right;">
+                            @if (blog.LockedBy > 0 && blog.LockedBy == ViewBag.m_SessionId)
+                            {
+                                <a href="/BlogPost/BlogUnlock/@blog.BlogId"><i class="icon-lock" title="Unlock" alt="Unlock"></i></a>
+                            }
+                        </td>
+                        <td>
+                            @if(blog.PageWorkFlowState == 1)
+                            {
+                                <a href="/BlogPost/BlogPublish/@blog.Id"><i class="icon-book" title="Publish" alt="Publish"></i></a>
+                            }
+                        </td>
+                        <td><a href="/BlogPost/BlogPreview/@blog.Id" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
+                        <td><a href="/BlogPost/EditBlogPost/@blog.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+                        <td><a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@blog.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>
+                    </tr>   
+                }

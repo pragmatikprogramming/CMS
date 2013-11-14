@@ -34,6 +34,24 @@ namespace CMS.WebUI.Controllers
 
         [CMSAuth]
         [HttpGet]
+        public ActionResult MoveDoc(int parentId, int id)
+        {
+            ViewBag.ParentId = parentId;
+            ViewBag.DocId = id;
+            List<Folder> m_Folders = FolderRepository.RetrieveAll(parentId);
+            return View("MoveDoc", m_Folders);
+        }
+
+        [CMSAuth]
+        [HttpGet]
+        public ActionResult MoveDocComplete(int parentId, int id)
+        {
+            DocumentRepository.MoveDoc(parentId, id);
+            return RedirectToAction("Index", "Document", new { id = parentId });
+        }
+
+        [CMSAuth]
+        [HttpGet]
         public ActionResult AddFolder(int id = 0)
         {
 

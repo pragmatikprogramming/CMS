@@ -15,8 +15,8 @@
     }
 
 </script>
-<div class="container-fluid">
-    <div class="row-fluid">            
+<div class="container-fluid">   
+<div class="row-fluid">         
         <div class="btn-toolbar">
             <a href="/BlogPost/AddBlogPost"><button class="btn btn-primary"><i class="icon-plus"></i> Add Blog Post</button></a>
             <!--<a href="/BlogPost/AddBlogPost/"><img src="~/Content/images/addDocument.png" />Add Blog Post</a>-->
@@ -24,6 +24,30 @@
             </div>
         </div>
         <div style="color: red">@Html.ValidationSummary()</div>
+            <table>
+                <thead>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td style="padding-left: 10px;">&nbsp;</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: top;">Filter By: </td>
+                        <td style="padding-left: 10px;">
+                            <form action="/BlogPost/getCategoryFilter" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#MyFilter" method="post">
+                                <select name="Categories" onchange="$(this.form).submit();">
+                                    <option value="">Select a filter</option>
+                                    @foreach (var cat in ViewBag.Categories)
+                                    {
+                                        <option value="@cat.Id">@cat.CategoryTitle</option>
+                                    }
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         <div class="well">
             <table class="table">
                 <thead>
@@ -38,7 +62,7 @@
                         <th style="width: 15px; text-align: right;"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="MyFilter">
                 @foreach (var blog in Model)
                 {
                     <tr>
@@ -94,5 +118,5 @@
             </div>
         </div>
     </div>
-</div>
+
 

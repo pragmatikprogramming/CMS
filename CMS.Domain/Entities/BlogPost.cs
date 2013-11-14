@@ -12,6 +12,7 @@ namespace CMS.Domain.Entities
         private int blogId;
         private string title;
         private DateTime publishDate;
+        private DateTime expirationDate;
         private int contentGroup;
         private List<int> categories;
         private string content;
@@ -73,6 +74,18 @@ namespace CMS.Domain.Entities
             }
         }
 
+        public DateTime ExpirationDate
+        {
+            get 
+            { 
+                return expirationDate; 
+            }
+            set 
+            { 
+                expirationDate = value; 
+            }
+        }
+
         [Required(ErrorMessage = "Please Select a Content Group")]
         public int ContentGroup
         {
@@ -99,6 +112,7 @@ namespace CMS.Domain.Entities
             }
         }
 
+        [Required(ErrorMessage = "Please Enter Content to be displayed")]
         public string Content
         {
             get 

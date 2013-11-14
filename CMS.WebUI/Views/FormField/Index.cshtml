@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CMS.Domain.Entities.FormField>
+@{
+    ViewBag.Title = "Form Fields";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h2>Form Fields</h2>
+</div>
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id) {
+        myID = id;
+    }
+
+</script>
+<div class="container-fluid">
+    <div class="row-fluid">
+    <div class="row-fluid">            
+        <div class="btn-toolbar">
+            <a href="/FormField/AddFormField/"><button class="btn btn-primary"><i class="icon-plus"></i> Add Form Field</button></a>
+
+            <div class="btn-group">
+                
+            </div>
+        </div>
+        <div style="color: red">@Html.ValidationSummary()</div>
+        <div class="well">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Field Type</th>
+                        <th style="width: 13px; text-align: right;"></th>
+                        <th style="width: 13px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var formField in Model)
+                {
+                    <tr>
+                        <td>@formField.Label</td>
+                        <td>@formField.FieldTypeText</td>
+                        <td><a href="/FormField/EditFormField/@formField.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
+                        <td><a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@formField.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>
+                    </tr>   
+                }
+                </tbody>
+            </table>
+        </div>
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="myModalLabel">Delete Confirmation</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the FormField?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/FormField/FormFieldDelete/' + myID;">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+

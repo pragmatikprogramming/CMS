@@ -155,3 +155,21 @@
     float: left;
 }
 
+.formdesigner {
+    width: 75%;
+}
+
+.fdleftcol {
+    width: 50%;
+    float: left;
+}
+
+.fdrightcol {
+    width: 50%;
+    float: left;
+}
+
+#sortable1 {
+    background-color: grey;
+}
+

@@ -20,5 +20,6 @@ namespace CMS.Domain.Abstract
         void unlockBlogPost(int id);
         void publishBlogPost(int id);
         List<Category> getCategories();
+        List<BlogPost> RetrieveAllByCategory(int Category);
     }
 }

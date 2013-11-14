@@ -22,6 +22,7 @@ namespace CMS.WebUI.Controllers
         [CMSAuth]
         public ActionResult Index()
         {
+            ViewBag.Categories = BlogPostRepository.getCategories();
             List<BlogPost> m_BlogPosts = BlogPostRepository.RetrieveAll();
             ViewBag.m_SessionId = (int)System.Web.HttpContext.Current.Session["uid"];
             return View("Index", m_BlogPosts);
@@ -34,6 +35,7 @@ namespace CMS.WebUI.Controllers
             ViewBag.Categories = BlogPostRepository.getCategories();
             ViewBag.myContentGroups = Utility.ContentGroups();
             BlogPost m_BlogPost = new BlogPost();
+
             return View("AddBlogPost", m_BlogPost);
         }
 
@@ -101,6 +103,8 @@ namespace CMS.WebUI.Controllers
             return RedirectToAction("Index", "BlogPost");
         }
 
+        [CMSAuth]
+        [HttpGet]
         public ActionResult BlogUnlock(int id)
         {
             //id is actually blogId
@@ -109,6 +113,8 @@ namespace CMS.WebUI.Controllers
             return RedirectToAction("Index", "BlogPost");
         }
 
+        [CMSAuth]
+        [HttpGet]
         public ActionResult BlogPublish(int id)
         {
             BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(id);
@@ -117,12 +123,23 @@ namespace CMS.WebUI.Controllers
             return RedirectToAction("Index", "BlogPost");
         }
 
+        [CMSAuth]
+        [HttpGet]
         public ActionResult BlogPreview(int id)
         {
             BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(id);
             ViewBag.Content = m_BlogPost.Content;
 
-            return View("Interior", m_BlogPost); 
+            return View("HomeInterior", m_BlogPost); 
+        }
+
+        [CMSAuth]
+        public ActionResult getCategoryFilter(int Categories)
+        {
+            List<BlogPost> m_BlogPosts = BlogPostRepository.RetrieveAllByCategory(Categories);
+            ViewBag.m_SessionId = (int)System.Web.HttpContext.Current.Session["uid"];
+
+            return PartialView("getCategoryFilter", m_BlogPosts);
         }
     }
 }

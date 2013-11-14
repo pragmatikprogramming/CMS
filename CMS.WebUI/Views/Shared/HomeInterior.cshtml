@@ -5,7 +5,14 @@
 
 <div class="left_part">
     <div style="margin-top: 30px;">
-        @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Content)) 
+        @if (ViewBag.PageType == "Form")
+        {
+            @Html.Action("getForm", new { id = ViewBag.id})
+        }
+        else
+        {
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Content)) 
+        }
     </div>
 </div><!--end left_part-->
             

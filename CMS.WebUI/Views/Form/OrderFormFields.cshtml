@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CMS.Domain.Entities.FormField>
+@{
+    ViewBag.Title = "Order Form Fields";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h2>Order Form Fields</h2>
+</div>
+<script type="text/javascript">
+    var myID = 0;
+
+    function doWork(id) {
+        myID = id;
+    }
+
+</script>
+<div class="container-fluid">
+    <div class="row-fluid">
+    <div class="row-fluid">            
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <a href="/Form/"><button class="btn btn-primary"><i class="icon-plus"></i> Return to Forms</button></a>
+            </div>
+        </div>
+        <div style="color: red">@Html.ValidationSummary()</div>
+        <div class="well">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Form Field Name</th>
+                        <th style="width: 13px; text-align: right;"></th>
+                        <th style="width: 13px; text-align: right;"></th>
+                        <th style="width: 13px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var form in Model)
+                {
+                    <tr>
+                        <td>@form.Label</td>
+                        <td>
+                            @if(form.IsRequired == 1)
+                            {
+                                <a href="/Form/ToggleRequired/@ViewBag.FormId/@form.Id/0" style="color: red;"><i class="icon-warning-sign" title="Required" alt="Required"></i></a>
+                            }
+                            else
+                            {
+                                <a href="/Form/ToggleRequired/@ViewBag.FormId/@form.Id/1" style="color: green;"><i class="icon-warning-sign" title="Required" alt="Required"></i></a>
+                            }
+                        </td>
+                        <td><a href="/Form/SortUp/@ViewBag.FormId/@form.Id"><i class="icon-arrow-up" title="Order Form Fields" alt="Sort Up"></i></a></td>
+                        <td><a href="/Form/SortDown/@ViewBag.FormId/@form.Id"><i class="icon-arrow-down" title="Edit" alt="Sort Down"></i></a></td>
+                    </tr>   
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

@@ -25,6 +25,9 @@ namespace CMS.Domain.Entities
         private int lockedBy;
         private int lastModifiedBy;
         private DateTime lastModifiedDate;
+        private int featuredEvent;
+
+
 
 
         public int EventID
@@ -234,6 +237,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 lastModifiedDate = value; 
+            }
+        }
+
+        public int FeaturedEvent
+        {
+            get 
+            { 
+                return featuredEvent; 
+            }
+            set 
+            { 
+                featuredEvent = value; 
             }
         }
     }

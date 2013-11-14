@@ -15,5 +15,6 @@ namespace CMS.Domain.Abstract
         List<Document> RetrieveAll(int parentId);
         void Update(Document m_Document, string OldName, HttpPostedFileBase fileUpload);
         bool Delete(int Id);
+        void MoveDoc(int parentId, int id);
     }
 }

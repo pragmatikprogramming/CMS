@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Add Form";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Count = 0;
+}
+
+<style>
+  #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 143px;}
+  #sortable1 li, #sortable2 li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+  </style>
+  <script>
+      $(function () {
+          $("ul.droptrue").sortable({
+              connectWith: "ul"
+          });
+
+          $("ul.dropfalse").sortable({
+              connectWith: "ul",
+              dropOnEmpty: false
+          });
+
+          $("#sortable1, #sortable2").disableSelection();
+      });
+  </script>
+
+<div class="header">
+    <h1 class="page-title">Add a Form</h1>
+</div>
+<div class="container-fluid">   
+<div class="row-fluid">  
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div class="formlabel">&nbsp;</div>
+    <div class="formfield" style="color: red">@Html.ValidationSummary()</div>
+    <div class="clear">&nbsp;</div>
+
+    <form action="/Form/AddForm" method="post" id="formAdd">
+
+        <div class="formlabel">Form Name:</div>
+        <div class="formfield"><input type="text" class="input-xlarge" name="FormName" value="@Model.FormName"></div>
+        <div class="clear">&nbsp;</div>
+          
+        <div class="formlabel">Email:</div>
+        <div class="formfield"><input type="text" class="input-xlarge" name="SubmissionEmail" value="@Model.SubmissionEmail" /></div>      
+        <div class="clear">&nbsp;</div>
+
+
+        <div class="formlabel">Fields:</div>
+        <div class="formfield">
+            <table>
+                <tbody>
+            @foreach (var formField in ViewBag.FormFields)
+            {
+                if (ViewBag.Count % 4 == 0)
+                {
+                    @:<tr>
+                }
+
+                <td style="width: 100px; text-align: right; padding-right: 10px;">@formField.Label</td>
+                @:<td style="width: 25px; text-align: left"><input type="checkbox" name="MyFormFields" id="MyFormFields" value="@formField.Id"/></td>
+                
+                ViewBag.Count = ViewBag.Count + 1;
+                
+                if (ViewBag.Count % 4 == 0 && ViewBag.Count != 0)
+                {
+                    @:</tr>
+                }
+
+                
+            }
+                @if(ViewBag.Count % 4 != 0)
+                {
+                    for(var i = ViewBag.Count; i % 4 > 0; i++)
+                    {
+                        @:<td>&nbsp;</td><td>&nbsp;</td>
+                    }
+                    @:</tr>
+                }    
+                </tbody>
+            </table>
+        </div>
+        <div class="clear">&nbsp;</div>
+       
+        <div style="line-height: 30px;">&nbsp;</div>
+        <div class="formlabel">&nbsp;</div>
+        <div class="formfield"><button form="formAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+    </form>
+</div>

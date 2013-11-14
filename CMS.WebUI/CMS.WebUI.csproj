@@ -131,8 +131,11 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
+    <Compile Include="Controllers\FormFieldController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HTMLWidgetController.cs" />
     <Compile Include="Controllers\JSONController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PageController.cs" />
@@ -2414,6 +2417,21 @@
     <Content Include="Views\BlogPost\AddBlogPost.cshtml" />
     <Content Include="Views\BlogPost\EditBlogPost.cshtml" />
     <Content Include="Views\Menu\getLinkUrl.cshtml" />
+    <Content Include="Views\Document\MoveDoc.cshtml" />
+    <Content Include="Views\BlogPost\getCategoryFilter.cshtml" />
+    <Content Include="Views\FormField\Index.cshtml" />
+    <Content Include="Views\FormField\AddFormField.cshtml" />
+    <Content Include="Views\FormField\UpdateForm.cshtml" />
+    <Content Include="Views\FormField\AddOption.cshtml" />
+    <Content Include="Views\FormField\EditFormField.cshtml" />
+    <Content Include="Views\Form\Index.cshtml" />
+    <Content Include="Views\Form\AddForm.cshtml" />
+    <Content Include="Views\Form\EditForm.cshtml" />
+    <Content Include="Views\Form\OrderFormFields.cshtml" />
+    <Content Include="Views\Form\getForm.cshtml" />
+    <Content Include="Views\HTMLWidget\Index.cshtml" />
+    <Content Include="Views\HTMLWidget\WidgetAdd.cshtml" />
+    <Content Include="Views\HTMLWidget\WidgetEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

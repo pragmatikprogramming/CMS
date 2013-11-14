@@ -7,6 +7,10 @@
     $(function () {
         $("#PublishDate").datepicker();
     });
+
+    $(function () {
+        $("#ExpirationDate").datepicker();
+    });
 </script>
 
 
@@ -14,6 +18,8 @@
     <h1 class="page-title">Create Blog Post</h1>
 </div>
 
+<div class="container-fluid">   
+<div class="row-fluid">  
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
@@ -41,7 +47,11 @@
         <div class="clear">&nbsp;</div>
         
         <div class="formlabel">Publish Date:</div>
-        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" @Model.PublishDate/></div>
+        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="@if(Model.PublishDate.Year != 0001 ){ @Model.PublishDate }" /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Expiration Date:</div>
+        <div class="formfield"><input type="text" name="ExpirationDate" id="ExpirationDate" readonly="readonly" value="@if(Model.PublishDate.Year != 0001){ @Model.ExpirationDate }" /></div>
         <div class="clear">&nbsp;</div>
 
         <textarea name="Content" id="Content" style="width: 80%">@Model.Content</textarea>

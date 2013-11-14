@@ -15,7 +15,8 @@
     }
 
 </script>
-<div class="container-fluid">
+<div class="container-fluid">  
+<div class="row-fluid">  
     <div class="row-fluid">            
         <div class="btn-toolbar">
             <div class="btn-group">
@@ -46,7 +47,7 @@
                             }
                             else if (trash.ObjectType == "Calendar")
                             {
-                                <a href="/Calendar/EventPreview" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a>
+                                <a href="/Calendar/EventPreview/@trash.ObjectId" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a>
                             }
                             <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@trash.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a>
                         </td>

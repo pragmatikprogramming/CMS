@@ -128,7 +128,10 @@
     <Compile Include="Abstract\IEventRepository.cs" />
     <Compile Include="Abstract\IFAQRepository.cs" />
     <Compile Include="Abstract\IFolderRepository.cs" />
+    <Compile Include="Abstract\IFormFieldRepository.cs" />
+    <Compile Include="Abstract\IFormRepository.cs" />
     <Compile Include="Abstract\IGalleryRepository.cs" />
+    <Compile Include="Abstract\IHTMLWidgetRepository.cs" />
     <Compile Include="Abstract\IImageRepository.cs" />
     <Compile Include="Abstract\IJSONRepository.cs" />
     <Compile Include="Abstract\IMenuItemRepository.cs" />
@@ -147,7 +150,10 @@
     <Compile Include="DataAccess\DBFolder.cs" />
     <Compile Include="DataAccess\DBEvent.cs" />
     <Compile Include="DataAccess\DBFAQ.cs" />
+    <Compile Include="DataAccess\DBForm.cs" />
+    <Compile Include="DataAccess\DBFormField.cs" />
     <Compile Include="DataAccess\DBGallery.cs" />
+    <Compile Include="DataAccess\DBHTMLWidget.cs" />
     <Compile Include="DataAccess\DBImage.cs" />
     <Compile Include="DataAccess\DBJSON.cs" />
     <Compile Include="DataAccess\DBMenu.cs" />
@@ -165,7 +171,10 @@
     <Compile Include="Entities\FAQ.cs" />
     <Compile Include="Entities\FAQQuestions.cs" />
     <Compile Include="Entities\Folder.cs" />
+    <Compile Include="Entities\Form.cs" />
+    <Compile Include="Entities\FormField.cs" />
     <Compile Include="Entities\Gallery.cs" />
+    <Compile Include="Entities\HTMLWidget.cs" />
     <Compile Include="Entities\Image.cs" />
     <Compile Include="Entities\JSONImages.cs" />
     <Compile Include="Entities\Menu.cs" />
@@ -190,7 +199,10 @@
     <Compile Include="Models\EventRepository.cs" />
     <Compile Include="Models\FAQRepository.cs" />
     <Compile Include="Models\FolderRepository.cs" />
+    <Compile Include="Models\FormFieldRepository.cs" />
+    <Compile Include="Models\FormRepository.cs" />
     <Compile Include="Models\GalleryRepository.cs" />
+    <Compile Include="Models\HTMLWidgetRepository.cs" />
     <Compile Include="Models\ImageRepository.cs" />
     <Compile Include="Models\JSONRepository.cs" />
     <Compile Include="Models\MenuItemRepository.cs" />

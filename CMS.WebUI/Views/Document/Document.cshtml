@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<CMS.Domain.Entities.Folder>
-
+@using CMS.WebUI.Infrastructure
 @{
     ViewBag.Title = "Admin - Manage Documents";
     ViewBag.Name = HttpContext.Current.Session["Name"];
@@ -18,7 +18,8 @@
     }
 
 </script>
-<div class="container-fluid">
+<div class="container-fluid">  
+<div class="row-fluid">  
     <div class="row-fluid">            
         <div class="btn-toolbar">
             <!--<a href="/Document/AddFolder/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-plus"></i> New Folder</button></a>&nbsp;&nbsp;&nbsp;-->
@@ -27,13 +28,14 @@
             </div>
         </div>
         <div style="color: red">@Html.ValidationSummary()</div>
+        @Html.FolderBreadCrumb((Int32)ViewBag.ParentId)
         <div class="well">
             <table class="table">
                 <thead>
                     <tr>
                         <th style="width: 30px;"></th>
                         <th>Folder Name</th>
-                        <th style="width: 36px;"></th>
+                        <th style="width: 45px;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,15 +59,16 @@
                             }
                             else if(m_Document.FileType == "xls" || m_Document.FileType == "xlsx")
                             {
-                                @:<img src="/Content/images/excelIcon.jpg" title="Excel Document" alt="Word Document" />
+                                @:<img src="/Content/images/excelIcon.jpg" title="Excel Document" alt="Excel Document" />
                             }   
-                            else if(m_Document.FileType == "pdf")
+                            else if(m_Document.FileType == "pdf" || m_Document.FileType == "PDF")
                             {
-                                @:<img src="/Content/images/pdfIcon.jpg" title="PDF Document" alt="Word Document" />
+                                @:<img src="/Content/images/pdfIcon.jpg" title="PDF Document" alt="PDF Document" />
                             }
                         </td>
                         <td>@m_Document.Name</td>
                         <td>
+                            <a href="/Document/MoveDoc/0/@m_Document.Id"><i class="icon-move" title="Move Document"></i></a>
                             <a href="/Document/EditDocument/@m_Document.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a>
                             <a href="#myModal" role="button" data-toggle="modal" id="" onclick="doWork(@m_Document.Id, 'Document');"><i class="icon-remove" title="Delete" alt="Delete"></i></a>
                         </td>

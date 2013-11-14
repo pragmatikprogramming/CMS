@@ -1,0 +1,40 @@
+﻿@if (ViewBag.FieldType == 1 || ViewBag.FieldType == 2 || ViewBag.FieldType == 6 || ViewBag.FieldType == 7)
+{
+    <div class="formlabel">Label Text:</div>
+    <div class="formfield"><input type="text" class="input-xlarge" name="Label" value=""></div>
+    <div class="clear">&nbsp;</div>
+    <input type="hidden" name="FieldType" value="@ViewBag.FieldType" />
+}
+else if(ViewBag.FieldType == 3)
+{
+    <input type="hidden" name="FieldType" value="@ViewBag.FieldType" />
+    <div class="formlabel">Label Text:</div>
+    <div class="formfield"><input type="text" class="input-xlarge" name="Label" value=""></div>
+    <div class="clear">&nbsp;</div>
+    
+    <div class="formlabel">Checkbox Text:</div>
+    <div class="formfield"><input type="text" class="input-xlarge" name="childrenTitle" value="" />&nbsp;&nbsp<a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/checkbox">Add more options</a></div>
+    <div class="clear">&nbsp;</div> 
+}
+else if(ViewBag.FieldType == 4)
+{
+    <input type="hidden" name="FieldType" value="@ViewBag.FieldType" />
+    <div class="formlabel">Label Text:</div>
+    <div class="formfield"><input type="text" class="input-xlarge" name="Label" value=""></div>
+    <div class="clear">&nbsp;</div>
+    
+    <div class="formlabel">Radio Text:</div>
+    <div class="formfield"><input type="text" class="input-xlarge" name="childrenTitle" value="" />&nbsp;&nbsp<a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/radio">Add more options</a></div>
+    <div class="clear">&nbsp;</div>
+}
+else if (ViewBag.FieldType == 5)
+{
+    <input type="hidden" name="FieldType" value="@ViewBag.FieldType" />
+    <div class="formlabel">Label Text:</div>
+    <div class="formfield"><input type="text" class="input-xlarge" name="Label" value=""></div>
+    <div class="clear">&nbsp;</div>
+    
+    <div class="formlabel">Option Text:</div>
+    <div class="formfield"><input type="text" class="input-xlarge" name="childrenTitle" value="" />&nbsp;&nbsp<a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/select">Add more options</a></div>
+    <div class="clear">&nbsp;</div>
+}
