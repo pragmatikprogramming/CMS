@@ -1,15 +1,4 @@
-/*@font-face {
-	font-family: 'Conv_exot350l';
-	src: url('fonts/exot350l.eot');
-	src: local('☺'), url('fonts/exot350l.woff') 
-	format('woff'), url('fonts/exot350l.ttf') 
-	format('truetype'), url('fonts/exot350l.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-*/
-
-body {background:url(../images/bg.jpg) repeat;  font-size: 12px; font-family:Arial, Helvetica, sans-serif;color: #636466;}
+body {font-size: 12px; font-family:Arial, Helvetica, sans-serif;color: #636466;}
 .kids-bg {background:url(../images/kids-bg.jpg) repeat;}
 .teens-bg {background:url(../images/teen-bg.jpg) repeat;}
 a img { border: 0; }
@@ -68,9 +57,10 @@ label { font-size:14px; font-weight:bold; font-family:'Open Sans Condensed', ser
 
 /**** Navigation ****/
 
-nav {border: 1px solid #a7a9ac; margin:10px 0 0 0; background:url(../images/menu_img.jpg) repeat-x 0 0px; background-color:#cfd1d2;  }
-ul.nav {display:block; padding-left:0px; margin-left:0px; } 
-ul.nav li {display:inline-block; border-right:solid 1px #c3c5c7; margin-left:-3px;  } 
+.navigation {border: 1px solid #a7a9ac; margin:10px 0 0 0; background:url(../images/menu_img.jpg) repeat-x 0 0px; background-color:#cfd1d2;  }
+.navigation2 {border: 1px solid #a7a9ac; border-bottom: 0px solid #a7a9ac; margin:10px 0 0 0; background:url(../images/menu_img.jpg) repeat-x 0 0px; background-color:#cfd1d2; }
+ul.nav {display:block; padding-left:0px; margin-left:0px;} 
+ul.nav li { float:left; border-right:solid 1px #c3c5c7;display:block;} 
 ul.nav li a {display:block; color:#298eb2;  font-size:14px; font-weight:bold; font-family:'Open Sans Condensed', serif;padding:5px 10px;} 
 ul.nav li a:hover {text-decoration:none; color:#fff; background:url(../images/hover.jpg) repeat-x 0 0px; background-color:#2b6276; } 
 ul.nav li a.active {text-decoration:none; color:#fff; background:url(../images/hover.jpg) repeat-x 0 0px; background-color:#2b6276; } 
@@ -98,6 +88,7 @@ article{ padding:5px 0px 5px 40px;}
 
 section { margin:0px; padding:0px;}
 figcaption{line-height:16px; padding:10px;}
+.advert_text{line-height:16px; padding:10px;}
 .pagination { margin-top:-18px; display:block; float:right; clear:both;}
 
 .coloumn2 { margin-bottom:15px;}
@@ -170,26 +161,33 @@ ul.nospace li a { color:#636466; padding: 2px 0 2px 0px; color:#c65c4f; font-wei
 ul.nospace li a:hover { text-decoration:underline; color:#c65c4f;} 
 
 
+/**** Teens Page ****/
+.teen-header{
+	font-size:18px;
+	font-family:'Yeseva One';
+}
 
 /**** Kids page ****/
 
 .kids-menu { float:left; width:315px; }
 ul.kids {list-style-type:none; display:block; padding-left:0px;margin-bottom:10px;margin-top: 5px}
 ul.kids li {-webkit-border-radius:50px 0px 0px 50px;-moz-border-radius:50px 0px 0px 50px;border-radius:50px 0px 0px 50px; width:308px; height:61px;padding:2px; margin:5px 0px}
-ul.kids li a { color:#fff; font-size:20px;text-shadow:0 2px 4px #333; padding:0px 5px 0px 105px; font-family:'Ribeye';}
+ul.kids li a { color:#fff; font-size:22px;text-shadow:0 2px 4px #333; padding:0px 5px 0px 105px; font-family:'Purple Purse';}
+/* ul.kids li a { color:#fff; font-size:20px;text-shadow:0 2px 4px #333; padding:0px 5px 0px 105px; font-family:'Ribeye';} */
 ul.kids li:hover {text-decoration:none; opacity:0.9;
 filter:alpha(opacity=90); /* For IE8 and earlier */  }
 ul.kids li.active-touch {width:315px;}
 .thums { width:94px; height:20px; display:block; margin-left:2px; }
 
-.kids-content { float:right; width:604px; border:3px solid #c75c4d; margin:5px 0px; padding:6px;}
+
+.kids-content { float:right; width:604px; border:3px solid #bf584b; margin:5px 0px; padding:6px;}
 .babies-content { float:right; width:604px; border:3px solid #E6A027; margin:5px 0px; padding:6px;}
 .parents-content { float:right; width:604px; border:3px solid #4F96B2; margin:5px 0px; padding:6px;}
 .teachers-content { float:right; width:604px; border:3px solid #9CA76B; margin:5px 0px; padding:6px;}
 .events-content { float:right; width:604px; border:3px solid #865082; margin:5px 0px; padding:6px;}
 .kids-catalog-content { float:right; width:604px; border:3px solid #F9F26D; margin:5px 0px; padding:6px;}
 
-.kids-content { float:right; width:604px; border:3px solid #bf584b; margin:5px 0px; padding:6px;}
+
 .kids-content-border { float:right; width:604px; border:3px solid #E6A027; margin:5px 0px; padding:6px;}
 .one-collumn { width:290px;}
 .imgL{ float:left; margin:10px;}
@@ -212,7 +210,7 @@ p { line-height:16px;}
 
 .title-yellow{ background-color:#dea43a;  padding:5px 15px; font-size:22px;  font-family:'Open Sans Condensed', serif; color:#fff;text-transform:uppercase;   }
 
-.kids-title{padding:10px; font-size:24px;  font-family:'Ribeye', serif; font-weight:bold;color:#fff;}
+.kids-title{padding:10px; font-size:24px;  font-family:'Henny Penny', serif; font-weight:bold;color:#fff;}
 .bg-red{background-color:#c75c4d; }
 .bg-blue{background-color:#4F96B2; }
 .bg-purple{background-color:#865082;}
@@ -226,81 +224,3 @@ footer {border-top: 1px solid #a7a9ac;border-bottom: 1px solid #a7a9ac; margin:1
 .footer_menu a {color:#636466; }
 .footer_menu a:hover {color:#636466; text-decoration:underline; }
 .copyright{ float:right;  width:280px; padding:10px;  text-align:right; }
-
-
-
-
-/*.follow{float:left; color:#2169a1; margin-top:10px;  margin-right:10px;}
-.fb { float:left; background:url(../images/social.png) no-repeat 0 0; width:34px; height:32px; }
-.tw {  float:left; background:url(../images/social.png) no-repeat -35px 0px; width:34px; height:34px; }
-.you {  float:left; background:url(../images/social.png) no-repeat -71px 0px; width:34px; height:34px; }*/
-
-/*.styled-select {
-    background: url("../images/select_arrow.jpg") no-repeat scroll right center #FFFFFF;
-    border:1px solid #cfcece;
-    color:#949494;
-    overflow: hidden;
-    padding:2px  0px 0px 0px;
-    width: 230px;
-	font-size:11px;
-}
-
-.styled-select select {
-    background: none repeat scroll 0 0 transparent;
-    border: 0 none;
-    color:#949494;
-    line-height: 1;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    width: 250px;
-	font-size:11px;
-}
-.select {
-    background: url("..images/select_arrow.jpg") no-repeat scroll right center #FFFFFF;
-    border:1px solid #cfcece;
-    color:#949494;
-    overflow: hidden;
-    padding:2px  0px 2px 0px;
-    width: 230px;
-	font-size:11px;
-}*/
-
-
-
-/*---- start middle code ----*/
-/*.button { text-shadow: 0 1px 1px rgba(0,0,0,.2);
-	-webkit-transition: background .12s ease-in-out;
-    -moz-transition: background .12s ease-in-out;
-    -ms-transition: background .12s ease-in-out;
-    -o-transition: background .12s ease-in-out;
-    transition: background .12s ease-in-out;
-}*/
-
-/*select {
-
-}
-
-select[multiple],
-select[size] {
-  height: auto;
-  border:none;
-  width:100%;
-  overflow:visible;
-  height:150px;
-
-}
-
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {*/
-/*  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;*/
-
-/*-moz-box-shadow: 0px -5px 10px #999;-webkit-box-shadow: 0px -5px 10px #999;box-shadow: 0px -5px 10px #999;*/
-
-/* box-shadow: inset 0 0 10px #3a3261;*/
-
-/* For IE8 and earlier */ 

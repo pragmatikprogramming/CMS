@@ -80,5 +80,21 @@ namespace CMS.WebUI.Controllers
             HTMLWidgetRepository.Delete(id);
             return RedirectToAction("Index", "HTMLWidget");
         }
+
+        [CMSAuth]
+        [HttpGet]
+        public ActionResult Preview(int id)
+        {
+            ViewBag.Id = id;
+            return View("WidgetPreview");
+        }
+
+        [CMSAuth]
+        [HttpGet]
+        public ActionResult getWidget(int id)
+        {
+            HTMLWidget m_Widget = HTMLWidgetRepository.RetrieveOne(id);
+            return View("getWidget", m_Widget);
+        }
     }
 }

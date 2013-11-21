@@ -141,6 +141,7 @@
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\TrashController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WidgetContainerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -681,6 +682,7 @@
     <Content Include="Content\CKEditor\plugins\dialog\plugin.js" />
     <Content Include="Content\CKEditor\plugins\dialog\samples\assets\my_dialog.js" />
     <Content Include="Content\CKEditor\plugins\dialog\samples\dialog.html" />
+    <Content Include="Content\CKEditor\plugins\doksoft_include\plugin.js" />
     <Content Include="Content\CKEditor\plugins\elementspath\lang\af.js" />
     <Content Include="Content\CKEditor\plugins\elementspath\lang\ar.js" />
     <Content Include="Content\CKEditor\plugins\elementspath\lang\bg.js" />
@@ -2225,8 +2227,8 @@
     <Content Include="Content\CKEditor\skins\moonocolor\skin.js" />
     <Content Include="Content\CKEditor\styles.js" />
     <Content Include="Content\css\calendar.css" />
+    <Content Include="Content\css\ckeditorStyles.css" />
     <Content Include="Content\css\reset.css" />
-    <Content Include="Content\css\style - Copy.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
@@ -2432,6 +2434,14 @@
     <Content Include="Views\HTMLWidget\Index.cshtml" />
     <Content Include="Views\HTMLWidget\WidgetAdd.cshtml" />
     <Content Include="Views\HTMLWidget\WidgetEdit.cshtml" />
+    <Content Include="Views\WidgetContainer\Index.cshtml" />
+    <Content Include="Views\WidgetContainer\ContainerAdd.cshtml" />
+    <Content Include="Views\WidgetContainer\ContainerEdit.cshtml" />
+    <Content Include="Views\WidgetContainer\OrderWidgets.cshtml" />
+    <Content Include="Views\WidgetContainer\WidgetPreview.cshtml" />
+    <Content Include="Views\WidgetContainer\getContainer.cshtml" />
+    <Content Include="Views\HTMLWidget\WidgetPreview.cshtml" />
+    <Content Include="Views\HTMLWidget\getWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

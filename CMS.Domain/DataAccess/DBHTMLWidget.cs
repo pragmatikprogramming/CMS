@@ -85,9 +85,10 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_HTMLWidget SET content = @content WHERE id = @id";
+            string queryString = "UPDATE CMS_HTMLWidget SET content = @content, name = @name WHERE id = @id";
             SqlCommand updateWidget = new SqlCommand(queryString, conn);
             updateWidget.Parameters.AddWithValue("content", m_Widget.Content);
+            updateWidget.Parameters.AddWithValue("name", m_Widget.Name);
             updateWidget.Parameters.AddWithValue("id", m_Widget.Id);
             updateWidget.ExecuteNonQuery();
 

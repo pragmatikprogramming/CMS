@@ -51,6 +51,7 @@ namespace CMS.WebUI.Infrastructure
             kernel.Bind<IFormFieldRepository>().To<FormFieldRepository>();
             kernel.Bind<IFormRepository>().To<FormRepository>();
             kernel.Bind<IHTMLWidgetRepository>().To<HTMLWidgetRepository>();
+            kernel.Bind<IWidgetContainer>().To<WidgetContainerRepository>();
         }
     }
 }

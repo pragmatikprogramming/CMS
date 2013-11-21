@@ -139,6 +139,7 @@
     <Compile Include="Abstract\IPageRepository.cs" />
     <Compile Include="Abstract\ITrashRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
+    <Compile Include="Abstract\IWidgetContainer.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="DataAccess\DBPage.cs" />
     <Compile Include="DataAccess\DBTrash.cs" />
     <Compile Include="DataAccess\DBUser.cs" />
+    <Compile Include="DataAccess\DBWidgetContainer.cs" />
     <Compile Include="Entities\Admin.cs" />
     <Compile Include="Entities\BlogPost.cs" />
     <Compile Include="Entities\Category.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Entities\Template.cs" />
     <Compile Include="Entities\Trash.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\WidgetContainer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +213,7 @@
     <Compile Include="Models\PageRepository.cs" />
     <Compile Include="Models\TrashRepository.cs" />
     <Compile Include="Models\UserRepository.cs" />
+    <Compile Include="Models\WidgetContainerRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

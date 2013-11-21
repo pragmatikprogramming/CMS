@@ -1,0 +1,5 @@
+﻿@foreach(var widget in Model)
+{
+    @Html.Raw(System.Web.HttpUtility.HtmlDecode(widget.Content))
+}
+

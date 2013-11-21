@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Edit - Widget Container";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Count = 0;
+}
+
+
+<div class="header">
+    <h1 class="page-title">Create a Widget Container</h1>
+</div>
+
+<div class="container-fluid">   
+<div class="row-fluid">  
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
+    <form action="/WidgetContainer/ContainerEdit" method="post" id="ContainerEdit">
+        <input type="hidden" name="Id" id="Id" value="@Model.Id" />
+        <div class="formlabel">Name:</div>
+        <div class="formfield"><input type="text" name="Name" value="@Model.Name" /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Template:</div>
+        <div class="formfield"><select name="TemplateId">
+            <option value="">-- Select a Template --</option>
+            @foreach (var Template in ViewBag.Templates)
+                {
+                    if (Template.TemplateId == Model.TemplateId)
+                    {
+                        <option value="@Template.TemplateId" selected="selected">@Template.FriendlyName</option>
+                    }
+                    else
+                    {
+                        <option value="@Template.TemplateId">@Template.FriendlyName</option>
+                    }
+                 }
+
+            </select></div>
+        <div class="clear">&nbsp;</div>
+        
+        <div class="formlabel">Widgets:</div>
+        <div class="formfield">
+            <table>
+                <tbody>
+            @foreach (var widget in ViewBag.Widgets)
+            {
+                if (ViewBag.Count % 4 == 0)
+                {
+                    @:<tr>
+                }
+
+                <td style="width: 100px; text-align: right; padding-right: 10px;">@widget.Name</td>
+                if (Model.MyWidgets.Contains(widget.Id))
+                {
+                    @:<td style="width: 25px; text-align: left"><input type="checkbox" name="MyWidgets" id="MyWidgets" value="@widget.Id" checked="checked" /></td>
+                }
+                else
+                {
+                    @:<td style="width: 25px; text-align: left"><input type="checkbox" name="MyWidgets" id="MyWidgets" value="@widget.Id"/></td>
+                }
+                
+                ViewBag.Count = ViewBag.Count + 1;
+                
+                if (ViewBag.Count % 4 == 0 && ViewBag.Count != 0)
+                {
+                    @:</tr>
+                }
+
+                
+            }
+                @if(ViewBag.Count % 4 != 0)
+                {
+                    for(var i = ViewBag.Count; i % 4 > 0; i++)
+                    {
+                        @:<td>&nbsp;</td><td>&nbsp;</td>
+                    }
+                    @:</tr>
+                }    
+                </tbody>
+            </table>
+        </div>
+        <div class="clear">&nbsp;</div>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+        
+        <div class="formlabel"><button form="ContainerEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+    </form>
+
+
+</div>
+

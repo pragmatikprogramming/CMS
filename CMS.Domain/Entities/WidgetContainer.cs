@@ -6,15 +6,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CMS.Domain.Entities
 {
-    public class HTMLWidget
+    public class WidgetContainer
     {
         private int id;
         private string name;
-        private string content;
-        private int sortOrder;
+        private int templateId;
+        private List<int> myWidgets;
+        private List<HTMLWidget> widgets;
 
         
-
         public int Id
         {
             get 
@@ -27,7 +27,7 @@ namespace CMS.Domain.Entities
             }
         }
 
-        [Required(ErrorMessage = "Please name your Widget")]
+        [Required(ErrorMessage = "Please Enter a Name")]
         public string Name
         {
             get 
@@ -40,28 +40,40 @@ namespace CMS.Domain.Entities
             }
         }
 
-        [Required(ErrorMessage = "Please add Content to your widget")]
-        public string Content
+        public int TemplateId
         {
             get 
             { 
-                return content; 
+                return templateId; 
             }
             set 
             { 
-                content = value; 
+                templateId = value; 
             }
         }
 
-        public int SortOrder
+        [Required(ErrorMessage = "Please Enter Widgets to associate with the side bar")]
+        public List<int> MyWidgets
         {
             get 
             { 
-                return sortOrder; 
+                return myWidgets; 
             }
             set 
             { 
-                sortOrder = value; 
+                myWidgets = value; 
+            }
+        }
+
+        public List<HTMLWidget> Widgets
+        {
+            get 
+            { 
+                return widgets; 
+            }
+            set 
+            { 
+                widgets = value; 
             }
         }
     }

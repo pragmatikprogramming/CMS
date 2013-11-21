@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Preivew";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="left_part">
+    &nbsp;
+</div><!--end left_part-->
+            
+<div class="right_part">
+    <div class="margin-top_10">&nbsp;</div>
+    @Html.Action("getContainer", new{ id = ViewBag.Id })              
+</div> <!--end right part-->
