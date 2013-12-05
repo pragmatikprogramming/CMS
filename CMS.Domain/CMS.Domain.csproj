@@ -131,6 +131,7 @@
     <Compile Include="Abstract\IFormFieldRepository.cs" />
     <Compile Include="Abstract\IFormRepository.cs" />
     <Compile Include="Abstract\IGalleryRepository.cs" />
+    <Compile Include="Abstract\IHomeRepository.cs" />
     <Compile Include="Abstract\IHTMLWidgetRepository.cs" />
     <Compile Include="Abstract\IImageRepository.cs" />
     <Compile Include="Abstract\IJSONRepository.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="DataAccess\DBForm.cs" />
     <Compile Include="DataAccess\DBFormField.cs" />
     <Compile Include="DataAccess\DBGallery.cs" />
+    <Compile Include="DataAccess\DBHome.cs" />
     <Compile Include="DataAccess\DBHTMLWidget.cs" />
     <Compile Include="DataAccess\DBImage.cs" />
     <Compile Include="DataAccess\DBJSON.cs" />
@@ -205,6 +207,7 @@
     <Compile Include="Models\FormFieldRepository.cs" />
     <Compile Include="Models\FormRepository.cs" />
     <Compile Include="Models\GalleryRepository.cs" />
+    <Compile Include="Models\HomeRepository.cs" />
     <Compile Include="Models\HTMLWidgetRepository.cs" />
     <Compile Include="Models\ImageRepository.cs" />
     <Compile Include="Models\JSONRepository.cs" />

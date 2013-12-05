@@ -2442,6 +2442,18 @@
     <Content Include="Views\WidgetContainer\getContainer.cshtml" />
     <Content Include="Views\HTMLWidget\WidgetPreview.cshtml" />
     <Content Include="Views\HTMLWidget\getWidget.cshtml" />
+    <Content Include="Views\Home\MainMenu.cshtml" />
+    <Content Include="Views\Home\Container.cshtml" />
+    <Content Include="Views\Home\NonSystemMenu.cshtml" />
+    <Content Include="Views\Home\FeaturedEvents.cshtml" />
+    <Content Include="Views\Home\HomePageMenuModule.cshtml" />
+    <Content Include="Views\Shared\BabiesAndToddlers.cshtml" />
+    <Content Include="Views\Shared\Parents.cshtml" />
+    <Content Include="Views\Shared\Teachers.cshtml" />
+    <Content Include="Views\Shared\Events.cshtml" />
+    <Content Include="Views\Shared\KidsCatalog.cshtml" />
+    <Content Include="Views\Home\SystemSubMenu.cshtml" />
+    <Content Include="Views\Home\getTeenBlog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

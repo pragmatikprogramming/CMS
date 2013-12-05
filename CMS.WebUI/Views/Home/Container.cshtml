@@ -1,0 +1,7 @@
+﻿@if(Model.Widgets != null)
+{
+    foreach(var widget in Model.Widgets)
+    {
+        @Html.Raw(System.Web.HttpUtility.HtmlDecode(widget.Content))
+    }
+}

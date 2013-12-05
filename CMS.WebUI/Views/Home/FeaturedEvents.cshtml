@@ -1,0 +1,52 @@
+﻿<div class="title2">Featured Events</div>
+            <figcaption>
+                @foreach(var mEvent in Model)
+                {
+                    <div class="coloumn2">
+                        @if(mEvent.EventStartDate.Month == mEvent.EventEndDate.Month && mEvent.EventStartDate.Day == mEvent.EventEndDate.Day)
+                        {
+				            <span class="date">@mEvent.EventStarDate.Month / @mEvent.EventStartDate.Day :</span>
+                        }
+                        else
+                        {
+                            <span class="date">@DateTime.Now.Month/@DateTime.Now.Day :</span>
+                        }
+                        
+                        @if(mEvent.EventStartMin == 0)
+                        {
+                            ViewBag.StartTime = mEvent.EventStartHour + ":00 " + mEvent.AmpmStart;
+                            <span class="event-title"><a href="#">@mEvent.EventTitle</a> <br />@ViewBag.StartTime - 
+                            @if (mEvent.EventEndMin == 0)
+                            {
+                                ViewBag.EndTime = mEvent.EventEndHour + ":00 " + mEvent.AmpmEnd;
+                                @ViewBag.EndTime
+                            }
+                            else
+                            {
+                                ViewBag.EndTime = mEvent.EventEndHour + ":" + mEvent.EventEndMin + " " + mEvent.AmpmEnd;
+                                @ViewBag.EndTime
+                            }    
+                            <br />@mEvent.BranchName</span>
+                        }
+                        else
+                        {
+                            ViewBag.StartTime = mEvent.EventStartHour + ":" + mEvent.EventStartMin + " " + mEvent.AmpmStart;
+                            <span class="event-title"><a href="#">@mEvent.EventTitle</a> <br />@ViewBag.StartTime - 
+                            @if (mEvent.EventEndMin == 0)
+                            {
+                                ViewBag.EndTime = mEvent.EventEndHour + ":00 " + mEvent.AmpmEnd;
+                                @ViewBag.EndTime
+                            }
+                            else
+                            {
+                                ViewBag.EndTime = mEvent.EventEndHour + ":" + mEvent.EventEndMin + " " + mEvent.AmpmEnd;
+                                @ViewBag.EndTime
+                            }    
+                            <br />@mEvent.BranchName</span>
+                        }
+                        <div class="clear"></div>
+                    </div>
+                }
+                               
+                <span class="more margin-top_10"><a href="#">view all events</a></span>
+            </figcaption>

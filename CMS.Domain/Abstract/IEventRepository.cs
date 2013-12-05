@@ -19,5 +19,6 @@ namespace CMS.Domain.Abstract
         void LockEvent(int id);
         void UnlockEvent(int id);
         void PublishEvent(int id);
+        List<Event> getFeaturedEvents();
     }
 }

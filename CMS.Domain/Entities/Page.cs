@@ -28,6 +28,9 @@ namespace CMS.Domain.Entities
         private string lastModifiedBy;
         private string lastModifiedDate;
         private int sortOrder;
+        private string redirectURL;
+
+        
 
         
 
@@ -262,6 +265,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 sortOrder = value; 
+            }
+        }
+
+        public string RedirectURL
+        {
+            get 
+            { 
+                return redirectURL; 
+            }
+            set 
+            { 
+                redirectURL = value; 
             }
         }
 

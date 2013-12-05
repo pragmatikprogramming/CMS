@@ -85,6 +85,11 @@ namespace CMS.Domain.Models
                 File.Delete(ConfigurationManager.AppSettings["Documents"] + "\\" + path);
             }
 
+            if (m_Trash.ObjectTable == "CMS_Menus")
+            {
+                DBMenu.PurgeMenuItmes(m_Trash.ObjectId);
+            }
+
             DBTrash.Delete(id);
         }
 

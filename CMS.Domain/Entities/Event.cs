@@ -20,6 +20,7 @@ namespace CMS.Domain.Entities
         private int eventEndMin;
         private string ampmEnd;
         private int branch;
+        private string branchName;
         private string body;
         private int pageWorkFlowState;
         private int lockedBy;
@@ -117,6 +118,19 @@ namespace CMS.Domain.Entities
             set 
             { 
                 branch = value; 
+            }
+        }
+
+
+        public string BranchName
+        {
+            get 
+            { 
+                return branchName; 
+            }
+            set 
+            { 
+                branchName = value; 
             }
         }
 

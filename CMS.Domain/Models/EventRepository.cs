@@ -103,5 +103,13 @@ namespace CMS.Domain.Models
         {
             DBEvent.PublishEvent(id);
         }
+
+        public List<Event> getFeaturedEvents()
+        {
+            List<Event> m_Events = new List<Event>();
+            m_Events = DBEvent.getFeaturedEvents();
+
+            return m_Events;
+        }
     }
 }

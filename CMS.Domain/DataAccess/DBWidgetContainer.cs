@@ -68,13 +68,64 @@ namespace CMS.Domain.DataAccess
                 SqlConnection conn2 = DB.DbConnect();
                 conn2.Open();
 
-                queryString = "select w.id, w.name, w.content, ctw.sortOrder from CMS_ContainerToWidgets ctw, CMS_HTMLWidget w WHERE ctw.widgetId = w.id AND ctw.containerId = 1 AND w.pageWorkFlowState != 4 ORDER BY ctw.sortOrder ASC";
+                queryString = "select w.id, w.name, w.content, ctw.sortOrder from CMS_ContainerToWidgets ctw, CMS_HTMLWidget w WHERE ctw.widgetId = w.id AND ctw.containerId = @id AND w.pageWorkFlowState != 4 ORDER BY ctw.sortOrder ASC";
                 SqlCommand getWidgets = new SqlCommand(queryString, conn2);
+                getWidgets.Parameters.AddWithValue("id", m_Container.Id);
                 SqlDataReader widgetReader = getWidgets.ExecuteReader();
 
                 m_Container.Widgets = new List<HTMLWidget>();
                 m_Container.MyWidgets = new List<int>();
 
+                while (widgetReader.Read())
+                {
+                    HTMLWidget m_Widget = new HTMLWidget();
+
+                    m_Widget.Id = widgetReader.GetInt32(0);
+                    m_Widget.Name = widgetReader.GetString(1);
+                    m_Widget.Content = widgetReader.GetString(2);
+                    m_Widget.SortOrder = widgetReader.GetInt32(3);
+
+                    m_Container.MyWidgets.Add(widgetReader.GetInt32(0));
+                    m_Container.Widgets.Add(m_Widget);
+                }
+
+                conn2.Close();
+            }
+
+            conn.Close();
+
+            return m_Container;
+        }
+
+        public static WidgetContainer RetrieveOneByTemplateId(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CMS_WidgetContainers WHERE templateId = @id AND pageWorkFlowState != 4";
+            SqlCommand getContainer = new SqlCommand(queryString, conn);
+            getContainer.Parameters.AddWithValue("id", id);
+            SqlDataReader containerReader = getContainer.ExecuteReader();
+
+            WidgetContainer m_Container = new WidgetContainer();
+
+            if (containerReader.Read())
+            {
+                m_Container.Id = containerReader.GetInt32(0);
+                m_Container.Name = containerReader.GetString(1);
+                m_Container.TemplateId = containerReader.GetInt32(2);
+
+                SqlConnection conn2 = DB.DbConnect();
+                conn2.Open();
+
+                queryString = "select w.id, w.name, w.content, ctw.sortOrder from CMS_ContainerToWidgets ctw, CMS_HTMLWidget w WHERE ctw.widgetId = w.id AND ctw.containerId = @id AND w.pageWorkFlowState != 4 ORDER BY ctw.sortOrder ASC";
+                SqlCommand getWidgets = new SqlCommand(queryString, conn2);
+                getWidgets.Parameters.AddWithValue("id", m_Container.Id);
+                SqlDataReader widgetReader = getWidgets.ExecuteReader();
+
+                m_Container.Widgets = new List<HTMLWidget>();
+                m_Container.MyWidgets = new List<int>();
+            
                 while (widgetReader.Read())
                 {
                     HTMLWidget m_Widget = new HTMLWidget();
@@ -151,7 +202,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "select w.id, w.name, w.content, ctw.sortOrder from CMS_ContainerToWidgets ctw, CMS_HTMLWidget w WHERE ctw.widgetId = w.id AND ctw.containerId = 1 AND w.pageWorkFlowState != 4 AND ctw.containerID = @id ORDER BY ctw.sortOrder ASC";
+            string queryString = "select w.id, w.name, w.content, ctw.sortOrder from CMS_ContainerToWidgets ctw, CMS_HTMLWidget w WHERE ctw.widgetId = w.id AND  w.pageWorkFlowState != 4 AND ctw.containerID = @id ORDER BY ctw.sortOrder ASC";
             SqlCommand getWidgets = new SqlCommand(queryString, conn);
             getWidgets.Parameters.AddWithValue("id", id);
             SqlDataReader widgetReader = getWidgets.ExecuteReader();

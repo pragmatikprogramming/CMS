@@ -109,5 +109,18 @@ namespace CMS.Domain.DataAccess
 
             conn.Close();
         }
+
+        public static void PurgeMenuItmes(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "DELETE FROM CMS_MenuItems WHERE parentId = @id";
+            SqlCommand delMenu = new SqlCommand(queryString, conn);
+            delMenu.Parameters.AddWithValue("id", id);
+            delMenu.ExecuteNonQuery();
+
+            conn.Close();
+        }
     }
 }

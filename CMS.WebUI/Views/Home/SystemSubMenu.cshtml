@@ -1,0 +1,7 @@
+﻿<h3>@ViewBag.ParentName Links</h3>
+<ul class="catlog_nav">
+    @foreach (var page in Model)
+    {
+        <li><a href="#" title="@page.NavigationName">@page.NavigationName</a></li>
+    }
+</ul>

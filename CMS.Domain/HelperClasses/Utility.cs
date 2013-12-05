@@ -123,6 +123,34 @@ namespace CMS.Domain.HelperClasses
             return LB;
         }
 
-        
+        public static string getBranchName(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT BranchName FROM CMS_BranchNames WHERE id = @id";
+            SqlCommand getBranchName = new SqlCommand(queryString, conn);
+            getBranchName.Parameters.AddWithValue("id", id);
+            string branchName = (string)getBranchName.ExecuteScalar();
+
+            conn.Close();
+
+            return branchName;
+        }
+
+        public static string getMenuName(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT menuName from CMS_Menus WHERE id = @id";
+            SqlCommand getMenuName = new SqlCommand(queryString, conn);
+            getMenuName.Parameters.AddWithValue("id", id);
+            string menuName = (string)getMenuName.ExecuteScalar();
+
+            conn.Close();
+
+            return menuName;
+        }
     }
 }

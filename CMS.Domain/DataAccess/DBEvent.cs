@@ -203,8 +203,8 @@ namespace CMS.Domain.DataAccess
             string queryString;
             queryString = "SELECT id, eventTitle, pageWorkFlowState, lockedBy from CMS_Events WHERE @searchDateStart >= eventStartDate AND @searchDate <= eventEndDate AND pageWorkFlowState != 4";
             SqlCommand getEvent = new SqlCommand(queryString, conn);
-            getEvent.Parameters.AddWithValue("searchDateStart", DateTime.Parse(searchDate.ToString("MM/dd/yyyy") + " 11:59:59"));
-            getEvent.Parameters.AddWithValue("searchDate", searchDate);
+            getEvent.Parameters.AddWithValue("searchDateStart", DateTime.Parse(searchDate.ToString("MM/dd/yyyy") + " 23:59:59"));
+            getEvent.Parameters.AddWithValue("searchDate", DateTime.Parse(searchDate.ToString("MM/dd/yyyy") + " 00:00:00"));
 
             SqlDataReader eventReader = getEvent.ExecuteReader();
 
@@ -309,5 +309,66 @@ namespace CMS.Domain.DataAccess
             conn.Close();
             return m_ContentGroups;
         }
+
+        public static List<Event> getFeaturedEvents()
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT TOP 5 * FROM CMS_Events WHERE featuredEvent = 1 AND eventStartDate <= @startDate AND eventEndDate >= @endDate AND pageWorkFlowState = 2 ORDER BY eventStartDate DESC";
+            SqlCommand getEvents = new SqlCommand(queryString, conn);
+            getEvents.Parameters.AddWithValue("startDate", DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy") + " 23:59:59"));
+            getEvents.Parameters.AddWithValue("endDate", DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy")));
+
+            SqlDataReader eventReader = getEvents.ExecuteReader();
+
+            List<Event> myEvents = new List<Event>();
+
+            while (eventReader.Read())
+            {
+                Event tempEvent = new Event();
+                tempEvent.EventID = eventReader.GetInt32(0);
+                tempEvent.EventTitle = eventReader.GetString(2);
+                tempEvent.PageWorkFlowState = eventReader.GetInt32(7);
+                tempEvent.LockedBy = eventReader.GetInt32(8);
+
+                DateTime startDate = eventReader.GetDateTime(3);
+                DateTime endDate = eventReader.GetDateTime(4);
+
+                tempEvent.EventStartDate = DateTime.Parse(startDate.ToString("MM/dd/yyyy"));
+                tempEvent.EventEndDate = DateTime.Parse(endDate.ToString("MM/dd/yyyy"));
+                tempEvent.EventStartHour = startDate.Hour % 12;
+                tempEvent.EventStartMin = startDate.Minute;
+                tempEvent.EventEndHour = endDate.Hour % 12;
+                tempEvent.EventEndMin = endDate.Minute;
+
+                if (startDate.Hour >= 12)
+                {
+                    tempEvent.AmpmStart = "PM";
+                }
+                else
+                {
+                    tempEvent.AmpmStart = "AM";
+                }
+
+                if (endDate.Hour >= 12)
+                {
+                    tempEvent.AmpmEnd = "PM";
+                }
+                else
+                {
+                    tempEvent.AmpmEnd = "AM";
+                }
+
+                tempEvent.Branch = eventReader.GetInt32(5);
+                tempEvent.BranchName = Utility.getBranchName(tempEvent.Branch);
+
+                myEvents.Add(tempEvent);
+            }
+
+            conn.Close();
+
+            return myEvents;
+        }  
     }
 }

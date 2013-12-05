@@ -51,7 +51,7 @@ namespace CMS.Domain.DataAccess
 
             conn.Open();
 
-            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder)";
+            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL)";
             SqlCommand insertPage = new SqlCommand(queryString, conn);
             insertPage.Parameters.AddWithValue("pageId", m_PageId);
             insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -68,6 +68,7 @@ namespace CMS.Domain.DataAccess
             insertPage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
             insertPage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
             insertPage.Parameters.AddWithValue("sortOrder", sortOrder);
+            insertPage.Parameters.AddWithValue("redirectURL", m_Page.RedirectURL);
             insertPage.ExecuteNonQuery();
 
             conn.Close();
@@ -117,6 +118,11 @@ namespace CMS.Domain.DataAccess
                 m_Page.LockedBy = pageDataReader.GetInt32(13);
                 m_Page.SortOrder = pageDataReader.GetInt32(16);
                 m_Page.LockedByName = DBPage.GetLockedByName(m_Page.LockedBy);
+
+                if (!pageDataReader.IsDBNull(17))
+                {
+                    m_Page.RedirectURL = pageDataReader.GetString(17);
+                }
             }
 
             conn.Close();
@@ -128,7 +134,19 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Pages WHERE parentId = @parentId AND pageWorkFlowState != 4 order by sortOrder, pageId, id DESC";
+            string controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+            string queryString = "";
+
+            if (controller == "Home" || controller == "")
+            {
+                queryString = "SELECT * FROM CMS_Pages WHERE parentId = @parentId AND pageWorkFlowState = 2 order by sortOrder, pageId, id DESC";
+                //queryString = "SELECT * FROM CMS_Pages WHERE pageId = @id AND pageWorkFlowState = 2 ORDER BY id DESC";
+            }
+            else
+            {
+                queryString = "SELECT * FROM CMS_Pages WHERE parentId = @parentId AND pageWorkFlowState != 4 order by sortOrder, pageId, id DESC";
+            }
+
             SqlCommand getPages = new SqlCommand(queryString, conn);
             getPages.Parameters.AddWithValue("parentId", m_Id);
             SqlDataReader pagesDataReader = getPages.ExecuteReader();
@@ -157,6 +175,11 @@ namespace CMS.Domain.DataAccess
                 tempPage.SortOrder = pagesDataReader.GetInt32(16);
                 tempPage.LockedByName = DBPage.GetLockedByName(tempPage.LockedBy);
 
+                if (!pagesDataReader.IsDBNull(17))
+                {
+                    tempPage.RedirectURL = pagesDataReader.GetString(17);
+                }
+
                 if (previousPageId != tempPage.PageID)
                 {
                     m_Pages.Add(tempPage);
@@ -178,7 +201,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_Page.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, expireDate = @expireDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate WHERE id = @id and pageId = @pageId";
+                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, expireDate = @expireDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL WHERE id = @id and pageId = @pageId";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
 
                 updatePage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -196,12 +219,13 @@ namespace CMS.Domain.DataAccess
                 updatePage.Parameters.AddWithValue("PageId", m_Page.PageID);
                 updatePage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
                 updatePage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
+                updatePage.Parameters.AddWithValue("redirectURL", m_Page.RedirectURL);
 
                 updatePage.ExecuteNonQuery();
             }
             else if (m_Page.PageWorkFlowState == 2 || m_Page.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder)";
+                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL)";
                 SqlCommand insertPage = new SqlCommand(queryString, conn);
                 insertPage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -218,6 +242,7 @@ namespace CMS.Domain.DataAccess
                 insertPage.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
                 insertPage.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
                 insertPage.Parameters.AddWithValue("sortOrder", m_Page.SortOrder);
+                insertPage.Parameters.AddWithValue("redirectURL", m_Page.RedirectURL);
                 insertPage.ExecuteNonQuery();
             }
             else

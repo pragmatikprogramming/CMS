@@ -41,20 +41,29 @@ namespace CMS.Domain.DataAccess
 
             conn.Open();
 
-            queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, categories, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @categories, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
+            queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
             SqlCommand insertBlogPost = new SqlCommand(queryString, conn);
             insertBlogPost.Parameters.AddWithValue("blogId", m_BlogId);
             insertBlogPost.Parameters.AddWithValue("title", m_BlogPost.Title);
             insertBlogPost.Parameters.AddWithValue("publishDate", m_BlogPost.PublishDate.ToString());
             insertBlogPost.Parameters.AddWithValue("expirationDate", m_BlogPost.PublishDate.ToString());
             insertBlogPost.Parameters.AddWithValue("contentGroup", m_BlogPost.ContentGroup);
-            insertBlogPost.Parameters.AddWithValue("categories", string.Join(",", m_BlogPost.Categories.ToArray()));  //m_BlogPost.Categories);
             insertBlogPost.Parameters.AddWithValue("content", m_BlogPost.Content);
             insertBlogPost.Parameters.AddWithValue("comments", m_BlogPost.Comments);
             insertBlogPost.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
             insertBlogPost.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
             insertBlogPost.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
             insertBlogPost.ExecuteNonQuery();
+
+            foreach (int catId in m_BlogPost.Categories)
+            {
+                queryString = "INSERT INTO CMS_BlogPostsToCategories(blogPostId, categoryId) VALUES(@blogId, @catId)";
+                SqlCommand insertCat = new SqlCommand(queryString, conn);
+                insertCat.Parameters.AddWithValue("blogId", m_BlogId);
+                insertCat.Parameters.AddWithValue("catId", catId);
+                insertCat.ExecuteNonQuery();
+            }
+            
 
             conn.Close();
         }
@@ -80,7 +89,7 @@ namespace CMS.Domain.DataAccess
             SqlDataReader blogPostReader = getBlogPost.ExecuteReader();
 
             BlogPost m_BlogPost = new BlogPost();
-            string m_Cats = "";
+
             if(blogPostReader.Read())
             {
                 m_BlogPost.Id = blogPostReader.GetInt32(0);
@@ -88,31 +97,38 @@ namespace CMS.Domain.DataAccess
                 m_BlogPost.Title = blogPostReader.GetString(2);
                 m_BlogPost.PublishDate = blogPostReader.GetDateTime(3);
                 m_BlogPost.ContentGroup = blogPostReader.GetInt32(4);
-                m_BlogPost.Content = blogPostReader.GetString(6);
-                m_BlogPost.PageWorkFlowState = blogPostReader.GetInt32(7);
-                m_BlogPost.LockedBy = blogPostReader.GetInt32(8);
-                m_BlogPost.LastModifiedBy = blogPostReader.GetInt32(9);
-                m_BlogPost.LastModifiedDate = blogPostReader.GetDateTime(10);
-                m_BlogPost.Comments = blogPostReader.GetInt32(11);
-                m_BlogPost.ExpirationDate = blogPostReader.GetDateTime(12);
+                m_BlogPost.Content = blogPostReader.GetString(5);
+                m_BlogPost.PageWorkFlowState = blogPostReader.GetInt32(6);
+                m_BlogPost.LockedBy = blogPostReader.GetInt32(7);
+                m_BlogPost.LastModifiedBy = blogPostReader.GetInt32(8);
+                m_BlogPost.LastModifiedDate = blogPostReader.GetDateTime(9);
+                m_BlogPost.Comments = blogPostReader.GetInt32(10);
+                m_BlogPost.ExpirationDate = blogPostReader.GetDateTime(11);
 
                 m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
                 m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
 
-                //handle category string to int conversion
-                m_Cats = blogPostReader.GetString(5);
-                string[] catsArray = m_Cats.Split(',');
-                List<int> myCats = new List<int>();
-                myCats.Add(0);
+                SqlConnection conn2 = DB.DbConnect();
+                conn2.Open();
 
-                foreach (string cat in catsArray)
+                queryString = "SELECT * FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
+                SqlCommand getCats = new SqlCommand(queryString, conn2);
+                getCats.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
+                SqlDataReader catsReader = getCats.ExecuteReader();
+
+                List<int> m_Cats = new List<int>();
+
+                while (catsReader.Read())
                 {
-                    myCats.Add(int.Parse(cat));
+                    m_Cats.Add(catsReader.GetInt32(2));
                 }
 
-                m_BlogPost.Categories = myCats;
+                m_BlogPost.Categories = m_Cats;
+
+                conn2.Close();
             }
             
+
             conn.Close();
             return m_BlogPost;
         }
@@ -138,14 +154,94 @@ namespace CMS.Domain.DataAccess
                 m_BlogPost.Title = blogPostReader.GetString(2);
                 m_BlogPost.PublishDate = blogPostReader.GetDateTime(3);
                 m_BlogPost.ContentGroup = blogPostReader.GetInt32(4);
-                //m_BlogPost.Categories = blogPostReader.GetString(5);
-                m_BlogPost.Content = blogPostReader.GetString(6);
-                m_BlogPost.PageWorkFlowState = blogPostReader.GetInt32(7);
-                m_BlogPost.LockedBy = blogPostReader.GetInt32(8);
-                m_BlogPost.LastModifiedBy = blogPostReader.GetInt32(9);
-                m_BlogPost.LastModifiedDate = blogPostReader.GetDateTime(10);
-                m_BlogPost.Comments = blogPostReader.GetInt32(11);
-                m_BlogPost.ExpirationDate = blogPostReader.GetDateTime(12);
+                m_BlogPost.Content = blogPostReader.GetString(5);
+                m_BlogPost.PageWorkFlowState = blogPostReader.GetInt32(6);
+                m_BlogPost.LockedBy = blogPostReader.GetInt32(7);
+                m_BlogPost.LastModifiedBy = blogPostReader.GetInt32(8);
+                m_BlogPost.LastModifiedDate = blogPostReader.GetDateTime(9);
+                m_BlogPost.Comments = blogPostReader.GetInt32(10);
+                m_BlogPost.ExpirationDate = blogPostReader.GetDateTime(11);
+                m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
+                m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
+
+                if (previousPageId != m_BlogPost.BlogId)
+                {
+                    m_BlogPosts.Add(m_BlogPost);
+                }
+
+                previousPageId = m_BlogPost.BlogId;
+
+                SqlConnection conn2 = DB.DbConnect();
+                conn2.Open();
+
+                queryString = "SELECT * FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
+                SqlCommand getCats = new SqlCommand(queryString, conn2);
+                getCats.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
+                SqlDataReader catsReader = getCats.ExecuteReader();
+
+                List<int> m_Cats = new List<int>();
+
+                while (catsReader.Read())
+                {
+                    m_Cats.Add(catsReader.GetInt32(2));
+                }
+
+                m_BlogPost.Categories = m_Cats;
+
+                conn2.Close();
+            }
+
+            conn.Close();
+            return m_BlogPosts;
+        }
+
+        public static List<BlogPost> RetrieveAllByCategory(int Category)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CMS_BlogPostsToCategories WHERE categoryId = @catId";
+            SqlCommand getCats = new SqlCommand(queryString, conn);
+            getCats.Parameters.AddWithValue("catId", Category);
+
+            SqlDataReader catsReader = getCats.ExecuteReader();
+
+            List<int> m_BlogIds = new List<int>();
+
+            while (catsReader.Read())
+            {
+                m_BlogIds.Add(catsReader.GetInt32(1));
+            }
+
+            conn.Close();
+            conn.Open();
+
+            string BlogIds = string.Join(",", m_BlogIds.ToArray());
+
+            queryString = "SELECT TOP 5 * FROM CMS_BlogPosts WHERE pageWorkFlowState = 2 AND BlogId IN (" + BlogIds + ") ORDER BY blogId, id";
+            SqlCommand getBlogPosts = new SqlCommand(queryString, conn);
+            SqlDataReader blogReader = getBlogPosts.ExecuteReader();
+
+            int previousPageId = 0;
+
+            List<BlogPost> m_BlogPosts = new List<BlogPost>();
+
+            while (blogReader.Read())
+            {
+                BlogPost m_BlogPost = new BlogPost();
+
+                m_BlogPost.Id = blogReader.GetInt32(0);
+                m_BlogPost.BlogId = blogReader.GetInt32(1);
+                m_BlogPost.Title = blogReader.GetString(2);
+                m_BlogPost.PublishDate = blogReader.GetDateTime(3);
+                m_BlogPost.ContentGroup = blogReader.GetInt32(4);
+                m_BlogPost.Content = blogReader.GetString(5);
+                m_BlogPost.PageWorkFlowState = blogReader.GetInt32(6);
+                m_BlogPost.LockedBy = blogReader.GetInt32(7);
+                m_BlogPost.LastModifiedBy = blogReader.GetInt32(8);
+                m_BlogPost.LastModifiedDate = blogReader.GetDateTime(9);
+                m_BlogPost.Comments = blogReader.GetInt32(10);
+                m_BlogPost.ExpirationDate = blogReader.GetDateTime(11);
 
                 m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
                 m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
@@ -162,69 +258,6 @@ namespace CMS.Domain.DataAccess
             return m_BlogPosts;
         }
 
-        public static List<BlogPost> RetrieveAllByCategory(int Category)
-        {
-            SqlConnection conn = DB.DbConnect();
-            conn.Open();
-
-            string queryString = "SELECT * FROM CMS_BlogPosts WHERE pageWorkFlowState != 4 ORDER BY blogId, publishDate, id DESC";
-            SqlCommand getBlogPosts = new SqlCommand(queryString, conn);
-            SqlDataReader blogPostReader = getBlogPosts.ExecuteReader();
-
-            List<BlogPost> m_BlogPosts = new List<BlogPost>();
-            int previousPageId = 0;
-
-            while (blogPostReader.Read())
-            {
-                BlogPost m_BlogPost = new BlogPost();
-
-                m_BlogPost.Id = blogPostReader.GetInt32(0);
-                m_BlogPost.BlogId = blogPostReader.GetInt32(1);
-                m_BlogPost.Title = blogPostReader.GetString(2);
-                m_BlogPost.PublishDate = blogPostReader.GetDateTime(3);
-                m_BlogPost.ContentGroup = blogPostReader.GetInt32(4);
-                //m_BlogPost.Categories = blogPostReader.GetString(5);
-                m_BlogPost.Content = blogPostReader.GetString(6);
-                m_BlogPost.PageWorkFlowState = blogPostReader.GetInt32(7);
-                m_BlogPost.LockedBy = blogPostReader.GetInt32(8);
-                m_BlogPost.LastModifiedBy = blogPostReader.GetInt32(9);
-                m_BlogPost.LastModifiedDate = blogPostReader.GetDateTime(10);
-                m_BlogPost.Comments = blogPostReader.GetInt32(11);
-                m_BlogPost.ExpirationDate = blogPostReader.GetDateTime(12);
-
-                m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
-                m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
-
-                if (previousPageId != m_BlogPost.BlogId)
-                {
-                    string m_Cats = blogPostReader.GetString(5);
-                    string[] catsArray = m_Cats.Split(',');
-                    List<int> myCats = new List<int>();
-                    myCats.Add(0);
-
-                    foreach (string cat in catsArray)
-                    {
-                        if (Category == int.Parse(cat))
-                        {
-                            myCats.Add(int.Parse(cat));
-                        }
-                    }
-
-                    m_BlogPost.Categories = myCats;
-
-                    if (myCats.Count > 1)
-                    {
-                        m_BlogPosts.Add(m_BlogPost);
-                    }
-                }
-
-                previousPageId = m_BlogPost.BlogId;
-            }
-
-            conn.Close();
-            return m_BlogPosts;
-        }
-
         public static void Update(BlogPost m_BlogPost)
         {
             SqlConnection conn = DB.DbConnect();
@@ -232,13 +265,12 @@ namespace CMS.Domain.DataAccess
 
             if (m_BlogPost.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_BlogPosts SET title = @title, publishDate = @publishDate, expirationDate = @expirationDate, contentGroup = @contentGroup, categories = @categories, content = @content, comments = @comments, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate WHERE id = @id";
+                string queryString = "UPDATE CMS_BlogPosts SET title = @title, publishDate = @publishDate, expirationDate = @expirationDate, contentGroup = @contentGroup, content = @content, comments = @comments, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate WHERE id = @id";
                 SqlCommand updateBlogPost = new SqlCommand(queryString, conn);
                 updateBlogPost.Parameters.AddWithValue("title", m_BlogPost.Title);
                 updateBlogPost.Parameters.AddWithValue("publishDate", m_BlogPost.PublishDate.ToString());
                 updateBlogPost.Parameters.AddWithValue("expirationDate", m_BlogPost.ExpirationDate.ToString());
                 updateBlogPost.Parameters.AddWithValue("contentGroup", m_BlogPost.ContentGroup);
-                updateBlogPost.Parameters.AddWithValue("categories", string.Join(",", m_BlogPost.Categories.ToArray()));  //m_BlogPost.Categories);
                 updateBlogPost.Parameters.AddWithValue("content", m_BlogPost.Content);
                 updateBlogPost.Parameters.AddWithValue("comments", m_BlogPost.Comments);
                 updateBlogPost.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
@@ -247,23 +279,50 @@ namespace CMS.Domain.DataAccess
                 updateBlogPost.Parameters.AddWithValue("id", m_BlogPost.Id);
                 updateBlogPost.ExecuteNonQuery();
 
+                queryString = "DELETE FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
+                SqlCommand delCats = new SqlCommand(queryString, conn);
+                delCats.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
+                delCats.ExecuteNonQuery();
+
+                foreach (int catId in m_BlogPost.Categories)
+                {
+                    queryString = "INSERT INTO CMS_BlogPostsToCategories(blogPostId, categoryId) VALUES(@blogId, @catId)";
+                    SqlCommand insertCat = new SqlCommand(queryString, conn);
+                    insertCat.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
+                    insertCat.Parameters.AddWithValue("catId", catId);
+                    insertCat.ExecuteNonQuery();
+                }
+
             }
             else if (m_BlogPost.PageWorkFlowState == 2 || m_BlogPost.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, categories, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @categories, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
+                string queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate)";
                 SqlCommand insertBlogPost = new SqlCommand(queryString, conn);
                 insertBlogPost.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
                 insertBlogPost.Parameters.AddWithValue("title", m_BlogPost.Title);
                 insertBlogPost.Parameters.AddWithValue("publishDate", m_BlogPost.PublishDate.ToString());
                 insertBlogPost.Parameters.AddWithValue("expirationDate", m_BlogPost.ExpirationDate.ToString());
                 insertBlogPost.Parameters.AddWithValue("contentGroup", m_BlogPost.ContentGroup);
-                insertBlogPost.Parameters.AddWithValue("categories", string.Join(",", m_BlogPost.Categories.ToArray()));  //m_BlogPost.Categories);
                 insertBlogPost.Parameters.AddWithValue("content", m_BlogPost.Content);
                 insertBlogPost.Parameters.AddWithValue("comments", m_BlogPost.Comments);
                 insertBlogPost.Parameters.AddWithValue("lockedBy", HttpContext.Current.Session["uid"]);
                 insertBlogPost.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
                 insertBlogPost.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
                 insertBlogPost.ExecuteNonQuery();
+
+                queryString = "DELETE FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
+                SqlCommand delCats = new SqlCommand(queryString, conn);
+                delCats.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
+                delCats.ExecuteNonQuery();
+
+                foreach (int catId in m_BlogPost.Categories)
+                {
+                    queryString = "INSERT INTO CMS_BlogPostsToCategories(blogPostId, categoryId) VALUES(@blogId, @catId)";
+                    SqlCommand insertCat = new SqlCommand(queryString, conn);
+                    insertCat.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
+                    insertCat.Parameters.AddWithValue("catId", catId);
+                    insertCat.ExecuteNonQuery();
+                }
             }
             else
             {

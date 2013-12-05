@@ -1,0 +1,17 @@
+﻿@foreach (var post in Model)
+{
+    <div class="border">
+        <h5><a href="#">More Poems</a></h5>
+            <section class="padding">
+                <figcaption class="caption float_left">@post.PublishDate</figcaption>
+                <figcaption class="caption float_right">By <strong class="strong">The Say-er of It</strong></figcaption>
+                <div class="clear margin-bottom_10"></div>
+                <figcaption class="caption">@post.Title<br /> <br />
+                    @Html.Raw(System.Web.HttpUtility.HtmlDecode(post.Content)) <br /><br />
+                	<span class="dashd"></span>
+                	<span class="float_right"><a href="#">10 comments</a></span>
+                </figcaption>
+                <div class="clear"></div>
+            </section>
+        </div><!--end border-->
+}

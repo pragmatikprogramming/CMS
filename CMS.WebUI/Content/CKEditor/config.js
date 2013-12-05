@@ -43,7 +43,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Make dialogs simpler.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
-	config.width = '640px';
+	config.width = '960px';
 
 	//config.extraPlugins = 'doksoft_include';
 	config.doksoft_include_css = ['/Content/css/ckeditorStyles.css', '/Content/css/reset.css'];

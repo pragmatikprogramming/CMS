@@ -17,30 +17,7 @@
 </div><!--end left_part-->
             
 <div class="right_part">
-    <div class="margin-top_10"><img src="~/Content/images/study_img.jpg" width="304" height="263"></div>
+    <div class="margin-top_10">&nbsp;</div>
                 
-    <div class="adver">
-        <div class="red"></div>
-        <div class="img_left"><img src="~/Content/images/img1.jpg" width="102" height="88"></div>
-		<figcaption>
-            <a href="#">June 10-Aug 10. A reading game and free performances. </a> <br />Click Branch Calendars for events.
-        </figcaption>
-    </div>
-                
-    <div class="adver">
-        <div class="green"></div>
-        <div class="img_left"><img src="~/Content/images/img2.jpg" width="102" height="88"></div>
-        <figcaption>
-            June 10-Aug 10. A reading game and free performances. <br />
-            <a href="#">707-421-6500</a>
-        </figcaption>
-    </div>
-                
-    <div class="adver">
-        <div class="blue"></div>
-        <div class="img_left"><img src="~/Content/images/img3.jpg" width="102" height="88"></div>
-		<figcaption>
-            <a href="#">June 10-Aug 10. A reading game and free performances. Click Branch Calendars for events.</a> <br />
-        </figcaption>
-    </div>
+    @Html.Action("Container", new{ id = ViewBag.PageId })
 </div> <!--end right part-->

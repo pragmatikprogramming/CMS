@@ -6,66 +6,18 @@
 <div class="left_part">
     <div class="catagory">
         <div class="collumn1">
-            <article>
-                <h2>CATALOG</h2>
-                <ul class="cat">
-                    <li><a href="#" title="Your Library Cart">Your Library Cart</a></li>
-               	    <li><a href="#" title="Search the Site">Search the Site</a></li>
-           		    <li><a href="#" title="Hours & Locations">Hours & Locations</a></li>
-       			    <span class="more"><a href="#">more...</a></span>			
-                </ul>
-            </article>
-            <article>
-                <h2>KIDS</h2>
-            	<ul class="cat">
-            	    <li><a href="#" title="Your Library Cart">Your Library Cart</a></li>
-               	  	<li><a href="#" title="Search the Site">Search the Site</a></li>
-           		  	<li><a href="#" title="Hours & Locations">Hours & Locations</a></li>
-       			  	<span class="more"><a href="#">more...</a></span>			
-           	    </ul>
-            </article>
+            @Html.Action("NonSystemMenu", new{ id = 8, viewName = "HomePageMenuModule"})
+            @Html.Action("NonSystemMenu", new{ id = 11, viewName = "HomePageMenuModule"})
         </div>
                 
         <div class="collumn1">
-            <article>
-            	<h2>TEENS</h2>
-            	  <ul class="cat">
-            		<li><a href="#" title="Your Library Cart">Your Library Cart</a></li>
-               	  	<li><a href="#" title="Search the Site">Search the Site</a></li>
-           		  	<li><a href="#" title="Hours & Locations">Hours & Locations</a></li>
-       			  	<span class="more"><a href="#">more...</a></span>			
-           	    </ul>
-            </article>
-            <article>
-                <h2>eLIBRARY</h2>
-            	<ul class="cat">
-            	    <li><a href="#" title="Your Library Cart">Your Library Cart</a></li>
-               	  	<li><a href="#" title="Search the Site">Search the Site</a></li>
-           		  	<li><a href="#" title="Hours & Locations">Hours & Locations</a></li>
-       			  	<span class="more"><a href="#">more...</a></span>			
-           	    </ul>
-            </article>
+            @Html.Action("NonSystemMenu", new{ id = 9, viewName = "HomePageMenuModule"})
+            @Html.Action("NonSystemMenu", new{ id = 12, viewName = "HomePageMenuModule"})
         </div>
                 
         <div class="collumn1">
-            <article>
-            	<h2>PROGRAMS</h2>
-                <ul class="cat">
-            		<li><a href="#" title="Your Library Cart">Your Library Cart</a></li>
-               	  	<li><a href="#" title="Search the Site">Search the Site</a></li>
-           		  	<li><a href="#" title="Hours & Locations">Hours & Locations</a></li>
-       			  	<span class="more"><a href="#">more...</a></span>			
-           	    </ul>
-            </article>
-            <article>
-                <h2>BEST OF THE WEB</h2>
-            	<ul class="cat">
-            		<li><a href="#" title="Your Library Cart">Your Library Cart</a></li>
-               	  	<li><a href="#" title="Search the Site">Search the Site</a></li>
-           		  	<li><a href="#" title="Hours & Locations">Hours & Locations</a></li>
-       			  	<span class="more"><a href="#">more...</a></span>			
-           	    </ul>
-            </article>
+            @Html.Action("NonSystemMenu", new{ id = 10, viewName = "HomePageMenuModule"})
+            @Html.Action("NonSystemMenu", new{ id = 13, viewName = "HomePageMenuModule"})
         </div>
         <div class="clear"></div>
     </div><!--end catagory-->
@@ -81,69 +33,12 @@
     </div>
                 
     <div class="event-box">
-        <div class="title2">Featured Events</div>
-            <figcaption>
-                <div class="coloumn2">
-				    <span class="date">03/19 :</span>
-                    <span class="event-title"><a href="#">Knitting Night</a> <br /> 
-                    7pm Fairfield CC</span>
-                    <div class="clear"></div>
-                </div>
-                
-                <div class="coloumn2">
-				    <span class="date">03/19 :</span>
-                    <span class="event-title"><a href="#">Classic Book Group</a> <br /> 
-                    11:30 - 12:30pm <br />
-                    Rio Vista</span>
-                    <div class="clear"></div>
-                </div>
-                
-                <div class="coloumn2">
-				    <span class="date">03/19 :</span>
-                    <span class="event-title"><a href="#">Knitting Night</a> <br /> 
-                    7pm Fairfield CC</span>
-                    <div class="clear"></div>
-                </div>
-                
-                <div class="coloumn2">
-				    <span class="date">03/19 :</span>
-                    <span class="event-title"><a href="#">Classic Book Group</a> <br /> 
-                    6:30 p.m. 
-                    Vacaville Town Square</span>
-                    <div class="clear"></div>
-                </div>
-                
-                <span class="more margin-top_10"><a href="#">view all news</a></span>
-            </figcaption>
+        @Html.Action("FeaturedEvents")
     </div><!--end events-->
     <div class="clear"></div>
 </div><!--end left_part-->
             
 <div class="right_part">
-    <div class="margin-top_10"><img src="~/Content/images/study_img.jpg" width="304" height="263"></div>
-                
-    <div class="adver">
-        <div class="red"></div>
-        <div class="img_left"><img src="~/Content/images/img1.jpg" width="102" height="88"></div>
-		<figcaption>
-            <a href="#">June 10-Aug 10. A reading game and free performances. </a> <br />Click Branch Calendars for events.
-        </figcaption>
-    </div>
-                
-    <div class="adver">
-        <div class="green"></div>
-        <div class="img_left"><img src="~/Content/images/img2.jpg" width="102" height="88"></div>
-        <figcaption>
-            June 10-Aug 10. A reading game and free performances. <br />
-            <a href="#">707-421-6500</a>
-        </figcaption>
-    </div>
-                
-    <div class="adver">
-        <div class="blue"></div>
-        <div class="img_left"><img src="~/Content/images/img3.jpg" width="102" height="88"></div>
-		<figcaption>
-            <a href="#">June 10-Aug 10. A reading game and free performances. Click Branch Calendars for events.</a> <br />
-        </figcaption>
-    </div>
+    <div class="margin-top_10" style="line-height: 0px;">&nbsp;</div>
+    @Html.Action("Container", new{ id = ViewBag.PageId })
 </div> <!--end right part-->
