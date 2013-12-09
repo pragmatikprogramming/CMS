@@ -1,0 +1,6 @@
+﻿@foreach (var question in Model)
+{
+    <p>@question.FaqQuestion</p><br />
+    <p>@Html.Raw(System.Web.HttpUtility.HtmlDecode(question.FaqAnswer)) </p><br />
+}
+

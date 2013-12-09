@@ -16,5 +16,6 @@ namespace CMS.Domain.Abstract
         List<Event> FeaturedEvents();
         List<MenuItem> NonSystemMenu(int id);
         List<BlogPost> GetTeenBlog();
+        List<BlogPost> GetNews();
     }
 }

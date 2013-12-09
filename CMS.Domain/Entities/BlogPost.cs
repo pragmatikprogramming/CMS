@@ -23,6 +23,11 @@ namespace CMS.Domain.Entities
         private int lastModifiedBy;
         private string lastModifiedByName;
         private DateTime lastModifiedDate;
+        private int newsImageId;
+        private string newsImageName;
+        private string introText;
+        private string author;
+
 
         public int Id
         {
@@ -207,6 +212,75 @@ namespace CMS.Domain.Entities
             { 
                 lastModifiedDate = value; 
             }
-        } 
+        }
+
+        public int NewsImageId
+        {
+            get 
+            { 
+                return newsImageId; 
+            }
+            set 
+            { 
+                newsImageId = value; 
+            }
+        }
+
+        public string NewsImageName
+        {
+            get 
+            { 
+                return newsImageName; 
+            }
+            set 
+            { 
+                newsImageName = value; 
+            }
+        }
+
+        public string IntroText
+        {
+            get 
+            { 
+                return introText; 
+            }
+            set 
+            { 
+                introText = value; 
+            }
+        }
+
+        public string Author
+        {
+            get 
+            { 
+                return author; 
+            }
+            set 
+            { 
+                author = value; 
+            }
+        }
+
+        public BlogPost()
+        {
+            NewsImageName = "";
+        }
+
+        public void BlogPostSet()
+        {
+            if(NewsImageName == null)
+            {
+                NewsImageName = "";
+            }
+            if(Author == null)
+            {
+                Author = "";
+            }
+            if(IntroText == null)
+            {
+                IntroText = "";
+            }
+        }
     }
 }

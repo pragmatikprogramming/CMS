@@ -2430,7 +2430,7 @@
     <Content Include="Views\Form\AddForm.cshtml" />
     <Content Include="Views\Form\EditForm.cshtml" />
     <Content Include="Views\Form\OrderFormFields.cshtml" />
-    <Content Include="Views\Form\getForm.cshtml" />
+    <Content Include="Views\Home\getForm.cshtml" />
     <Content Include="Views\HTMLWidget\Index.cshtml" />
     <Content Include="Views\HTMLWidget\WidgetAdd.cshtml" />
     <Content Include="Views\HTMLWidget\WidgetEdit.cshtml" />
@@ -2447,13 +2447,14 @@
     <Content Include="Views\Home\NonSystemMenu.cshtml" />
     <Content Include="Views\Home\FeaturedEvents.cshtml" />
     <Content Include="Views\Home\HomePageMenuModule.cshtml" />
-    <Content Include="Views\Shared\BabiesAndToddlers.cshtml" />
-    <Content Include="Views\Shared\Parents.cshtml" />
-    <Content Include="Views\Shared\Teachers.cshtml" />
-    <Content Include="Views\Shared\Events.cshtml" />
-    <Content Include="Views\Shared\KidsCatalog.cshtml" />
     <Content Include="Views\Home\SystemSubMenu.cshtml" />
     <Content Include="Views\Home\getTeenBlog.cshtml" />
+    <Content Include="Views\BlogPost\ImageSelect.cshtml" />
+    <Content Include="Views\Home\getNews.cshtml" />
+    <Content Include="Views\Page\getForms.cshtml" />
+    <Content Include="Views\Page\getFAQ.cshtml" />
+    <Content Include="Views\Home\getFAQ.cshtml" />
+    <Content Include="Views\Page\getDefaults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

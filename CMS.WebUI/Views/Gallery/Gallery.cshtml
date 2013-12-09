@@ -42,8 +42,12 @@
                         <td><img src="/Content/images/folder.png" title="Folder" alt="Folder" /></td>
                         <td><a href="/Gallery/Images/@folder.Id">@folder.Name</a></td>
                         <td>
-                            <a href="/Gallery/EditGallery/@folder.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a>
-                            <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@folder.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a>
+                            
+                            @if(folder.Name != "News Images")
+                            {
+                                <a href="/Gallery/EditGallery/@folder.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a>
+                                <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@folder.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a>
+                            }
                         </td>
                     </tr>   
                 }

@@ -15,12 +15,16 @@ namespace CMS.WebUI.Controllers
     {
         IPageRepository PageRepository;
         IJSONRepository JSONRepository;
+        IFormRepository FormRepository;
+        IFAQRepository FAQRepository;
 
         
-        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo)
+        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo, IFormRepository FormRepo, IFAQRepository FAQRepo)
         {
             PageRepository = PageRepo;
             JSONRepository = JSONRepo;
+            FormRepository = FormRepo;
+            FAQRepository = FAQRepo;
         }
 
         [HttpGet]
@@ -76,6 +80,7 @@ namespace CMS.WebUI.Controllers
 
             if (ModelState.IsValid)
             {
+                m_Page.PageSetDefaults();
                 PageRepository.Create(m_Page);
                 return RedirectToAction("Index", "Page", new { id = m_Page.ParentId });
             }
@@ -147,6 +152,7 @@ namespace CMS.WebUI.Controllers
 
             if (ModelState.IsValid)
             {
+                m_Page.PageSetDefaults();
                 PageRepository.Update(m_Page);
                 return RedirectToAction("Index", "Page", new { id = m_Page.ParentId });
             }
@@ -233,6 +239,29 @@ namespace CMS.WebUI.Controllers
             Page m_Page = PageRepository.RetrieveOne(id);
             PageRepository.sortDown(id);
             return RedirectToAction("Index", "Page", new { id = m_Page.ParentId });
+        }
+
+        [HttpPost]
+        [CMSAuth]
+        public ActionResult getPageTypeIds(int mPageType)
+        {
+            ViewBag.PageType = mPageType;
+
+            if (mPageType == 2)
+            {
+                List<Form> m_Forms = FormRepository.RetrieveAll();
+                return View("getForms", m_Forms);
+            }
+            else if (mPageType == 3)
+            {
+                List<FAQ> m_FAQ = FAQRepository.RetrieveAllFAQ();
+                return View("getFAQ", m_FAQ);
+            }
+            else
+            {
+                ViewBag.Templates = Utility.GetTemplates();
+                return View("getDefaults");
+            }
         }
     }
 }

@@ -1,0 +1,19 @@
+﻿<input type="hidden" value="@ViewBag.PageType" name="PageType" />
+<div class="formlabel">Forms:</div>
+<div class="formfield">
+    <select name="PageTypeId">
+        @foreach (var mForm in Model)
+        {
+            <option value="@mForm.Id">@mForm.FormName</option>
+        }
+    </select>
+</div>
+<div class="clear">&nbsp;</div>
+
+<div class="formlabel">Template:</div>
+<div class="formfield">
+    <select name="TemplateId" aria-readonly="true">
+        <option value="5" selected="selected">Home Interior</option>
+    </select>
+</div>
+<div class="clear">&nbsp;</div>

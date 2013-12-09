@@ -4,7 +4,7 @@
         <h5><a href="#">More Poems</a></h5>
             <section class="padding">
                 <figcaption class="caption float_left">@post.PublishDate</figcaption>
-                <figcaption class="caption float_right">By <strong class="strong">The Say-er of It</strong></figcaption>
+                <figcaption class="caption float_right">By <strong class="strong">@post.Author</strong></figcaption>
                 <div class="clear margin-bottom_10"></div>
                 <figcaption class="caption">@post.Title<br /> <br />
                     @Html.Raw(System.Web.HttpUtility.HtmlDecode(post.Content)) <br /><br />

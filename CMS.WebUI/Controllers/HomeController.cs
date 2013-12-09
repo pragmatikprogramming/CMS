@@ -14,11 +14,17 @@ namespace CMS.WebUI.Controllers
     {
         IPageRepository PageRepository;
         IHomeRepository HomeRepository;
+        IImageRepository ImageRepository;
+        IFormRepository FormRepository;
+        IFAQRepository FAQRepository;
 
-        public HomeController(IPageRepository PageRepo, IHomeRepository HomeRepo)
+        public HomeController(IPageRepository PageRepo, IHomeRepository HomeRepo, IImageRepository ImageRepo, IFormRepository FormRepo, IFAQRepository FAQRepo)
         {
             PageRepository = PageRepo;
             HomeRepository = HomeRepo;
+            ImageRepository = ImageRepo;
+            FormRepository = FormRepo;
+            FAQRepository = FAQRepo;
         }
 
         public ActionResult Index(int id = 0)
@@ -33,8 +39,10 @@ namespace CMS.WebUI.Controllers
             {
                 Page m_Page = PageRepository.RetrieveOne(id);
 
-                if (m_Page.RedirectURL == null)
+                if (m_Page.RedirectURL == null || m_Page.RedirectURL == string.Empty)
                 {
+                    ViewBag.PageType = m_Page.PageType;
+                    ViewBag.id = m_Page.PageTypeId;
                     return View(m_Page.TemplateName, m_Page);
                 }
                 else
@@ -83,6 +91,25 @@ namespace CMS.WebUI.Controllers
             ViewBag.Count = 0;
             List<BlogPost> m_BlogPosts = HomeRepository.GetTeenBlog();
             return View("getTeenBlog", m_BlogPosts);
+        }
+
+        public ActionResult getNews()
+        {
+            ViewBag.Count = 1;
+            List<BlogPost> m_BlogPosts = HomeRepository.GetNews();
+            return View("getNews", m_BlogPosts);
+        }
+
+        public ActionResult getForm(int id)
+        {
+            Form m_Form = FormRepository.RetrieveOne(id);
+            return View("getForm", m_Form);
+        }
+
+        public ActionResult getFAQ(int id)
+        {
+            List<FAQQuestions> m_Questions = FAQRepository.RetrieveAllFAQQuestions(id);
+            return View("getFAQ", m_Questions);
         }
     }
 }

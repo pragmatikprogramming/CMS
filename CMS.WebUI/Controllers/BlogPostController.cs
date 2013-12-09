@@ -13,10 +13,12 @@ namespace CMS.WebUI.Controllers
     public class BlogPostController : Controller
     {
         IBlogPostRepository BlogPostRepository;
+        IImageRepository ImageRepository;
 
-        public BlogPostController(IBlogPostRepository BlogPostRepo)
+        public BlogPostController(IBlogPostRepository BlogPostRepo, IImageRepository ImageRepo)
         {
             BlogPostRepository = BlogPostRepo;
+            ImageRepository = ImageRepo;
         }
 
         [CMSAuth]
@@ -35,6 +37,7 @@ namespace CMS.WebUI.Controllers
             ViewBag.Categories = BlogPostRepository.getCategories();
             ViewBag.myContentGroups = Utility.ContentGroups();
             BlogPost m_BlogPost = new BlogPost();
+            ViewBag.NewsImages = ImageRepository.RetrieveAll(23);
 
             return View("AddBlogPost", m_BlogPost);
         }
@@ -54,6 +57,7 @@ namespace CMS.WebUI.Controllers
             {
                 ViewBag.Categories = BlogPostRepository.getCategories();
                 ViewBag.myContentGroups = Utility.ContentGroups();
+                ViewBag.NewsImages = ImageRepository.RetrieveAll(23);
                 return View("AddBlogPost", m_BlogPost);
             }
         }
@@ -65,6 +69,7 @@ namespace CMS.WebUI.Controllers
             ViewBag.Categories = BlogPostRepository.getCategories();
             ViewBag.myContentGroups = Utility.ContentGroups();
             BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(id);
+            ViewBag.NewsImages = ImageRepository.RetrieveAll(23);
             return View("EditBlogPost", m_BlogPost);
         }
 
@@ -77,6 +82,7 @@ namespace CMS.WebUI.Controllers
             m_BlogPost.PageWorkFlowState = a_BlogPost.PageWorkFlowState;
             if (ModelState.IsValid)
             {
+                m_BlogPost.BlogPostSet();
                 BlogPostRepository.Update(m_BlogPost);
                 return RedirectToAction("Index", "BlogPost");
             }
@@ -89,6 +95,7 @@ namespace CMS.WebUI.Controllers
                 }
                 ViewBag.Categories = BlogPostRepository.getCategories();
                 ViewBag.myContentGroups = Utility.ContentGroups();
+                ViewBag.NewsImages = ImageRepository.RetrieveAll(23);
                 return View("EditBlogPost", m_BlogPost);
             }
         }
@@ -140,6 +147,14 @@ namespace CMS.WebUI.Controllers
             ViewBag.m_SessionId = (int)System.Web.HttpContext.Current.Session["uid"];
 
             return PartialView("getCategoryFilter", m_BlogPosts);
+        }
+
+        [CMSAuth]
+        public ActionResult ImageSelect(string ImageName, int ImageId)
+        {
+            ViewBag.ImageName = ImageName;
+            ViewBag.ImageId = ImageId;
+            return View("ImageSelect");
         }
     }
 }

@@ -48,6 +48,14 @@
         <div class="formfield"><input type="text" name="Title" value="@Model.Title" /></div>
         <div class="clear">&nbsp;</div>
         
+        <div class="formlabel">Author:</div>
+        <div class="formfield"><input type="text" name="Author" id="Author" value="@Model.Author" /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Intro Text:</div>
+        <div class="formfield"><textarea cols="10" rows="5" name="IntroText" id="IntroText">@Model.IntroText</textarea></div>
+        <div class="clear">&nbsp;</div>
+
         <div class="formlabel">Publish Date:</div>
         <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="@Model.PublishDate" /></div>
         <div class="clear">&nbsp;</div>
@@ -64,6 +72,15 @@
                 "imageBrowser_listUrl": "/JSON/getImages"
             }, '');
             </script>
+
+        <div style="line-height: 30px;">&nbsp;</div>
+
+        <div id="myImage">
+            <div class="formlabel">Image:</div>
+            <div class="formfield"><input type="text" name="NewsImageName" value="@Model.NewsImageName" /><a href="#myModal" role="button" data-toggle="modal">&nbsp;&nbsp;select an image</a></div>
+            <div class="clear">&nbsp;</div>
+            <input type="hidden" name="NewsImageId" value="@Model.NewsImageId" />
+        </div>
 
         <div style="line-height: 30px;">&nbsp;</div>
         <div class="formlabel">Categories:</div>
@@ -111,7 +128,23 @@
         <div class="formlabel"><button form="blogpostEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
     </form>
 
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="myModalLabel">Choos An Image</h3>
+            </div>
+            <div class="modal-body">
+                @foreach(var image in ViewBag.NewsImages)
+                {
+                    <p class="error-text"><a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#myImage" href="/BlogPost/ImageSelect?ImageName=@image.Name.@image.FileType&ImageId=@image.Id"  data-dismiss="modal">@image.Name.@image.FileType</a></p>
+                }
+            </div>
 
+            <div class="modal-footer">
+                <!--<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/Gallery/DeleteGallery/' + myID;">Delete</button>-->
+            </div>
+        </div>
 </div>
 
 

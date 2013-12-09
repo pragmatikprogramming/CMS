@@ -29,12 +29,9 @@ namespace CMS.Domain.Entities
         private string lastModifiedDate;
         private int sortOrder;
         private string redirectURL;
-
+        private int pageType;
+        private int pageTypeId;
         
-
-        
-
-
         public int Id
         {
             get 
@@ -280,11 +277,43 @@ namespace CMS.Domain.Entities
             }
         }
 
+        public int PageType
+        {
+            get 
+            { 
+                return pageType; 
+            }
+            set 
+            { 
+                pageType = value; 
+            }
+        }
+
+        public int PageTypeId
+        {
+            get 
+            { 
+                return pageTypeId; 
+            }
+            set 
+            { 
+                pageTypeId = value; 
+            }
+        }
+
         public Page()
         {
             content = string.Empty;
             metaDescription = string.Empty;
             metaKeywords = string.Empty;
+        }
+
+        public void PageSetDefaults()
+        {
+            if(RedirectURL == null)
+            {
+                RedirectURL = "";
+            }
         }
     }
 }

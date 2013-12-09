@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "HomeFull";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<div class="margin-top_10">&nbsp;</div>
+
+@Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+
+<div class="margin-top_10">&nbsp;</div>

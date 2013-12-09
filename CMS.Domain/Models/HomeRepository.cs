@@ -51,5 +51,11 @@ namespace CMS.Domain.Models
             List<BlogPost> m_BlogPosts = DBBlogPost.RetrieveAllByCategory(3);
             return m_BlogPosts;
         }
+
+        public List<BlogPost> GetNews()
+        {
+            List<BlogPost> m_BlogPosts = DBBlogPost.RetrieveAllByCategory(2);
+            return m_BlogPosts;
+        }
     }
 }

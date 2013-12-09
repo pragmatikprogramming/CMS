@@ -22,7 +22,41 @@
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
+    <form action="/Page/getPageTypeIds" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#PageType" method="post">
+        <div class="formlabel">Page Type:</div>
+        <div class="formfield">
+            <select name="mPageType" onchange="$(this.form).submit();">
+                <option value="1">Default Content Page</option>
+                <option value="2">Forms Page</option>
+                <option value="3">FAQ's Page</option>
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+    </form>
     <form action="/Page/EditPage" method="post" id="pageEdit">
+        <div id="PageType">
+            <input type="hidden" name="PageType" value="1" />
+            <input type="hidden" name="PageTypeId" value="0" />
+
+            <div class="formlabel">Template:</div>
+            <div class="formfield">
+                <select name="TemplateId">
+                    <option value="">-- Select a Template --</option>
+                    @foreach (var Template in ViewBag.Templates)
+                    {
+                        if (Template.TemplateId == Model.TemplateId)
+                        {
+                            <option value="@Template.TemplateId" selected="selected">@Template.FriendlyName</option>
+                        }
+                        else
+                        {
+                            <option value="@Template.TemplateId">@Template.FriendlyName</option>
+                        }
+                        }
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+        </div>
         <input type="hidden" name="Id" id="Id" value="@Model.Id" />
         <input type="hidden" name="PageID" id="PageID" value="@Model.PageID" />
         <input type="hidden" name="ParentId" id="ParentId" value="@Model.ParentId" />
@@ -42,24 +76,6 @@
                  }
             </select>
         </div>
-        <div class="clear">&nbsp;</div>
-
-        <div class="formlabel">Template:</div>
-        <div class="formfield"><select name="TemplateId">
-            <option value="">-- Select a Template --</option>
-            @foreach (var Template in ViewBag.Templates)
-                {
-                    if (Template.TemplateId == Model.TemplateId)
-                    {
-                        <option value="@Template.TemplateId" selected="selected">@Template.FriendlyName</option>
-                    }
-                    else
-                    {
-                        <option value="@Template.TemplateId">@Template.FriendlyName</option>
-                    }
-                 }
-
-                               </select></div>
         <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Page Title:</div>
