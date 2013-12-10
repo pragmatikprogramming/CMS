@@ -1,25 +1,22 @@
-﻿@foreach(var news in Model)
-{
-    if(ViewBag.Count == 1)
-    {
-        @:<div class="title">News & Announcements</div>
-        @:<div align="center" class="margin-top_10"><img src="/Galleries/News Images/@news.NewsImageName" width="256" height="220"></div>
+﻿<div id="News">
+    <div class="title">News & Announcements</div>
+    <div align="center" class="margin-top_10"><img src="/Galleries/News Images/@Model[0].NewsImageName" width="256" height="220"></div>
                 
-        @:<figcaption>@news.IntroText<br />
-            @:<span class="more margin-top_10"><a href="#">view all news</a></span>
-            @:<span class="pagination">
-    }
-    if (ViewBag.Count == 1)
-    {
-        @:<a href="#" ><i class="icon-caret-left" title="Previous" alt="Previous"></i></a>
-    }
-        @:<a href="#">@ViewBag.Count</a>
-    if(ViewBag.Count == 6 || ViewBag.Count == Model.Count)
-    {
-            @:<a href="#" ><i class="icon-caret-right" title="Next" alt="Next"></i></a>
-            @:</span>    
-        @:</figcaption>
-    }
-
-    ViewBag.Count = ViewBag.Count + 1;
-}
+    <figcaption>@Model[0].IntroText<br />
+        <span class="more margin-top_10"><a href="/News">view all news</a></span>
+        <span class="pagination">
+            @foreach(var news in Model)
+            {
+                if (ViewBag.Count == 1)
+                {
+                    @:<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#News" href="/Home/SwapNews?id=@news.Id" style="text-decoration: underline;">@ViewBag.Count</a>
+                }
+                else
+                {
+                    @:<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#News" href="/Home/SwapNews?id=@news.Id" style="text-decoration: none;">@ViewBag.Count</a>
+                }
+                ViewBag.Count = ViewBag.Count + 1;
+            }
+        </span>    
+    </figcaption>
+</div>

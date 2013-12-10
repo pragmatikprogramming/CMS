@@ -37,7 +37,7 @@
         <div class="logo"><a href="index.html"><img src="~/Content/images/kids-logo.jpg" width="146" height="153" title="Solano County Library Logo" alt="Solano County Library" /></a></div>
         <div class="header3">
        	    <div class="nav_box">
-           	    @Html.Action("NonSystemMenu", new{ id = 7, viewName = "NonSystemMenu"})
+           	    @Html.Action("NonSystemMenu", "Home", new{ id = 7, viewName = "NonSystemMenu"})
             </div>  
             <div class="search_bar">
                 <form name="form1" method="post" action="">
@@ -56,7 +56,7 @@
         <div class="clear"></div>
     </header>
     <div class="navigation">
-        @Html.Action("MainMenu")
+        @Html.Action("MainMenu", "Home")
     </div><!--end navigation-->
     
     @RenderBody()

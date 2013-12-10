@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Preivew";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="left_part">
+    <div class="margin-top_10">&nbsp;</div>
+    @Html.Action("getForm", new{ id = ViewBag.id } )
+    <div class="margin-top_10">&nbsp;</div>
+</div><!--end left_part-->
+            
+<div class="right_part">
+    <div class="margin-top_10">&nbsp;</div>
+                 
+</div> <!--end right part-->

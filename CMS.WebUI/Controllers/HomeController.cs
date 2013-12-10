@@ -18,6 +18,11 @@ namespace CMS.WebUI.Controllers
         IFormRepository FormRepository;
         IFAQRepository FAQRepository;
 
+        public HomeController()
+        {
+
+        }
+
         public HomeController(IPageRepository PageRepo, IHomeRepository HomeRepo, IImageRepository ImageRepo, IFormRepository FormRepo, IFAQRepository FAQRepo)
         {
             PageRepository = PageRepo;
@@ -110,6 +115,16 @@ namespace CMS.WebUI.Controllers
         {
             List<FAQQuestions> m_Questions = FAQRepository.RetrieveAllFAQQuestions(id);
             return View("getFAQ", m_Questions);
+        }
+
+        public ActionResult SwapNews(int id)
+        {
+            ViewBag.BlogPost = HomeRepository.SwapNews(id);
+            ViewBag.Id = id;
+            ViewBag.Count = 1;
+            List<BlogPost> m_BlogPosts = HomeRepository.GetNews();
+
+            return View("SwapNews", m_BlogPosts);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace CMS.Domain.HelperClasses
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT COUNT(*) FROM CMS_User_Session WHERE uid = @uid AND usersLastRequest > DATEADD(MINUTE, -15, GETDATE())";
+            string queryString = "SELECT COUNT(*) FROM CMS_User_Session WHERE uid = @uid AND usersLastRequest > DATEADD(MINUTE, -60, GETDATE())";
             SqlCommand cmd = new SqlCommand(queryString, conn);
             cmd.Parameters.AddWithValue("uid", uid);
 

@@ -42,6 +42,7 @@ namespace CMS.Domain.DataAccess
                 m_Event.EventStartDate = myEvent.GetDateTime(3);
                 m_Event.EventEndDate = myEvent.GetDateTime(4);
                 m_Event.Branch = myEvent.GetInt32(5);
+                m_Event.BranchName = Utility.getBranchName(m_Event.Branch);
                 m_Event.Body = myEvent.GetString(6);
                 m_Event.PageWorkFlowState = myEvent.GetInt32(7);
                 m_Event.LockedBy = myEvent.GetInt32(8);

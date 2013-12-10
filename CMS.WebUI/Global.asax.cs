@@ -29,6 +29,7 @@ namespace CMS.WebUI
 
         public void Session_OnStart()
         {
+            Session.Timeout = 60;
         }
     }
 }

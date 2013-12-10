@@ -37,7 +37,7 @@
         	    </div>
         	    <div class="header4">
        		        <div class="nav_box">
-           	            @Html.Action("NonSystemMenu", new{ id = 7, viewName = "NonSystemMenu"})
+           	            @Html.Action("NonSystemMenu", "Home", new{ id = 7, viewName = "NonSystemMenu"})
                     </div>  
                     <div class="search_bar">
                	        <form name="form1" method="post" action="">
@@ -56,7 +56,7 @@
                 <div class="clear"></div>
             </header>
            	<div class="navigation2">
-                @Html.Action("MainMenu")
+                @Html.Action("MainMenu", "Home")
             </div><!--end navigation-->
 
             @RenderBody()

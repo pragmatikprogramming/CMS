@@ -12,7 +12,7 @@
                 
     <div class="teen-right">
 
-        @Html.Action("getTeenBlog")
+        @Html.Action("getTeenBlog", "Home")
 
     </div><!--end colomn-right-->
     <div class="clear"></div>
@@ -21,11 +21,11 @@
 <div class="right_part">
     <div class="coloumn3">
         <div class="inner-cen-bg">	
-            @Html.Action("SystemSubMenu", new{id = ViewBag.PageId})	
+            @Html.Action("SystemSubMenu", "Home", new{id = ViewBag.PageId})	
         </div>
     </div><!--end coloumn3-->
     <div class="inner-bot-bg"></div>
             
-    @Html.Action("Container", new{ id = ViewBag.PageId })
+    @Html.Action("Container", "Home", new{ id = ViewBag.PageId })
 </div> <!--end right part--> 
 <div class="clear"></div>

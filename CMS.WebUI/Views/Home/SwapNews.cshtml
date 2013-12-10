@@ -1,0 +1,20 @@
+﻿    <div class="title">News & Announcements</div>
+    <div align="center" class="margin-top_10"><img src="/Galleries/News Images/@ViewBag.BlogPost.NewsImageName" width="256" height="220"></div>
+                
+    <figcaption>@ViewBag.BlogPost.IntroText<br />
+        <span class="more margin-top_10"><a href="#">view all news</a></span>
+        <span class="pagination">
+            @foreach(var news in Model)
+            {
+                if (ViewBag.Id == news.Id)
+                {
+                    @:<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#News" href="/Home/SwapNews/@news.Id" style="text-decoration: underline;">@ViewBag.Count</a>
+                }
+                else
+                {
+                    @:<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#News" href="/Home/SwapNews/@news.Id" style="text-decoration: none;">@ViewBag.Count</a>
+                }
+                ViewBag.Count = ViewBag.Count + 1;
+            }
+        </span>    
+    </figcaption>

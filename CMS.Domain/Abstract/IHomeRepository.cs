@@ -17,5 +17,6 @@ namespace CMS.Domain.Abstract
         List<MenuItem> NonSystemMenu(int id);
         List<BlogPost> GetTeenBlog();
         List<BlogPost> GetNews();
+        BlogPost SwapNews(int id);
     }
 }

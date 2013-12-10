@@ -138,6 +138,7 @@
     <Compile Include="Controllers\HTMLWidgetController.cs" />
     <Compile Include="Controllers\JSONController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\TrashController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2430,7 +2431,6 @@
     <Content Include="Views\Form\AddForm.cshtml" />
     <Content Include="Views\Form\EditForm.cshtml" />
     <Content Include="Views\Form\OrderFormFields.cshtml" />
-    <Content Include="Views\Home\getForm.cshtml" />
     <Content Include="Views\HTMLWidget\Index.cshtml" />
     <Content Include="Views\HTMLWidget\WidgetAdd.cshtml" />
     <Content Include="Views\HTMLWidget\WidgetEdit.cshtml" />
@@ -2443,7 +2443,7 @@
     <Content Include="Views\HTMLWidget\WidgetPreview.cshtml" />
     <Content Include="Views\HTMLWidget\getWidget.cshtml" />
     <Content Include="Views\Home\MainMenu.cshtml" />
-    <Content Include="Views\Home\Container.cshtml" />
+    <Content Include="Views\Shared\Container.cshtml" />
     <Content Include="Views\Home\NonSystemMenu.cshtml" />
     <Content Include="Views\Home\FeaturedEvents.cshtml" />
     <Content Include="Views\Home\HomePageMenuModule.cshtml" />
@@ -2455,6 +2455,13 @@
     <Content Include="Views\Page\getFAQ.cshtml" />
     <Content Include="Views\Home\getFAQ.cshtml" />
     <Content Include="Views\Page\getDefaults.cshtml" />
+    <Content Include="Views\Shared\HomeFullWidth.cshtml" />
+    <Content Include="Views\News\News.cshtml" />
+    <Content Include="Views\Home\SwapNews.cshtml" />
+    <Content Include="Views\Form\FormPreview.cshtml" />
+    <Content Include="Views\Shared\getForm.cshtml" />
+    <Content Include="Views\Calendar\CalendarPreview.cshtml" />
+    <Content Include="Views\News\Article.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

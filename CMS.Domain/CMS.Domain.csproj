@@ -137,6 +137,7 @@
     <Compile Include="Abstract\IJSONRepository.cs" />
     <Compile Include="Abstract\IMenuItemRepository.cs" />
     <Compile Include="Abstract\IMenuRepository.cs" />
+    <Compile Include="Abstract\INewsRepository.cs" />
     <Compile Include="Abstract\IPageRepository.cs" />
     <Compile Include="Abstract\ITrashRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Models\JSONRepository.cs" />
     <Compile Include="Models\MenuItemRepository.cs" />
     <Compile Include="Models\MenuRepository.cs" />
+    <Compile Include="Models\NewsRepository.cs" />
     <Compile Include="Models\PageRepository.cs" />
     <Compile Include="Models\TrashRepository.cs" />
     <Compile Include="Models\UserRepository.cs" />

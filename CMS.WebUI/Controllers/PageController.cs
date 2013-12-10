@@ -219,6 +219,7 @@ namespace CMS.WebUI.Controllers
         {
             Page m_Page = PageRepository.RetrieveOne(id);
             ViewBag.Content = m_Page.Content;
+            ViewBag.PageId = m_Page.PageID;
 
             return View(m_Page.TemplateName, m_Page);
         }

@@ -22,6 +22,8 @@
             
 <div class="right_part">
     <div class="margin-top_10">&nbsp;</div>
-                
-    @Html.Action("Container", new{ id = ViewBag.PageId })
+    @if(ViewBag.PageId != null)
+    {
+        @Html.Action("Container", "Home", new{ id = ViewBag.PageId })
+    }
 </div> <!--end right part-->

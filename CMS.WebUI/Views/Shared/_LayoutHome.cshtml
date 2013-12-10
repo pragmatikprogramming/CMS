@@ -13,6 +13,9 @@
     <link rel="stylesheet" type="text/css" href="~/Content/css/reset.css" media="screen" />
   	<link rel="stylesheet" type="text/css" href="~/Content/css/style.css" media="screen" />
     <link rel="stylesheet" href="~/Content/font-awesome.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:light&v1' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="~/Content/js/cufon-yui.js"></script>
@@ -36,7 +39,7 @@
         	<div class="logo"><a href="index.html"><img src="~/Content/images/logo.jpg" width="146" height="153" title="Solano County Library Logo" alt="Solano County Library" /></a></div>
         	<div class="header">
        		  <div class="nav_box">
-                    @Html.Action("NonSystemMenu", new{ id = 7, viewName = "NonSystemMenu"})
+                    @Html.Action("NonSystemMenu", "Home", new{ id = 7, viewName="NonSystemMenu"})
               </div>  
                <div class="search_bar">
                	  <form name="form1" method="post" action="">
@@ -55,7 +58,7 @@
             <div class="clear"></div>
             </header>
            	 <div class="navigation">
-             	@Html.Action("MainMenu")
+             	@Html.Action("MainMenu", "Home")
             </div><!--end navigation-->
 
             @RenderBody()

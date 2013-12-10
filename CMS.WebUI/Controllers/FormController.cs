@@ -118,7 +118,7 @@ namespace CMS.WebUI.Controllers
         {
             ViewBag.PageType = "Form";
             ViewBag.id = id;
-            return View("HomeInterior");
+            return View("FormPreview");
         }
 
         [HttpGet]

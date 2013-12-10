@@ -49,6 +49,9 @@ namespace CMS.WebUI.Controllers
         [CMSAuth]
         public ActionResult ContainerAdd(WidgetContainer m_Container)
         {
+            var TemplateId = ModelState["TemplateId"];
+            TemplateId.Errors.Clear();
+            
             if (ModelState.IsValid)
             {
                 int containerId = WidgetContainerRepository.Create(m_Container);

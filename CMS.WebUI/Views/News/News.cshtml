@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="left_part">
+    <div style="margin-top: 30px;">
+        <h1>News</h1>
+        <div class="margin-top_10">&nbsp;</div>
+        @foreach (var news in Model)
+        {
+            if (ViewBag.Count == 0)
+            {
+                <h2><a href="/News/Article/@news.Id">@news.Title</a></h2>
+                <p>@news.PublishDate.ToString("MM/dd/yyyy")</p>
+                <div class="margin-top_10">&nbsp;</div>
+                <p>@Html.Raw(System.Web.HttpUtility.HtmlDecode(news.Content))</p>
+                <div class="margin-top_10">&nbsp;</div>
+                <div class="margin-top_10">&nbsp;</div>
+                ViewBag.Count = 1;
+            }
+            else
+            {
+                <h2><a href="/News/Article/@news.Id">@news.Title</a></h2>
+                <p>@news.PublishDate.ToString("MM/dd/yyyy")</p>
+                <p>@news.IntroText</p>
+                <div class="margin-top_10">&nbsp;</div>
+                <div class="margin-top_10">&nbsp;</div>
+            }
+        }
+        <div class="margin-top_10">&nbsp;</div>
+    </div>
+</div><!--end left_part-->
+            
+<div class="right_part">
+    <div class="margin-top_10">&nbsp;</div>
+    @Html.Action("getNewsContainer")            
+    <!--Html.Action("Container", new{ id = ViewBag.PageId })-->
+</div> <!--end right part-->

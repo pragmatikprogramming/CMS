@@ -57,5 +57,11 @@ namespace CMS.Domain.Models
             List<BlogPost> m_BlogPosts = DBBlogPost.RetrieveAllByCategory(2);
             return m_BlogPosts;
         }
+
+        public BlogPost SwapNews(int id)
+        {
+            BlogPost m_BlogPost = DBBlogPost.RetrieveOne(id);
+            return m_BlogPost;
+        }
     }
 }

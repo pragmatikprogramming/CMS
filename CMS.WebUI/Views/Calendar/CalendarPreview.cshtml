@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Preivew";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<div class="left_part">
+    <div class="margin-top_10">&nbsp;</div>
+    <h2>@Model.EventTitle</h2>
+    <div class="margin-top_10">&nbsp;</div>
+    <p>@Model.EventStartDate.ToString("MM/dd/yyyy") - @Model.EventEndDate.ToString("MM/dd/yyyy")</p>
+    <p>
+        @if(Model.EventStartMin == 0)
+        {
+            ViewBag.StartTime = Model.EventStartHour + ":00 " + Model.AmpmStart;
+        }
+        else
+        {
+            ViewBag.StartTime = Model.EventStartHour + ":" + Model.EventStartMin + " " + Model.AmpmStart;
+        }
+        @if (Model.EventEndMin == 0)
+        {
+            ViewBag.EndTime = Model.EventEndHour + ":00 " + Model.AmpmEnd;
+        }
+        else
+        {
+            ViewBag.EndTime = Model.EventEndHour + ":" + Model.EventEndMin + " " + Model.AmpmEnd;
+        }
+
+        @ViewBag.StartTime - @ViewBag.EndTime
+    </p>
+    <p>@Model.BranchName</p>
+    <div class="margin-top_10">&nbsp;</div>
+    <p>@Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Body)) </p>
+    <div class="margin-top_10">&nbsp;</div>
+</div><!--end left_part-->
+            
+<div class="right_part">
+    <div class="margin-top_10">&nbsp;</div>             
+</div> <!--end right part-->
