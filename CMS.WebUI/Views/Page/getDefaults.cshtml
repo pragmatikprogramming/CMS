@@ -7,7 +7,12 @@
         <option value="">-- Select a Template --</option>
         @foreach (var Template in ViewBag.Templates)
         {
-            <option value="@Template.TemplateId">@Template.FriendlyName</option>
+            <option value="@Template.TemplateId"
+                @if(ViewBag.m_Page.TemplateId == Template.TemplateId)
+                {
+                    @: selected="selected"
+                }
+            >@Template.FriendlyName</option>
         }
     </select>
 </div>

@@ -15,5 +15,22 @@ namespace CMS.Domain.DataAccess
             List<Page> m_Pages = DBPage.RetrieveAll(0);
             return m_Pages;
         }
+
+        public static void SubmitComment(BlogPostComment m_Comment)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "INSERT INTO CMS_BlogPostComments(comment, name, blogId, pageWorkFlowState) VALUES(@comment, @name, @blogId, 1)";
+            SqlCommand insertComment = new SqlCommand(queryString, conn);
+            insertComment.Parameters.AddWithValue("comment", m_Comment.Comment);
+            insertComment.Parameters.AddWithValue("name", m_Comment.Name);
+            insertComment.Parameters.AddWithValue("blogId", m_Comment.BlogId);
+            insertComment.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        
     }
 }

@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Teens";
+    Layout = "~/Views/Shared/_LayoutTeens.cshtml";
+}
+<div class="inner_bg"></div><!--end inner-->
+    <div class="inner-content">
+        <div class="margin-top_10">&nbsp;</div>
+
+        <div class="border">
+        <h5><a href="/Home/BlogPost/@Model.Id">@Model.Title</a></h5>
+            <section class="padding">
+                <figcaption class="caption float_left">@Model.PublishDate.ToString("MM/dd/yyyy")</figcaption>
+                <figcaption class="caption float_right">By <strong class="strong">@Model.Author</strong></figcaption>
+                <div class="clear margin-bottom_10"></div>
+                <figcaption class="caption">@Model.Title<br /> <br />
+                    @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) <br /><br />
+                </figcaption>
+                <div class="clear"></div>
+            </section>
+        </div><!--end border-->
+
+        <div class="margin-top_10">&nbsp;</div>
+
+        @if(Model.Comments == 1)
+        {
+        <div class="border">
+            <h5><a href="#">Leave a Comment</a></h5>
+            <div class="margin-top_10">&nbsp;</div>
+            <form action="/Home/SubmitComment" method="post">
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input type="hidden" name="BlogId" value="@Model.BlogId" />
+                <div class="formlabel">Name:</div>
+                <div class="formfield"><input type="text" name="Name" value="" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Comment:</div>
+                <div class="formfield"><textarea cols="60" rows="5" maxlength="2000" name="Comment" ></textarea></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">&nbsp;</div>
+                <div class="formfield"><input type="submit" value="submit" /></div>
+                <div class="clear">&nbsp;</div>
+            </form>
+        </div>
+
+        <div class="margin-top_10">&nbsp;</div>
+
+        <div class="border" >
+            <h5><a href="#">Comments</a></h5>
+            <div class="margin-top_10">&nbsp;</div>
+            @Html.Action("GetComments", new{id = Model.BlogId})
+        </div>
+
+        <div class="margin-top_10">&nbsp;</div>
+        }
+    </div><!--end left_part-->
+            
+    <div class="right_part">
+        <div class="coloumn3">
+            <div class="inner-cen-bg">
+                <div class="margin-top_10">&nbsp;</div> 
+            </div>
+        </div><!--end coloumn3-->
+        <div class="inner-bot-bg"></div>  
+        <div class="margin-top_10">&nbsp;</div>  
+        @Html.Action("Container", "Home", new{ id = 7 })
+    </div> <!--end right part-->
+
+
+
+
+
+
+
+
+

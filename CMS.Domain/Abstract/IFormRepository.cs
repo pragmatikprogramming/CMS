@@ -18,5 +18,6 @@ namespace CMS.Domain.Abstract
         void SortUp(int parentId, int id);
         void SortDown(int parentId, int id);
         void ToggleRequired(int parentId, int id, int value);
+        void InsertFormData(string formData, int formId);
     }
 }

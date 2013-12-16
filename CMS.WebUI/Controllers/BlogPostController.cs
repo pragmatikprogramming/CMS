@@ -156,5 +156,27 @@ namespace CMS.WebUI.Controllers
             ViewBag.ImageId = ImageId;
             return View("ImageSelect");
         }
+
+        [CMSAuth]
+        public ActionResult BlogPostComments(int id)
+        {
+            List<BlogPostComment> m_Comments = BlogPostRepository.GetComments(id);
+            return View("BlogPostComments", m_Comments);
+
+        }
+
+        [CMSAuth]
+        public ActionResult CommentPublish(int parentId, int id)
+        {
+            BlogPostRepository.CommentPublish(id);
+            return RedirectToAction("BlogPostComments", new { id = parentId });
+        }
+
+        [CMSAuth]
+        public ActionResult CommentDelete(int parentId, int id)
+        {
+            BlogPostRepository.CommentDelete(id);
+            return RedirectToAction("BlogPostComments", new { id = parentId });
+        }
     }
 }

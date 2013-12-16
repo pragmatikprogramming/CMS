@@ -2462,6 +2462,10 @@
     <Content Include="Views\Shared\getForm.cshtml" />
     <Content Include="Views\Calendar\CalendarPreview.cshtml" />
     <Content Include="Views\News\Article.cshtml" />
+    <Content Include="Views\Page\getCategories.cshtml" />
+    <Content Include="Views\Home\BlogPost.cshtml" />
+    <Content Include="Views\Home\GetComments.cshtml" />
+    <Content Include="Views\BlogPost\BlogPostComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

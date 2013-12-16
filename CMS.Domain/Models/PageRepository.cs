@@ -20,7 +20,10 @@ namespace CMS.Domain.Models
         public Page RetrieveOne(int m_Id)
         {
             Page m_Page = DBPage.RetrieveOne(m_Id);
-            m_Page.TemplateName = DBPage.GetTemplateName(m_Page.TemplateId);
+            if (m_Page.TemplateId > 0)
+            {
+                m_Page.TemplateName = DBPage.GetTemplateName(m_Page.TemplateId);
+            }
 
             return m_Page;
         }

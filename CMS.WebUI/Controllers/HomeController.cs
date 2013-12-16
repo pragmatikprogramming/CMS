@@ -17,27 +17,28 @@ namespace CMS.WebUI.Controllers
         IImageRepository ImageRepository;
         IFormRepository FormRepository;
         IFAQRepository FAQRepository;
+        IBlogPostRepository BlogPostRepository;
 
         public HomeController()
         {
 
         }
 
-        public HomeController(IPageRepository PageRepo, IHomeRepository HomeRepo, IImageRepository ImageRepo, IFormRepository FormRepo, IFAQRepository FAQRepo)
+        public HomeController(IPageRepository PageRepo, IHomeRepository HomeRepo, IImageRepository ImageRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo)
         {
             PageRepository = PageRepo;
             HomeRepository = HomeRepo;
             ImageRepository = ImageRepo;
             FormRepository = FormRepo;
             FAQRepository = FAQRepo;
+            BlogPostRepository = BlogPostRepo;
         }
 
         public ActionResult Index(int id = 0)
         {
-            ViewBag.PageId = id;
-
             if (id == 0)
             {
+                ViewBag.PageId = 4;
                 return View("Home");
             }
             else
@@ -48,6 +49,7 @@ namespace CMS.WebUI.Controllers
                 {
                     ViewBag.PageType = m_Page.PageType;
                     ViewBag.id = m_Page.PageTypeId;
+                    ViewBag.PageId = m_Page.TemplateId;
                     return View(m_Page.TemplateName, m_Page);
                 }
                 else
@@ -105,8 +107,9 @@ namespace CMS.WebUI.Controllers
             return View("getNews", m_BlogPosts);
         }
 
-        public ActionResult getForm(int id)
+        public ActionResult getForm(int parentId, int id)
         {
+            ViewBag.ParentId = parentId;
             Form m_Form = FormRepository.RetrieveOne(id);
             return View("getForm", m_Form);
         }
@@ -125,6 +128,82 @@ namespace CMS.WebUI.Controllers
             List<BlogPost> m_BlogPosts = HomeRepository.GetNews();
 
             return View("SwapNews", m_BlogPosts);
+        }
+
+        public ActionResult BlogPost(int id)
+        {
+            BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(id);
+            ViewBag.PageType = 5;
+            ViewBag.PageId = -1;
+
+            return View("BlogPost", m_BlogPost);
+        }
+
+
+        [HttpPost]
+        public ActionResult SubmitComment(BlogPostComment m_Comment)
+        {
+            HomeRepository.SubmitComment(m_Comment);
+            return RedirectToAction("BlogPost", "Home", new { id = m_Comment.Id });
+        }
+
+        public ActionResult GetComments(int id)
+        {
+            List<BlogPostComment> m_Comments = BlogPostRepository.GetComments(id);
+            return View("GetComments", m_Comments);
+        }
+
+        [HttpPost]
+        public ActionResult ProcessForm(int parentId, int id)
+        {
+            string formData = "";
+            Form m_Form = FormRepository.RetrieveOne(id);
+
+            Dictionary<string, int> m_Ffs = new Dictionary<string,int>();
+
+            foreach (FormField ff in m_Form.FormFields)
+            {
+                if (ff.IsRequired == 1)
+                {
+                    m_Ffs.Add(ff.Label, 1);
+                }
+                else
+                {
+                    m_Ffs.Add(ff.Label, 0);
+                }
+            }
+
+            foreach (string key in Request.Form.Keys)
+            {
+                if (string.IsNullOrEmpty(Request.Form[key]) && m_Ffs[key] == 1)
+                {
+                    ModelState.AddModelError(key, "Please enter a value for " + key);
+                }
+                formData += key + "::" + Request.Form[key] + "^^";
+            }
+
+            if (ModelState.IsValid)
+            {
+                FormRepository.InsertFormData(formData, id);
+
+                Page m_Page = PageRepository.RetrieveOne(parentId);
+
+                ViewBag.PageType = m_Page.PageType;
+                ViewBag.id = m_Page.PageTypeId;
+                ViewBag.PageId = m_Page.TemplateId;
+                ViewBag.Message = "Your information has been submitted.";
+                return View(m_Page.TemplateName, m_Page);
+            }
+            else
+            {
+                Page m_Page = PageRepository.RetrieveOne(parentId);
+                ViewBag.PageType = m_Page.PageType;
+                ViewBag.id = m_Page.PageTypeId;
+                ViewBag.PageId = m_Page.TemplateId;
+                return View(m_Page.TemplateName, m_Page);
+                //
+                //return View("getForm", m_Form);
+            }
         }
     }
 }

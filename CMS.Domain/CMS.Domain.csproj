@@ -168,6 +168,7 @@
     <Compile Include="DataAccess\DBWidgetContainer.cs" />
     <Compile Include="Entities\Admin.cs" />
     <Compile Include="Entities\BlogPost.cs" />
+    <Compile Include="Entities\BlogPostComment.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Branch.cs" />
     <Compile Include="Entities\ContentGroup.cs" />

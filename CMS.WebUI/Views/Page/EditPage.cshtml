@@ -26,16 +26,39 @@
         <div class="formlabel">Page Type:</div>
         <div class="formfield">
             <select name="mPageType" onchange="$(this.form).submit();">
-                <option value="1">Default Content Page</option>
-                <option value="2">Forms Page</option>
-                <option value="3">FAQ's Page</option>
+                <option value="1" 
+                    @if(Model.PageType == 1) 
+                    { 
+                        @:selected="selected" 
+                    } 
+                >Default Content Page</option>
+                <option value="2"
+                    @if(Model.PageType == 2) 
+                    { 
+                        @:selected="selected" 
+                    }
+                >Forms Page</option>
+                <option value="3"
+                    @if(Model.PageType == 3) 
+                    { 
+                        @:selected="selected" 
+                    }
+                >FAQ's Page</option>
+                <option value="4"
+                    @if(Model.PageType == 4) 
+                    { 
+                        @:selected="selected" 
+                    }
+                >Blog Page</option>
             </select>
         </div>
         <div class="clear">&nbsp;</div>
     </form>
     <form action="/Page/EditPage" method="post" id="pageEdit">
         <div id="PageType">
-            <input type="hidden" name="PageType" value="1" />
+            @Html.Action("getPageTypeIds", new{ mPageType = Model.PageType, id = Model.Id })
+            
+            <!--<input type="hidden" name="PageType" value="1" />
             <input type="hidden" name="PageTypeId" value="0" />
 
             <div class="formlabel">Template:</div>
@@ -55,7 +78,7 @@
                         }
                 </select>
             </div>
-            <div class="clear">&nbsp;</div>
+            <div class="clear">&nbsp;</div>-->
         </div>
         <input type="hidden" name="Id" id="Id" value="@Model.Id" />
         <input type="hidden" name="PageID" id="PageID" value="@Model.PageID" />

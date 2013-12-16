@@ -59,5 +59,11 @@ namespace CMS.Domain.Models
         {
             DBForm.ToggleRequired(parentId, id, value);
         }
+
+        public void InsertFormData(string formData, int formId)
+        {
+            DBForm.InsertFormData(formData, formId);
+        }
+
     }
 }

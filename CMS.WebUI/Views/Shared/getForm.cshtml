@@ -12,8 +12,9 @@
 }
 
 </style>
-
-<form action="" method="post">
+<form action="/Home/ProcessForm" method="post">
+    <input type="hidden" value="@Model.Id" name="id" />
+    <input type="hidden" value="@ViewBag.ParentId" name="parentId" />
     @foreach (var formField in Model.FormFields)
     {
         <div class="formlabel">

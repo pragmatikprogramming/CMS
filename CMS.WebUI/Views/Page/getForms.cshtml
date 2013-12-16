@@ -4,7 +4,12 @@
     <select name="PageTypeId">
         @foreach (var mForm in Model)
         {
-            <option value="@mForm.Id">@mForm.FormName</option>
+            <option value="@mForm.Id"
+                @if(ViewBag.m_Page.PageTypeId == @mForm.Id)
+                {
+                    @: selected="selected"
+                }
+            >@mForm.FormName</option>
         }
     </select>
 </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Net.Mail;
 using CMS.Domain.Abstract;
 using CMS.Domain.Entities;
 using CMS.Domain.DataAccess;
@@ -23,8 +24,8 @@ namespace CMS.Domain.Models
             {
                 id = 39;
             }
-            Page m_Page = DBPage.RetrieveOne(id);
-            WidgetContainer m_Container = DBWidgetContainer.RetrieveOneByTemplateId(m_Page.TemplateId);
+            //Page m_Page = DBPage.RetrieveOne(id);
+            WidgetContainer m_Container = DBWidgetContainer.RetrieveOneByTemplateId(id);
             return m_Container;
         }
 
@@ -63,5 +64,19 @@ namespace CMS.Domain.Models
             BlogPost m_BlogPost = DBBlogPost.RetrieveOne(id);
             return m_BlogPost;
         }
+
+        public void SubmitComment(BlogPostComment m_Comment)
+        {
+            DBHome.SubmitComment(m_Comment);
+
+            /*MailMessage m_Message = new MailMessage("website@solanolibrary.com", "jwiggint@gmail.com");
+            m_Message.Subject = "New Blog Post for Approval";
+            m_Message.Body = @"Go approve the comment";
+            SmtpClient client = new SmtpClient("localhost");
+            client.UseDefaultCredentials = true;
+
+            client.Send(m_Message);*/
+        }
+
     }
 }

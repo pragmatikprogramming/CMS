@@ -66,7 +66,7 @@
                 @foreach (var blog in Model)
                 {
                     <tr>
-                        <td><a href="/BlogPost/Index/@blog.BlogId">@blog.Title</a></td>
+                        <td><a href="/BlogPost/BlogPostComments/@blog.BlogId">@blog.Title</a></td>
                         <td>@blog.LockedByName</td>
                         <td>
                             @if(blog.PageWorkFlowState == 1)

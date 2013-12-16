@@ -18,5 +18,7 @@ namespace CMS.Domain.Abstract
         List<BlogPost> GetTeenBlog();
         List<BlogPost> GetNews();
         BlogPost SwapNews(int id);
+        void SubmitComment(BlogPostComment m_Comment);
+        
     }
 }

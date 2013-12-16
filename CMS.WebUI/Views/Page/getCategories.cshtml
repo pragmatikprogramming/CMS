@@ -1,0 +1,41 @@
+﻿<input type="hidden" value="@ViewBag.PageType" name="PageType" />
+<div class="formlabel">Categories:</div>
+<div class="formfield">
+    <select name="PageTypeId">
+        @foreach (var mCategory in Model)
+        {
+            if (ViewBag.m_Page.PageTypeId == mCategory.Id)
+            {
+                <option value="@mCategory.Id" selected="selected">@mCategory.CategoryTitle</option>
+            }
+            else
+            {
+                <option value="@mCategory.Id">@mCategory.CategoryTitle</option>
+            }
+        }
+    </select>
+</div>
+<div class="clear">&nbsp;</div>
+
+<div class="formlabel">Template:</div>
+<div class="formfield">
+    <select name="TemplateId" aria-readonly="true">
+        @if (ViewBag.m_Page.TemplateId == 5)
+        {
+            <option value="5" selected="selected">Home Interior</option>
+        }
+        else
+        {
+            <option value="5" >Home Interior</option>
+        }
+        @if (ViewBag.m_Page.TemplateId == 7)
+        {
+            <option value="7" selected="selected">Teens</option>
+        }
+        else
+        {
+            <option value="7" >Teens</option>
+        }
+    </select>
+</div>
+<div class="clear">&nbsp;</div>

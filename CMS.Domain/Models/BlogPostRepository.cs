@@ -77,5 +77,21 @@ namespace CMS.Domain.Models
 
             return m_BlogPosts;
         }
+
+        public List<BlogPostComment> GetComments(int BlogId)
+        {
+            List<BlogPostComment> m_Comments = DBBlogPost.GetComments(BlogId);
+            return m_Comments;
+        }
+
+        public void CommentPublish(int id)
+        {
+            DBBlogPost.CommentPublish(id);
+        }
+
+        public void CommentDelete(int id)
+        {
+            DBBlogPost.CommentDelete(id);
+        }
     }
 }

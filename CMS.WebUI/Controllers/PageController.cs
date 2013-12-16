@@ -17,14 +17,16 @@ namespace CMS.WebUI.Controllers
         IJSONRepository JSONRepository;
         IFormRepository FormRepository;
         IFAQRepository FAQRepository;
+        IBlogPostRepository BlogPostRepository;
 
         
-        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo, IFormRepository FormRepo, IFAQRepository FAQRepo)
+        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo)
         {
             PageRepository = PageRepo;
             JSONRepository = JSONRepo;
             FormRepository = FormRepo;
             FAQRepository = FAQRepo;
+            BlogPostRepository = BlogPostRepo;
         }
 
         [HttpGet]
@@ -242,11 +244,19 @@ namespace CMS.WebUI.Controllers
             return RedirectToAction("Index", "Page", new { id = m_Page.ParentId });
         }
 
-        [HttpPost]
         [CMSAuth]
-        public ActionResult getPageTypeIds(int mPageType)
+        public ActionResult getPageTypeIds(int mPageType, int id = 0)
         {
             ViewBag.PageType = mPageType;
+
+            Page m_Page = new Page();
+
+            if (id != 0)
+            {
+                m_Page = PageRepository.RetrieveOne(id);
+            }
+
+            ViewBag.m_Page = m_Page;
 
             if (mPageType == 2)
             {
@@ -257,6 +267,11 @@ namespace CMS.WebUI.Controllers
             {
                 List<FAQ> m_FAQ = FAQRepository.RetrieveAllFAQ();
                 return View("getFAQ", m_FAQ);
+            }
+            else if (mPageType == 4)
+            {
+                List<Category> m_Categories = BlogPostRepository.getCategories();
+                return View("getCategories", m_Categories);
             }
             else
             {

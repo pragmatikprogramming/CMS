@@ -472,5 +472,66 @@ namespace CMS.Domain.DataAccess
             conn.Close();
             return m_Categories;
         }
+
+        public static List<BlogPostComment> GetComments(int BlogId)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CMS_BlogPostComments WHERE blogId = @blogId AND pageWorkFlowState != 4 ORDER BY id DESC";
+            SqlCommand getComments = new SqlCommand(queryString, conn);
+            getComments.Parameters.AddWithValue("blogId", BlogId);
+            SqlDataReader commentReader = getComments.ExecuteReader();
+
+            List<BlogPostComment> m_Comments = new List<BlogPostComment>();
+
+            while (commentReader.Read())
+            {
+                BlogPostComment m_Comment = new BlogPostComment();
+                m_Comment.Id = commentReader.GetInt32(0);
+                m_Comment.BlogId = commentReader.GetInt32(1);
+                m_Comment.Comment = commentReader.GetString(2);
+                m_Comment.Name = commentReader.GetString(3);
+                m_Comment.PageWorkFlowState = commentReader.GetInt32(4);
+
+                m_Comments.Add(m_Comment);
+            }
+
+            return m_Comments;
+        }
+
+        public static void CommentPublish(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "UPDATE CMS_BlogPostComments SET pageWorkFlowState = 2 WHERE id = @id";
+            SqlCommand updateComment = new SqlCommand(queryString, conn);
+            updateComment.Parameters.AddWithValue("id", id);
+            updateComment.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static void CommentDelete(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "UPDATE CMS_BlogPostComments SET pageWorkFlowState = 4 WHERE id = @id";
+            SqlCommand updateBlogPosts = new SqlCommand(queryString, conn);
+            updateBlogPosts.Parameters.AddWithValue("id", id);
+            updateBlogPosts.ExecuteNonQuery();
+
+            queryString = "INSERT INTO CMS_Trash(objectId, objectTable, objectName, deleteDate, deletedBy, objectColumn, objectType) VALUES(@objectId, 'CMS_BlogPostComments', @objectName, @deleteDate, @deletedBy, 'id', 'Blog Post Comment')";
+            SqlCommand insertTrash = new SqlCommand(queryString, conn);
+            insertTrash.Parameters.AddWithValue("objectId", id);
+            insertTrash.Parameters.AddWithValue("objectName", String.Empty);
+            insertTrash.Parameters.AddWithValue("deleteDate", DateTime.Now);
+            insertTrash.Parameters.AddWithValue("deletedBy", HttpContext.Current.Session["uid"]);
+            insertTrash.ExecuteNonQuery();
+
+            conn.Close();
+        }
     }
 }

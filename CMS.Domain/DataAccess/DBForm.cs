@@ -344,5 +344,20 @@ namespace CMS.Domain.DataAccess
 
             conn.Close();
         }
+
+        public static void InsertFormData(string formData, int formId)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "INSERT INTO CMS_FormData(formData, formId, submissionDate) VALUES(@formData, @formId, @submissionDate)";
+            SqlCommand insertFormData = new SqlCommand(queryString, conn);
+            insertFormData.Parameters.AddWithValue("formData", formData);
+            insertFormData.Parameters.AddWithValue("formId", formId);
+            insertFormData.Parameters.AddWithValue("submissionDate", DateTime.Now.ToString("MM/dd/yyyy"));
+            insertFormData.ExecuteNonQuery();
+
+            conn.Close();
+        }
     }
 }

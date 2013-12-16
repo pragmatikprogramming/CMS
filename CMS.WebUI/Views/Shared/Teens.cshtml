@@ -4,28 +4,43 @@
 }
 
 <div class="inner_bg"></div><!--end inner-->
-            	
-<div class="inner-content">
-    <div class="breadcum"><a href="index.html">Home</a> / Teens</div>
-                
-        @Html.Raw(Model.Content)
-                
-    <div class="teen-right">
+    <div class="inner-content">
 
-        @Html.Action("getTeenBlog", "Home")
+        <div class="margin-top_10">&nbsp;</div> 
+        @if (ViewBag.Message != null)
+        {
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield" style="color: red;">@ViewBag.Message</div>
+            <div class="clear">&nbsp;</div>
+        }
+        @if (ViewBag.PageType == 2)
+        {
+            @Html.Action("getForm", new { parentId = Model.PageID, id = ViewBag.id})
+        }
+        else if(ViewBag.PageType == 3)
+        {
+            @Html.Action("getFAQ", new { id = ViewBag.id})   
+        }
+        else if(ViewBag.PageType == 4)
+        {
+            @Html.Action("getTeenBlog", "Home")
+        }
+        else
+        {
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) 
+        }
 
-    </div><!--end colomn-right-->
-    <div class="clear"></div>
-</div><!--end left_part-->
+        <div class="clear"></div>
+    </div><!--end left_part-->
             
-<div class="right_part">
-    <div class="coloumn3">
-        <div class="inner-cen-bg">	
-            @Html.Action("SystemSubMenu", "Home", new{id = ViewBag.PageId})	
-        </div>
-    </div><!--end coloumn3-->
-    <div class="inner-bot-bg"></div>
-            
-    @Html.Action("Container", "Home", new{ id = ViewBag.PageId })
-</div> <!--end right part--> 
-<div class="clear"></div>
+    <div class="right_part">
+        <div class="coloumn3">
+            <div class="inner-cen-bg">
+                @Html.Action("SystemSubMenu", "Home", new{id = ViewBag.PageId})	
+                <div class="margin-top_10">&nbsp;</div> 
+            </div>
+        </div><!--end coloumn3-->
+        <div class="inner-bot-bg"></div>  
+        <div class="margin-top_10">&nbsp;</div>  
+        @Html.Action("Container", "Home", new{ id = Model.TemplateId })
+    </div> <!--end right part--> 
