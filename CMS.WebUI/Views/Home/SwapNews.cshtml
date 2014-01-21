@@ -1,8 +1,8 @@
 ﻿    <div class="title">News & Announcements</div>
-    <div align="center" class="margin-top_10"><img src="/Galleries/News Images/@ViewBag.BlogPost.NewsImageName" width="256" height="220"></div>
+    <div align="center" class="margin-top_10"><a href="/News/Article/@ViewBag.Id"><img src="/Galleries/News Images/@ViewBag.BlogPost.NewsImageName" width="256" height="220"></a></div>
                 
     <figcaption>@ViewBag.BlogPost.IntroText<br />
-        <span class="more margin-top_10"><a href="#">view all news</a></span>
+        <span class="more margin-top_10"><a href="/News">view all news</a></span>
         <span class="pagination">
             @foreach(var news in Model)
             {

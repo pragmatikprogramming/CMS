@@ -54,8 +54,8 @@ namespace CMS.Domain.DataAccess
             insertBlogPost.Parameters.AddWithValue("lastModifiedBy", HttpContext.Current.Session["uid"]);
             insertBlogPost.Parameters.AddWithValue("lastModifiedDate", DateTime.Now);
             insertBlogPost.Parameters.AddWithValue("newsImageId", m_BlogPost.NewsImageId);
-            insertBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName);
-            insertBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author);
+            insertBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName ?? "");
+            insertBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author ?? "");
             insertBlogPost.Parameters.AddWithValue("introText", m_BlogPost.IntroText);
             insertBlogPost.ExecuteNonQuery();
 

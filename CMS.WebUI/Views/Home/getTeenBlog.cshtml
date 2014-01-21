@@ -1,15 +1,15 @@
 ﻿@foreach (var post in Model)
 {
     <div class="border">
-        <h5><a href="/Home/BlogPost/@post.Id">@post.Title</a></h5>
+        <h5><a href="/Home/BlogPost/@post.Id">@post.Title</a></h5>   
             <section class="padding">
                 <figcaption class="caption float_left">@post.PublishDate.ToString("MM/dd/yyyy")</figcaption>
                 <figcaption class="caption float_right">By <strong class="strong">@post.Author</strong></figcaption>
                 <div class="clear margin-bottom_10"></div>
-                <figcaption class="caption">@post.Title<br /> <br />
+                <figcaption class="caption">
                     @Html.Raw(System.Web.HttpUtility.HtmlDecode(post.Content)) <br /><br />
                 	<span class="dashd"></span>
-                	<span class="float_right"><a href="#">Comment / Share</a></span>
+                	<span class="float_right"><a href="/Home/BlogPost/@post.Id">Comment / Share</a></span>
                 </figcaption>
                 <div class="clear"></div>
             </section>

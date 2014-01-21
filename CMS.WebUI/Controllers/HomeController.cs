@@ -38,7 +38,7 @@ namespace CMS.WebUI.Controllers
         {
             if (id == 0)
             {
-                ViewBag.PageId = 4;
+                ViewBag.TemplateId = 4;
                 return View("Home");
             }
             else
@@ -49,7 +49,8 @@ namespace CMS.WebUI.Controllers
                 {
                     ViewBag.PageType = m_Page.PageType;
                     ViewBag.id = m_Page.PageTypeId;
-                    ViewBag.PageId = m_Page.TemplateId;
+                    ViewBag.PageId = m_Page.PageID;
+                    ViewBag.TemplateId = m_Page.TemplateId;
                     return View(m_Page.TemplateName, m_Page);
                 }
                 else
@@ -104,6 +105,7 @@ namespace CMS.WebUI.Controllers
         {
             ViewBag.Count = 1;
             List<BlogPost> m_BlogPosts = HomeRepository.GetNews();
+            ViewBag.NewsId = m_BlogPosts[0].Id;
             return View("getNews", m_BlogPosts);
         }
 

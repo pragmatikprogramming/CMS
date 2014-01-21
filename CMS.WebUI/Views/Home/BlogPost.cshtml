@@ -9,10 +9,15 @@
         <div class="border">
         <h5><a href="/Home/BlogPost/@Model.Id">@Model.Title</a></h5>
             <section class="padding">
+                <span class='st_facebook_large' displayText='Facebook'></span>
+                <span class='st_twitter_large' displayText='Tweet'></span>
+                <span class='st_pinterest_large' displayText='Pinterest'></span>
+                <span class='st_email_large' displayText='Email'></span>
+                <span class='st_fblike_large' displayText='Facebook Like'></span><br /><br /><br />
                 <figcaption class="caption float_left">@Model.PublishDate.ToString("MM/dd/yyyy")</figcaption>
                 <figcaption class="caption float_right">By <strong class="strong">@Model.Author</strong></figcaption>
                 <div class="clear margin-bottom_10"></div>
-                <figcaption class="caption">@Model.Title<br /> <br />
+                <figcaption class="caption">
                     @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) <br /><br />
                 </figcaption>
                 <div class="clear"></div>

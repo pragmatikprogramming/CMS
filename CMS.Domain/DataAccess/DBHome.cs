@@ -21,7 +21,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CMS_BlogPostComments(comment, name, blogId, pageWorkFlowState) VALUES(@comment, @name, @blogId, 1)";
+            string queryString = "INSERT INTO CMS_BlogPostComments(comment, name, blogId, pageWorkFlowState) VALUES(@comment, @name, @blogId, 2)";
             SqlCommand insertComment = new SqlCommand(queryString, conn);
             insertComment.Parameters.AddWithValue("comment", m_Comment.Comment);
             insertComment.Parameters.AddWithValue("name", m_Comment.Name);
