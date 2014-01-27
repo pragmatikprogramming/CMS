@@ -82,7 +82,6 @@ namespace CMS.Domain.Entities
             }
         }
 
-        [Required(ErrorMessage = "Please enter an End Date")]
         public DateTime EventEndDate
         {
             get 

@@ -89,6 +89,53 @@ namespace CMS.Domain.Models
             return true;
         }
 
+        public bool EventTimeBothErrorChecking(Event m_Event)
+        {
+            if (m_Event.EventEndHour != -1 && m_Event.EventStartHour == -1 && EventEndTimeErrorChecking(m_Event) && EventStartTimeErrorChecking(m_Event))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+        public bool EventStartTimeBeforeEventEndTime(Event m_Event)
+        {
+            if (m_Event.AmpmStart == "pm" && m_Event.AmpmEnd == "am")
+            {
+                return false;
+            }
+            else if (m_Event.AmpmStart == "am" && m_Event.AmpmEnd == "pm")
+            {
+                return true;
+            }
+            else
+            {
+                if (m_Event.EventStartHour < m_Event.EventEndHour)
+                {
+                    return false;
+                }
+                else if (m_Event.EventStartHour > m_Event.EventEndHour)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (m_Event.EventStartMin <= m_Event.EventEndMin)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
         public void LockEvent(int id)
         {
             DBEvent.LockEvent(id);

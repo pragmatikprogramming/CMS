@@ -2,6 +2,6 @@
 <ul class="catlog_nav">
     @foreach (var page in Model)
     {
-        <li><a href="#" title="@page.NavigationName">@page.NavigationName</a></li>
+        <li><a href="/@page.PageID" title="@page.NavigationName">@page.NavigationName</a></li>
     }
 </ul>

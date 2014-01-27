@@ -151,8 +151,8 @@
 
         <div class="formlabel">Event End Time:</div>
         <div class="formfield">
-            <select name="EventEndHour" id="EventEndHour" style="width: 75px;">
-                <option value="-1"></option>
+            <select name="EventEndHour" id="EventEndHour" style="width: 75px">
+                <option value="-1"> </option>
                 @for (var i = 1; i <= 12; i++)
                 {
                     if (Model.EventEndHour == i)
@@ -168,7 +168,7 @@
         </div>
         <div class="formfield">
             <select name="EventEndMin" id="EventEndMin" style="width: 75px">
-                <option value="-1"></option>
+                <option value="-1"> </option>
                 @if (Model.EventEndMin == 0 && Model.EventEndHour > 0)
                 {
                     <option value="0" selected="selected">00</option>

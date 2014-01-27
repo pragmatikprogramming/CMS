@@ -20,5 +20,7 @@ namespace CMS.Domain.Abstract
         void UnlockEvent(int id);
         void PublishEvent(int id);
         List<Event> getFeaturedEvents();
+        bool EventTimeBothErrorChecking(Event m_Event);
+        bool EventStartTimeBeforeEventEndTime(Event m_Event);
     }
 }

@@ -75,7 +75,17 @@ namespace CMS.WebUI.Controllers
             {
                 ModelState.AddModelError("EventEndHour", "A complete end time including AM or PM is required");
             }
-            
+
+            if (!EventRepository.EventTimeBothErrorChecking(m_Event))
+            {
+                ModelState.AddModelError("EventStartHour", "You cannot input an end time without a start time");
+            }
+
+            if (!EventRepository.EventStartTimeBeforeEventEndTime(m_Event))
+            {
+                ModelState.AddModelError("EventStartHour", "Start Time must be before End Time");
+            }
+
             if (ModelState.IsValid)
             {
                 EventRepository.Create(m_Event);

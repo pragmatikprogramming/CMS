@@ -55,34 +55,75 @@
         <div class="formfield">
             <select name="EventStartHour" id="EventStartHour" style="width: 75px;">
                 <option value="-1"></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                @for (var i = 1; i <= 12; i++)
+                {
+                    if (Model.EventStartHour == i)
+                    {
+                        <option value="@i" selected="selected">@i</option>
+                    }
+                    else
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
             </select>
         </div>
         <div class="formfield">
             <select name="EventStartMin" id="EventStartMin" style="width: 75px">
                 <option value="-1"></option>
-                <option value="0">00</option>
-                <option value="15">15</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
+                @if (Model.EventStartMin == 0 && Model.EventStartHour > 0)
+                {
+                    <option value="0" selected="selected">00</option>
+                }
+                else
+                {
+                    <option value="0">00</option>
+                }
+                @if (Model.EventStartMin == 15 && Model.EventStartHour > 0)
+                {
+                    <option value="15" selected="selected">15</option>
+                }
+                else
+                {
+                    <option value="15">15</option>
+                }
+                @if (Model.EventStartMin == 30 && Model.EventStartHour > 0)
+                {
+                    <option value="30" selected="selected">30</option>
+                }
+                else
+                {
+                    <option value="30">30</option>
+                }
+                @if (Model.EventStartMin == 45 && Model.EventStartHour > 0)
+                {
+                    <option value="45" selected="selected">45</option>
+                }
+                else
+                {
+                    <option value="45">45</option>
+                }
             </select>
         </div>
         <div class="formfield">
             <select name="AmpmStart" id="AmpmStart" style="width: 75px">
                 <option value="-1"></option>
-                <option value="am">AM</option>
-                <option value="pm">PM</option>
+                @if (Model.AmpmStart == "am" && Model.EventStartHour > 0)
+                {
+                    <option value="am" selected="selected">AM</option>
+                }
+                else
+                {
+                    <option value="am" >AM</option>
+                }
+                @if (Model.AmpmStart == "pm" && Model.EventStartHour > 0)
+                {
+                    <option value="pm" selected="selected">PM</option>
+                }
+                else
+                {
+                    <option value="pm">PM</option>
+                }
             </select>
         </div>
         <div class="clear">&nbsp;</div>
@@ -98,34 +139,75 @@
         <div class="formfield">
             <select name="EventEndHour" id="EventEndHour" style="width: 75px;">
                 <option value="-1"></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
+                @for (var i = 1; i <= 12; i++)
+                {
+                    if (Model.EventEndHour == i)
+                    {
+                        <option value="@i" selected="selected">@i</option>
+                    }
+                    else
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
             </select>
         </div>
         <div class="formfield">
             <select name="EventEndMin" id="EventEndMin" style="width: 75px">
                 <option value="-1"></option>
-                <option value="0">00</option>
-                <option value="15">15</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
+                @if (Model.EventEndMin == 0 && Model.EventEndHour > 0)
+                {
+                    <option value="0" selected="selected">00</option>
+                }
+                else
+                {
+                    <option value="0">00</option>
+                }
+                @if (Model.EventEndMin == 15 && Model.EventEndHour > 0)
+                {
+                    <option value="15" selected="selected">15</option>
+                }
+                else
+                {
+                    <option value="15">15</option>
+                }
+                @if (Model.EventEndMin == 30 && Model.EventEndHour > 0)
+                {
+                    <option value="30" selected="selected">30</option>
+                }
+                else
+                {
+                    <option value="30">30</option>
+                }
+                @if (Model.EventEndMin == 45 && Model.EventEndHour > 0)
+                {
+                    <option value="45" selected="selected">45</option>
+                }
+                else
+                {
+                    <option value="45">45</option>
+                }
             </select>
         </div>
         <div class="formfield">
             <select name="AmpmEnd" id="AmpmEnd" style="width: 75px">
                 <option value="-1"></option>
-                <option value="am">AM</option>
-                <option value="pm">PM</option>
+                @if (Model.AmpmEnd == "am" && Model.EventEndHour > 0)
+                {
+                    <option value="am" selected="selected">AM</option>
+                }
+                else
+                {
+                    <option value="am" >AM</option>
+                }
+                @if (Model.AmpmEnd == "pm" && Model.EventEndHour > 0)
+                {
+                    <option value="pm" selected="selected">PM</option>
+                }
+                else
+                {
+                    <option value="pm">PM</option>
+                }
             </select>
         </div>
         <div class="clear">&nbsp;</div>
@@ -160,7 +242,12 @@
         <div style="line-height: 30px;">&nbsp;</div>
 
         <div class="formlabel">Featured Event:</div>
-        <div class="formfield"><input type="checkbox" name="FeaturedEvent" id="FeaturedEvent" value="1" /></div>
+        <div class="formfield"><input type="checkbox" name="FeaturedEvent" id="FeaturedEvent" value="1" 
+            @if(Model.FeaturedEvent == 1)
+            {
+                @: checked="checked"
+            }
+        /></div>
         <div class="clear">&nbsp;</div>
 
         <div style="line-height: 30px;">&nbsp;</div>
