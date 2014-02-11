@@ -35,10 +35,10 @@ h5 a:hover {color:#c65c4f; text-decoration:underline;}
 /**** Header ****/
 
 .logo{ width:160px; float:left; }
-.header{background:url(../images/header_img.jpg) no-repeat 0 0; float:left; width:778px; height:153px;}
+/*.header{background:url(../images/header_img.jpg) no-repeat 0 0; float:left; width:778px; height:153px;}*/
 .header2{background:url(../images/header_img2.jpg) no-repeat 0 0; float:left; width:778px; height:153px;}
-.header3{background:url(../images/header_kids.jpg) no-repeat 0 0; float:left; width:778px; height:153px;}
-.header4{background:url(../images/header_teens.jpg) no-repeat 0 0; float:left; width:778px; height:153px;}
+/*.header3{background:url(../images/header_kids.jpg) no-repeat 0 0; float:left; width:778px; height:153px;}*/
+/*.header4{background:url(../images/header_teens.jpg) no-repeat 0 0; float:left; width:778px; height:153px;}*/
 .nav_box{background:url(../images/top_nav_bg.png) no-repeat 0 top; width:281px; height:78px; float:right; clear:both;}
 
 ul.top_nav { display:inline-block; padding-left:0px; margin-left:0px;}

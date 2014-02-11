@@ -38,8 +38,9 @@ namespace CMS.WebUI.Controllers
         {
             if (id == 0)
             {
+                Page m_Page = PageRepository.RetrieveOne(39);
                 ViewBag.TemplateId = 4;
-                return View("Home");
+                return View("Home", m_Page);
             }
             else
             {
@@ -112,6 +113,7 @@ namespace CMS.WebUI.Controllers
         public ActionResult getForm(int parentId, int id)
         {
             ViewBag.ParentId = parentId;
+            ViewBag.Count = 0;
             Form m_Form = FormRepository.RetrieveOne(id);
             return View("getForm", m_Form);
         }

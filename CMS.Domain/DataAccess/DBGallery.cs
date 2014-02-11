@@ -55,7 +55,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Gallery WHERE pageWorkFlowState != 4";
+            string queryString = "SELECT * FROM CMS_Gallery WHERE pageWorkFlowState != 4 ORDER BY name";
             SqlCommand getGalleries = new SqlCommand(queryString, conn);
 
             SqlDataReader m_Galleries = getGalleries.ExecuteReader();

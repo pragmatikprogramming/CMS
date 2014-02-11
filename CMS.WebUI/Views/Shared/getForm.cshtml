@@ -22,12 +22,100 @@
             {
                 <font style="color:red;">*</font>
             }
-                
-            @formField.Label:
-
+            @if(formField.FieldType != 7)
+            {    
+                @formField.Label
+            }
+            else
+            {
+                @:&nbsp;   
+            }
         </div>
         
-        if (formField.FieldType == 5)
+        if(formField.FieldType == 1)
+        {
+            <div class="formfield"><input type="@formField.FieldType" class="input-xlarge" name="@formField.Label" value=""></div>
+            <div class="clear">&nbsp;</div>
+        }
+        else if (formField.FieldType == 2)
+        {
+            <div class="formfield"><textarea rows="5" cols="30" name="@formField.Label" id="@formField.Label"></textarea></div>
+            <div class="clear">&nbsp;</div>
+        }
+        else if(formField.FieldType == 3)
+        {
+               <div class="formfield">
+                   <br />
+                   <br />
+                   <table>
+                       <tbody>
+                            @{int m_Count = 0;}
+                            @foreach(var m_Child in formField.Children)
+                            {
+                                if(m_Count % 4 == 0)
+                                {
+                                    if(m_Count == 0)
+                                    {
+                                        @:<tr>
+                                    }
+                                    else
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                }
+                                
+                                @:<td><input type="checkbox" value="@m_Child.Label" name="@formField.Label" /> @m_Child.Label</td>
+                                
+                                m_Count = m_Count + 1;
+                            }
+                            @if(m_Count % 4 != 0 && m_Count != 0)
+                            {
+                                @:</tr>
+                            }
+                       </tbody>
+                   </table>
+
+               </div>
+                <div class="clear">&nbsp;</div>
+               
+        }
+        else if (formField.FieldType == 4)
+        {
+            <div class="formfield">
+                   <br />
+                   <br />
+                   <table>
+                       <tbody>
+                            @{int m_Count = 0;}
+                            @foreach(var m_Child in formField.Children)
+                            {
+                                if(m_Count % 4 == 0)
+                                {
+                                    if(m_Count == 0)
+                                    {
+                                        @:<tr>
+                                    }
+                                    else
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                }
+                                
+                                @:<td><input type="radio" value="@m_Child.Label" name="@formField.Label" /> @m_Child.Label</td>
+                                
+                                m_Count = m_Count + 1;
+                            }
+                            @if(m_Count % 4 != 0 && m_Count != 0)
+                            {
+                                @:</tr>
+                            }
+                       </tbody>
+                   </table>
+
+               </div>
+                <div class="clear">&nbsp;</div>
+        }
+        else if (formField.FieldType == 5)
         {
             <div class="formfield">
                 <select name="@formField.Label">
@@ -37,18 +125,31 @@
                     }
                 </select>
             </div>
+            <div class="clear">&nbsp;</div>
         }
-        else if (formField.FieldType == 2)
+        else if(formField.FieldType == 6)
         {
-            <div class="formfield"><textarea rows="5" cols="30" name="@formField.Label" id="@formField.Label"></textarea></div>
+            <div class="formfield"><input type="password" value="" name="@formField.Label" /></div>
+            <div class="clear">&nbsp;</div>   
         }
         else if(formField.FieldType == 7)
         {
-            <div class="formfield"><input type="submit" value="@formField.Label" /></div>
+            <div class="formfield"><input type="submit" value="@formField.Label" name=""/></div>
+            <div class="clear">&nbsp;</div>
+        }
+        else if(formField.FieldType == 8)
+        {
+            <script>
+                $(function () {
+                    $("#@formField.Label").datepicker();
+                });
+            </script>
+        
+            <div class="formfield"><input type="@formField.FieldType" class="input-xlarge" name="@formField.Label" id="@formField.Label" readonly="readonly"></div>
+            <div class="clear">&nbsp;</div>
         }
         else
         {
-            <div class="formfield"><input type="@formField.FieldType" class="input-xlarge" name="@formField.Label" value=""></div>
             <div class="clear">&nbsp;</div>
         }
     }

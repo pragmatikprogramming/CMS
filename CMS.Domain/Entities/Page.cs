@@ -31,7 +31,10 @@ namespace CMS.Domain.Entities
         private string redirectURL;
         private int pageType;
         private int pageTypeId;
-        
+        private int displayOnSubmenu;
+        private int bannerImage;
+        private string bannerImageName;
+
         public int Id
         {
             get 
@@ -298,6 +301,42 @@ namespace CMS.Domain.Entities
             set 
             { 
                 pageTypeId = value; 
+            }
+        }
+
+        public int DisplayOnSubmenu
+        {
+            get 
+            { 
+                return displayOnSubmenu; 
+            }
+            set 
+            { 
+                displayOnSubmenu = value; 
+            }
+        }
+
+        public int BannerImage
+        {
+            get 
+            { 
+                return bannerImage; 
+            }
+            set 
+            { 
+                bannerImage = value; 
+            }
+        }
+
+        public string BannerImageName
+        {
+            get 
+            { 
+                return bannerImageName; 
+            }
+            set 
+            { 
+                bannerImageName = value; 
             }
         }
 

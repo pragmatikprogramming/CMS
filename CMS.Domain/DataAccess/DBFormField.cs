@@ -17,7 +17,7 @@ namespace CMS.Domain.DataAccess
 
             string queryString = "INSERT INTO CMS_FormFields(label, fieldType, parentId, validationType) VALUES(@label, @fieldType, @parentId, @validationType)";
             SqlCommand insertFormField = new SqlCommand(queryString, conn);
-            insertFormField.Parameters.AddWithValue("label", m_FormField.Label);
+            insertFormField.Parameters.AddWithValue("label", m_FormField.Label ?? "");
             insertFormField.Parameters.AddWithValue("fieldType", m_FormField.FieldType);
             insertFormField.Parameters.AddWithValue("parentId", m_FormField.ParentId);
             insertFormField.Parameters.AddWithValue("validationType", m_FormField.ValidationType);
@@ -32,7 +32,7 @@ namespace CMS.Domain.DataAccess
             {
                 queryString = "INSERT INTO CMS_FormFields(label, fieldType, parentId) VALUES(@label, @fieldType, @parentId)";
                 SqlCommand insertTemp = new SqlCommand(queryString, conn);
-                insertTemp.Parameters.AddWithValue("label", temp.Label);
+                insertTemp.Parameters.AddWithValue("label", temp.Label ?? "");
                 insertTemp.Parameters.AddWithValue("fieldType", temp.FieldType);
                 insertTemp.Parameters.AddWithValue("parentId", m_FormFieldId);
 
@@ -140,7 +140,7 @@ namespace CMS.Domain.DataAccess
 
             string queryString = "UPDATE CMS_FormFields SET label = @label, fieldType = @fieldType, parentId = @parentId, validationType = @validationType WHERE id = @id";
             SqlCommand updateFormField = new SqlCommand(queryString, conn);
-            updateFormField.Parameters.AddWithValue("label", m_FormField.Label);
+            updateFormField.Parameters.AddWithValue("label", m_FormField.Label ?? "");
             updateFormField.Parameters.AddWithValue("fieldType", m_FormField.FieldType);
             updateFormField.Parameters.AddWithValue("parentId", m_FormField.ParentId);
             updateFormField.Parameters.AddWithValue("id", m_FormField.Id);

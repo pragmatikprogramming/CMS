@@ -40,7 +40,15 @@ namespace CMS.WebUI.Controllers
         public ActionResult AddFormField(FormField m_FormField, string[] childrenTitle)
         {
             ViewBag.DisplayInfo = 0;
-            ViewBag.childrenTitle = childrenTitle;
+
+            if (childrenTitle == null)
+            {
+                ViewBag.childrenTitle = new string[0];
+            }
+            else
+            {
+                ViewBag.childrenTitle = childrenTitle;
+            }
             ViewBag.FieldTypes = FormFieldRepository.getFieldTypes();
             ViewBag.ValidationTypes = FormFieldRepository.getValidationTypes();
 

@@ -2466,6 +2466,7 @@
     <Content Include="Views\Home\BlogPost.cshtml" />
     <Content Include="Views\Home\GetComments.cshtml" />
     <Content Include="Views\BlogPost\BlogPostComments.cshtml" />
+    <Content Include="Views\Page\ImageSelect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

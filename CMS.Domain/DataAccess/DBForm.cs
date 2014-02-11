@@ -165,18 +165,22 @@ namespace CMS.Domain.DataAccess
 
             conn.Close();
 
+            int sortOrder = 1;
+
             foreach (int FormField in m_Form.MyFormFields)
             {
                 conn.Open();
 
-                queryString = "INSERT INTO CMS_FormToFormFields(formId, formFieldId) VALUES(@formId, @formFieldId)";
+                queryString = "INSERT INTO CMS_FormToFormFields(formId, formFieldId, sortOrder) VALUES(@formId, @formFieldId, @sortOrder)";
                 SqlCommand insertInfo = new SqlCommand(queryString, conn);
                 insertInfo.Parameters.AddWithValue("formId", m_Form.Id);
                 insertInfo.Parameters.AddWithValue("formFieldId", FormField);
+                insertInfo.Parameters.AddWithValue("sortOrder", sortOrder);
 
                 insertInfo.ExecuteNonQuery();
 
                 conn.Close();
+                sortOrder++;
             }
         }
 

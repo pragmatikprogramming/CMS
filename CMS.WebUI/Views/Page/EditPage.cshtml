@@ -136,6 +136,24 @@
 
         <div style="line-height: 30px;">&nbsp;</div>
 
+        <div id="myImage">
+            <div class="formlabel">Banner:</div>
+            <div class="formfield"><input type="text" name="BannerImageName" value="@Model.BannerImageName" /><a href="#myModal" role="button" data-toggle="modal">&nbsp;&nbsp;select an image</a></div>
+            <div class="clear">&nbsp;</div>
+            <input type="hidden" name="BannerImageId" value="0" />
+        </div>
+
+        <div class="formlabel">Display on Submenu:</div>
+        <div class="formfield"><input type="checkbox" name="DisplayOnSubmenu" id="DisplayOnSubmenu" value="1"
+            @if(Model.DisplayOnSubmenu == 1)
+            {
+                @:checked="checked"
+            }
+        /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div style="line-height: 10px;">&nbsp;</div>
+
         <div class="formlabel">Review Schedule:</div>
         <div class="formfield"><input type="text" name="review_schedule" readonly="readonly" />&nbsp; <i class="icon-calendar icon-2x"></i></div>
         <div class="clear">&nbsp;</div>
@@ -148,6 +166,23 @@
         <button form="pageEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
     </form>
 
+        <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="myModalLabel">Choos An Image</h3>
+            </div>
+            <div class="modal-body">
+                @foreach(var image in ViewBag.BannerImages)
+                {
+                    <p class="error-text"><a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#myImage" href="/Page/ImageSelect?ImageName=@image.Name.@image.FileType&ImageId=@image.Id"  data-dismiss="modal">@image.Name.@image.FileType</a></p>
+                }
+            </div>
+
+            <div class="modal-footer">
+                <!--<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="document.location.href ='/Gallery/DeleteGallery/' + myID;">Delete</button>-->
+            </div>
+        </div>
 
 </div>
 

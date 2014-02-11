@@ -316,10 +316,10 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT TOP 5 * FROM CMS_Events WHERE featuredEvent = 1 AND eventStartDate <= @startDate AND eventEndDate >= @endDate AND pageWorkFlowState = 2 ORDER BY eventStartDate DESC";
+            string queryString = "SELECT TOP 5 * FROM CMS_Events WHERE featuredEvent = 1 AND eventEndDate >= @startDate AND pageWorkFlowState = 2 ORDER BY eventStartDate ASC";
             SqlCommand getEvents = new SqlCommand(queryString, conn);
-            getEvents.Parameters.AddWithValue("startDate", DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy") + " 23:59:59"));
-            getEvents.Parameters.AddWithValue("endDate", DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy")));
+            getEvents.Parameters.AddWithValue("startDate", DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy") + " 00:00:00"));
+            //getEvents.Parameters.AddWithValue("endDate", DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy")));
 
             SqlDataReader eventReader = getEvents.ExecuteReader();
 

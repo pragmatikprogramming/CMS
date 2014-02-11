@@ -43,7 +43,7 @@
                         <td><a href="/Gallery/Images/@folder.Id">@folder.Name</a></td>
                         <td>
                             
-                            @if(folder.Name != "News Images")
+                            @if(folder.Name != "News Images" && folder.Name != "Banner Images")
                             {
                                 <a href="/Gallery/EditGallery/@folder.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a>
                                 <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@folder.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a>

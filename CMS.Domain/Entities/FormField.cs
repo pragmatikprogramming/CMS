@@ -29,7 +29,6 @@ namespace CMS.Domain.Entities
             }
         }
 
-        [Required(ErrorMessage = "Please input your label text")]
         public string Label
         {
             get 

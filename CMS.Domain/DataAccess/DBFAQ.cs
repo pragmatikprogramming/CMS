@@ -150,7 +150,8 @@ namespace CMS.Domain.DataAccess
                 tempQuestion.FaqID = myFAQQuestion.GetInt32(1);
                 tempQuestion.FaqQuestion = myFAQQuestion.GetString(2);
                 tempQuestion.FaqAnswer = myFAQQuestion.GetString(3);
-                tempQuestion.SortOrder = myFAQQuestion.GetInt32(4);
+                tempQuestion.PageWorkFlowState = myFAQQuestion.GetInt32(4);
+                tempQuestion.SortOrder = myFAQQuestion.GetInt32(5);
             }
 
             conn.Close();
@@ -274,7 +275,7 @@ namespace CMS.Domain.DataAccess
                 int m_id = Convert.ToInt32(myId);
                 FAQQuestions o_FAQQuestion = DBFAQ.RetrieveOneFAQQuestion(m_id);
 
-                queryString = "UPDATE CMS_FAQQuestions SET sortOrder = @sortOrder, pageWorkFlowState = 2 WHERE id = @id";
+                queryString = "UPDATE CMS_FAQQuestions SET sortOrder = @sortOrder WHERE id = @id";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
                 updatePage.Parameters.AddWithValue("sortOrder", newSortOrder);
                 updatePage.Parameters.AddWithValue("id", m_FAQQuestion.QID);
@@ -300,7 +301,7 @@ namespace CMS.Domain.DataAccess
 
             //check boundaries of sort to make sure they are valid
 
-            string queryString = "SELECT TOP 1 id FROM CMS_FAQQuestions WHERE faqID = @faqID and sortOrder = @sortOrder ORDER BY id DESC";
+            string queryString = "SELECT id FROM CMS_FAQQuestions WHERE faqID = @faqID and sortOrder = @sortOrder ORDER BY id DESC";
             SqlCommand getId = new SqlCommand(queryString, conn);
             getId.Parameters.AddWithValue("faqID", m_FAQQuestion.FaqID);
             getId.Parameters.AddWithValue("sortOrder", newSortOrder);

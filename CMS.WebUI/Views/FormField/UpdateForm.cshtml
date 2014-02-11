@@ -1,4 +1,4 @@
-﻿@if (ViewBag.FieldType == 1 || ViewBag.FieldType == 2 || ViewBag.FieldType == 6 || ViewBag.FieldType == 7)
+﻿@if (ViewBag.FieldType == 1 || ViewBag.FieldType == 2 || ViewBag.FieldType == 6 || ViewBag.FieldType == 7 || ViewBag.FieldType == 8)
 {
     <div class="formlabel">Label Text:</div>
     <div class="formfield"><input type="text" class="input-xlarge" name="Label" value=""></div>
@@ -37,4 +37,11 @@ else if (ViewBag.FieldType == 5)
     <div class="formlabel">Option Text:</div>
     <div class="formfield"><input type="text" class="input-xlarge" name="childrenTitle" value="" />&nbsp;&nbsp<a data-ajax="true" data-ajax-mode="after" data-ajax-update="#myForm" href="/FormField/AddOption/select">Add more options</a></div>
     <div class="clear">&nbsp;</div>
+}
+else if (ViewBag.FieldType == 9)
+{
+    <div class="formlabel">Custom Text:</div>
+    <div class="formfield"><textarea rows="5" cols="50" name="Label"></textarea></div>
+    <div class="clear">&nbsp;</div>
+    <input type="hidden" name="FieldType" value="@ViewBag.FieldType" />
 }

@@ -18,15 +18,17 @@ namespace CMS.WebUI.Controllers
         IFormRepository FormRepository;
         IFAQRepository FAQRepository;
         IBlogPostRepository BlogPostRepository;
+        IImageRepository ImageRepository;
 
         
-        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo)
+        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo, IImageRepository ImageRepo)
         {
             PageRepository = PageRepo;
             JSONRepository = JSONRepo;
             FormRepository = FormRepo;
             FAQRepository = FAQRepo;
             BlogPostRepository = BlogPostRepo;
+            ImageRepository = ImageRepo;
         }
 
         [HttpGet]
@@ -48,6 +50,7 @@ namespace CMS.WebUI.Controllers
             ViewBag.ParentId = id;
             ViewBag.myContentGroups = Utility.ContentGroups();
             ViewBag.Templates = Utility.GetTemplates();
+            ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
 
             Page m_Page = new Page();
 
@@ -91,6 +94,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.ParentId = m_Page.ParentId;
                 ViewBag.myContentGroups = Utility.ContentGroups();
                 ViewBag.Templates = Utility.GetTemplates();
+                ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
 
                 return View("AddPage", m_Page);
             }
@@ -116,6 +120,7 @@ namespace CMS.WebUI.Controllers
                 PageRepository.LockPage(id);
                 ViewBag.myContentGroups = Utility.ContentGroups();
                 ViewBag.Templates = Utility.GetTemplates();
+                ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
                 return View("EditPage", m_Page);
             }
         }
@@ -163,6 +168,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.ParentId = m_Page.ParentId;
                 ViewBag.myContentGroups = Utility.ContentGroups();
                 ViewBag.Templates = Utility.GetTemplates();
+                ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
 
                 return View("EditPage", m_Page);
             }
@@ -278,6 +284,14 @@ namespace CMS.WebUI.Controllers
                 ViewBag.Templates = Utility.GetTemplates();
                 return View("getDefaults");
             }
+        }
+
+        [CMSAuth]
+        public ActionResult ImageSelect(string ImageName, int ImageId)
+        {
+            ViewBag.ImageName = ImageName;
+            ViewBag.ImageId = ImageId;
+            return View("ImageSelect");
         }
     }
 }

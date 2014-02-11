@@ -1,7 +1,4 @@
-﻿
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -55,7 +52,7 @@ namespace CMS.Domain.DataAccess
 
             conn.Open();
 
-            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId)";
+            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage)";
             SqlCommand insertPage = new SqlCommand(queryString, conn);
             insertPage.Parameters.AddWithValue("pageId", m_PageId);
             insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -75,6 +72,8 @@ namespace CMS.Domain.DataAccess
             insertPage.Parameters.AddWithValue("redirectURL", m_Page.RedirectURL);
             insertPage.Parameters.AddWithValue("pageType", m_Page.PageType);
             insertPage.Parameters.AddWithValue("pageTypeId", m_Page.PageTypeId);
+            insertPage.Parameters.AddWithValue("displayOnSubmenu", m_Page.DisplayOnSubmenu);
+            insertPage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
             insertPage.ExecuteNonQuery();
 
             conn.Close();
@@ -127,6 +126,8 @@ namespace CMS.Domain.DataAccess
                 m_Page.PageType = pageDataReader.GetInt32(18);
                 m_Page.PageTypeId = pageDataReader.GetInt32(19);
                 m_Page.LockedByName = DBPage.GetLockedByName(m_Page.LockedBy);
+                m_Page.DisplayOnSubmenu = pageDataReader.GetInt32(20);
+                m_Page.BannerImageName = pageDataReader.GetString(21);
 
                 if (!pageDataReader.IsDBNull(17))
                 {
@@ -183,6 +184,8 @@ namespace CMS.Domain.DataAccess
                 tempPage.LockedBy = pagesDataReader.GetInt32(13);
                 tempPage.SortOrder = pagesDataReader.GetInt32(16);
                 tempPage.LockedByName = DBPage.GetLockedByName(tempPage.LockedBy);
+                tempPage.DisplayOnSubmenu = pagesDataReader.GetInt32(20);
+                tempPage.BannerImageName = pagesDataReader.GetString(21);
 
                 if (!pagesDataReader.IsDBNull(17))
                 {
@@ -210,7 +213,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_Page.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, expireDate = @expireDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId WHERE id = @id and pageId = @pageId";
+                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, expireDate = @expireDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId, displayOnSubmenu = @displayOnSubmenu, bannerImage = @bannerImage WHERE id = @id and pageId = @pageId";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
 
                 updatePage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -231,12 +234,14 @@ namespace CMS.Domain.DataAccess
                 updatePage.Parameters.AddWithValue("redirectURL", m_Page.RedirectURL);
                 updatePage.Parameters.AddWithValue("pageType", m_Page.PageType);
                 updatePage.Parameters.AddWithValue("pageTypeId", m_Page.PageTypeId);
+                updatePage.Parameters.AddWithValue("displayOnSubmenu", m_Page.DisplayOnSubmenu);
+                updatePage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
 
                 updatePage.ExecuteNonQuery();
             }
             else if (m_Page.PageWorkFlowState == 2 || m_Page.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId)";
+                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage)";
                 SqlCommand insertPage = new SqlCommand(queryString, conn);
                 insertPage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -256,6 +261,8 @@ namespace CMS.Domain.DataAccess
                 insertPage.Parameters.AddWithValue("redirectURL", m_Page.RedirectURL);
                 insertPage.Parameters.AddWithValue("pageType", m_Page.PageType);
                 insertPage.Parameters.AddWithValue("pageTypeId", m_Page.PageTypeId);
+                insertPage.Parameters.AddWithValue("displayOnSubmenu", m_Page.DisplayOnSubmenu);
+                insertPage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
                 insertPage.ExecuteNonQuery();
             }
             else
