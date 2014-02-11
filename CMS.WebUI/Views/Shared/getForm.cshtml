@@ -34,7 +34,7 @@
         
         if(formField.FieldType == 1)
         {
-            <div class="formfield"><input type="@formField.FieldType" class="input-xlarge" name="@formField.Label" value=""></div>
+            <div class="formfield"><input type="@formField.FieldTypeText" class="input-xlarge" name="@formField.Label" value=""></div>
             <div class="clear">&nbsp;</div>
         }
         else if (formField.FieldType == 2)
@@ -145,7 +145,7 @@
                 });
             </script>
         
-            <div class="formfield"><input type="@formField.FieldType" class="input-xlarge" name="@formField.Label" id="@formField.Label" readonly="readonly"></div>
+            <div class="formfield"><input type="@formField.FieldTypeText" class="input-xlarge" name="@formField.Label" id="@formField.Label" readonly="readonly"></div>
             <div class="clear">&nbsp;</div>
         }
         else
