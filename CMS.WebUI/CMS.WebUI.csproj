@@ -2336,6 +2336,7 @@
     <Content Include="Content\CKEditor\samples\sample_posteddata.php" />
     <Content Include="Content\CKEditor\skins\moonocolor\readme.md" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
+    <None Include="Properties\PublishProfiles\MJSDEV.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
