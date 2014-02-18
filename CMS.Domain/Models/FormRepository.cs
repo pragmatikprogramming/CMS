@@ -67,7 +67,7 @@ namespace CMS.Domain.Models
             DBForm.InsertFormData(formData, formId);
         }
 
-        public static void SendFormData(string to, string from, string body, string subject)
+        public void SendFormData(string to, string from, string body, string subject)
         {
             MailMessage mail = new MailMessage(from, to, subject, body);
             SmtpClient client = new SmtpClient(ConfigurationManager.AppSettings["SMTPServer"]);

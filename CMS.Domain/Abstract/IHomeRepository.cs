@@ -15,7 +15,7 @@ namespace CMS.Domain.Abstract
         List<BlogPost> NewsAnnouncements();
         List<Event> FeaturedEvents();
         List<MenuItem> NonSystemMenu(int id);
-        List<BlogPost> GetTeenBlog();
+        List<BlogPost> GetBlog(int id);
         List<BlogPost> GetNews();
         BlogPost SwapNews(int id);
         void SubmitComment(BlogPostComment m_Comment);

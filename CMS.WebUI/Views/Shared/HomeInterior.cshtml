@@ -29,7 +29,7 @@
         }
         else if(ViewBag.PageType == 4)
         {
-            @Html.Action("getTeenBlog", "Home")
+            @Html.Action("getBlog", "Home", new { id = Model.PageTypeId })
         }
         else
         {

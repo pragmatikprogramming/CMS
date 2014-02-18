@@ -2448,7 +2448,7 @@
     <Content Include="Views\Home\FeaturedEvents.cshtml" />
     <Content Include="Views\Home\HomePageMenuModule.cshtml" />
     <Content Include="Views\Home\SystemSubMenu.cshtml" />
-    <Content Include="Views\Home\getTeenBlog.cshtml" />
+    <Content Include="Views\Home\getBlog.cshtml" />
     <Content Include="Views\BlogPost\ImageSelect.cshtml" />
     <Content Include="Views\Home\getNews.cshtml" />
     <Content Include="Views\Page\getForms.cshtml" />

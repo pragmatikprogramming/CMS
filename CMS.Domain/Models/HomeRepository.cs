@@ -47,9 +47,9 @@ namespace CMS.Domain.Models
             return m_MenuItems;
         }
 
-        public List<BlogPost> GetTeenBlog()
+        public List<BlogPost> GetBlog(int id)
         {
-            List<BlogPost> m_BlogPosts = DBBlogPost.RetrieveAllByCategory(3);
+            List<BlogPost> m_BlogPosts = DBBlogPost.RetrieveAllByCategory(id);
             return m_BlogPosts;
         }
 

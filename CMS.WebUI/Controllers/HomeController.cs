@@ -95,11 +95,11 @@ namespace CMS.WebUI.Controllers
             return View("FeaturedEvents", m_Events);
         }
 
-        public ActionResult getTeenBlog()
+        public ActionResult getBlog(int id)
         {
             ViewBag.Count = 0;
-            List<BlogPost> m_BlogPosts = HomeRepository.GetTeenBlog();
-            return View("getTeenBlog", m_BlogPosts);
+            List<BlogPost> m_BlogPosts = HomeRepository.GetBlog(id);
+            return View("getBlog", m_BlogPosts);
         }
 
         public ActionResult getNews()
