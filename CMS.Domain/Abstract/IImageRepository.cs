@@ -13,7 +13,7 @@ namespace CMS.Domain.Abstract
         void Create(Image m_Image, HttpPostedFileBase myFile);
         Image RetrieveOne(int id);
         List<Image> RetrieveAll(int id);
-        void Update(Image m_Image, HttpPostedFileBase fileUpload, string OldName);
+        void Update(Image m_Image, HttpPostedFileBase fileUpload, string OldName, string OldFileType);
         void Delete(int id);
     }
 }

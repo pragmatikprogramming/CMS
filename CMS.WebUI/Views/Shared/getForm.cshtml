@@ -22,7 +22,7 @@
             {
                 <font style="color:red;">*</font>
             }
-            @if(formField.FieldType != 7)
+            @if(formField.FieldType != 7 && formField.FieldType != 9)
             {    
                 @formField.Label
             }
@@ -146,6 +146,11 @@
             </script>
         
             <div class="formfield"><input type="@formField.FieldTypeText" class="input-xlarge" name="@formField.Label" id="@formField.Label" readonly="readonly"></div>
+            <div class="clear">&nbsp;</div>
+        }
+        else if(formField.FieldType == 9)
+        {
+            <div class="formfield">@formField.Label</div>
             <div class="clear">&nbsp;</div>
         }
         else

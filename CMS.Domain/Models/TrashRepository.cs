@@ -50,6 +50,9 @@ namespace CMS.Domain.Models
                 Gallery m_Gallery = DBGallery.RetrieveOne(DBImage.GetParentId(m_Trash.ObjectId));
                 string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Trash.ObjectName + "." + m_Trash.ObjectType;
                 File.Delete(path);
+
+                string thumbpath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs\\" + m_Trash.ObjectName + "_thumb." + m_Trash.ObjectType;
+                File.Delete(thumbpath);
             }
 
             if (m_Trash.ObjectTable == "CMS_Folders")

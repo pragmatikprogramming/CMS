@@ -161,6 +161,7 @@ namespace CMS.WebUI.Controllers
         public ActionResult ProcessForm(int parentId, int id)
         {
             string formData = "";
+            string emailBody = "";
             Form m_Form = FormRepository.RetrieveOne(id);
 
             Dictionary<string, int> m_Ffs = new Dictionary<string,int>();
@@ -184,6 +185,7 @@ namespace CMS.WebUI.Controllers
                     ModelState.AddModelError(key, "Please enter a value for " + key);
                 }
                 formData += key + "::" + Request.Form[key] + "^^";
+                emailBody += key + " = " + Request.Form[key] + "<br />";
             }
 
             if (ModelState.IsValid)
@@ -191,6 +193,7 @@ namespace CMS.WebUI.Controllers
                 FormRepository.InsertFormData(formData, id);
 
                 Page m_Page = PageRepository.RetrieveOne(parentId);
+                FormRepository.SendFormData(m_Form.SubmissionEmail, "webmaster@solanolibrary.com", emailBody, m_Form.FormName + " - Submission");
 
                 ViewBag.PageType = m_Page.PageType;
                 ViewBag.id = m_Page.PageTypeId;

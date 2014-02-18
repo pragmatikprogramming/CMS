@@ -137,7 +137,7 @@ namespace CMS.WebUI.Controllers
 
             if (fileUpload != null && fileUpload.ContentLength > 0)
             {
-                if (fileUpload.ContentType != "image/jpg" && fileUpload.ContentType != "image/jpeg" && fileUpload.ContentType != "image/png" && fileUpload.ContentType != "image/gif" && fileUpload.ContentType != "image/bmp")
+                if (fileUpload.ContentType != "image/jpg" && fileUpload.ContentType != "image/jpeg" && fileUpload.ContentType != "image/png" && fileUpload.ContentType != "image/gif")
                 {
                     ModelState.AddModelError("Name", "An invalid file type was uploaded.  Please select a different file");
                 }
@@ -172,7 +172,7 @@ namespace CMS.WebUI.Controllers
 
         [CMSAuth]
         [HttpPost]
-        public ActionResult EditImage(Image m_Image, HttpPostedFileBase fileUpload, string OldName)
+        public ActionResult EditImage(Image m_Image, HttpPostedFileBase fileUpload, string OldName, string OldFileType)
         {
             if (fileUpload != null && fileUpload.ContentLength > 0)
             {
@@ -184,7 +184,7 @@ namespace CMS.WebUI.Controllers
 
             if (ModelState.IsValid)
             {
-                ImageRepository.Update(m_Image, fileUpload, OldName);
+                ImageRepository.Update(m_Image, fileUpload, OldName, OldFileType);
                 return RedirectToAction("Images", "Gallery", new { id = m_Image.ParentId });
             }
             else

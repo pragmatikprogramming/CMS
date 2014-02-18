@@ -24,7 +24,7 @@ namespace CMS.Domain.DataAccess
             SqlCommand insertImage = new SqlCommand(queryString, conn);
             insertImage.Parameters.AddWithValue("name", m_Image.Name);
             insertImage.Parameters.AddWithValue("altText", m_Image.AltText);
-            insertImage.Parameters.AddWithValue("fileType", m_Image.FileType);
+            insertImage.Parameters.AddWithValue("fileType", m_Image.FileType ?? "");
             insertImage.Parameters.AddWithValue("parentId", m_Image.ParentId);
             insertImage.Parameters.AddWithValue("contentGroup", m_Image.ContentGroup);
             insertImage.ExecuteNonQuery();
@@ -80,15 +80,6 @@ namespace CMS.Domain.DataAccess
                 m_Image.FileType = allImages.GetString(3);
                 m_Image.ParentId = allImages.GetInt32(4);
                 m_Image.ContentGroup = allImages.GetInt32(5);
-
-                Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
-                string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
-                System.Drawing.Image myImage = System.Drawing.Image.FromFile(path);
-                
-                var ratio = 100 / myImage.Width;
-
-                m_Image.Width = (int)myImage.Width * ratio;
-                m_Image.Height = (int)myImage.Height * ratio;
 
                 m_Images.Add(m_Image);
             }

@@ -5,6 +5,8 @@ using System.Web;
 using CMS.Domain.Abstract;
 using CMS.Domain.Entities;
 using CMS.Domain.DataAccess;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace CMS.Domain.Models
 {
@@ -65,5 +67,13 @@ namespace CMS.Domain.Models
             DBForm.InsertFormData(formData, formId);
         }
 
+        public static void SendFormData(string to, string from, string body, string subject)
+        {
+            MailMessage mail = new MailMessage(from, to, subject, body);
+            SmtpClient client = new SmtpClient(ConfigurationManager.AppSettings["SMTPServer"]);
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = false;
+            client.Send(mail);
+        }
     }
 }

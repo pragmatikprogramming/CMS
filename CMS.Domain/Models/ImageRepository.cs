@@ -19,22 +19,20 @@ namespace CMS.Domain.Models
             m_Image.FileType = fileExt;
 
             DBImage.Create(m_Image);
-
+            
             Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
             string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
             string thumbPath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs\\" + m_Image.Name + "_thumb." + m_Image.FileType;
             myFile.SaveAs(path);
 
-            
-
-            /*using (System.Drawing.Image myImage = System.Drawing.Image.FromFile(path))
+            using (System.Drawing.Image myImage = System.Drawing.Image.FromFile(path))
             {
                 System.Drawing.Image thumb = myImage.GetThumbnailImage(100, 100, () => false, IntPtr.Zero);
                 thumb.Save(thumbPath);
-                //((IDisposable)myImage).Dispose();
-                //((IDisposable)thumb).Dispose();
+                ((IDisposable)myImage).Dispose();
+                ((IDisposable)thumb).Dispose();
                 GC.Collect();
-            }*/
+            }
 
         }
 
@@ -51,28 +49,61 @@ namespace CMS.Domain.Models
             return m_Images;
         }
 
-        public void Update(Image m_Image, HttpPostedFileBase fileUpload, string OldName)
+        public void Update(Image m_Image, HttpPostedFileBase fileUpload, string OldName, string OldFileType)
         {
-            DBImage.Update(m_Image);
-            
-            if (OldName != m_Image.Name)
-            {
-                Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
+            string fileExt;
 
-                string oldPath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + OldName + "." + m_Image.FileType;
-                string newPath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
-
-                File.Move(oldPath, newPath);
-            }
             if (fileUpload != null && fileUpload.ContentLength > 0)
             {
+                fileExt = fileUpload.FileName.Split('.').Last();
+                m_Image.FileType = fileExt;
+
+                DBImage.Update(m_Image);
+
                 Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
 
-                string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
+                string path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + OldName + "." + OldFileType;
                 File.Delete(path);
+                path = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
+
+                string thumbpath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs\\" + OldName + "_thumb." + OldFileType;
+                File.Delete(thumbpath);
+                thumbpath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs\\" + m_Image.Name + "_thumb." + m_Image.FileType;
 
                 fileUpload.SaveAs(path);
+
+                using (System.Drawing.Image myImage = System.Drawing.Image.FromFile(path))
+                {
+                    System.Drawing.Image thumb = myImage.GetThumbnailImage(100, 100, () => false, IntPtr.Zero);
+                    thumb.Save(thumbpath);
+                    ((IDisposable)myImage).Dispose();
+                    ((IDisposable)thumb).Dispose();
+                    GC.Collect();
+                }
             }
+            else if (OldName != m_Image.Name)
+            {
+                m_Image.FileType = OldFileType;
+                DBImage.Update(m_Image);
+
+                Gallery m_Gallery = DBGallery.RetrieveOne(m_Image.ParentId);
+
+                string oldPath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + OldName + "." + OldFileType;
+                string newPath = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\" + m_Image.Name + "." + m_Image.FileType;
+
+                string oldPathThumb = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs\\" + OldName + "_thumb." + OldFileType;
+                string newPathThumb = ConfigurationManager.AppSettings["Gallery"] + "\\" + m_Gallery.Name + "\\thumbs\\" + m_Image.Name + "_thumb." + m_Image.FileType;
+
+                File.Move(oldPath, newPath);
+                File.Move(oldPathThumb, newPathThumb);
+            }
+            else
+            {
+                m_Image.FileType = OldFileType;
+
+                DBImage.Update(m_Image);
+            }
+            
         }
 
         public void Delete(int id)
