@@ -15,6 +15,11 @@
     <div class="formfield" style="color: red">@Html.ValidationSummary()</div>
     <div class="clear">&nbsp;</div>
 
+    <div class="formlabel">&nbsp;</div>
+    <div class="formfield"><a href="/Form"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
+    <div class="clear">&nbsp;</div>
+    <div style="line-height: 30px;">&nbsp;</div>
+
     <form action="/Form/EditForm" method="post" id="formEdit">
 
         <input type="hidden" name="Id" value="@Model.Id" />
@@ -72,5 +77,6 @@
         <div style="line-height: 30px;">&nbsp;</div>
         <div class="formlabel">&nbsp;</div>
         <div class="formfield"><button form="formEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+        <div class="clear">&nbsp;</div>
     </form>
 </div>

@@ -95,9 +95,10 @@ namespace CMS.WebUI.Controllers
             return View("FeaturedEvents", m_Events);
         }
 
-        public ActionResult getBlog(int id)
+        public ActionResult getBlog(int parentId, int id)
         {
             ViewBag.Count = 0;
+            ViewBag.TemplateId = parentId;
             List<BlogPost> m_BlogPosts = HomeRepository.GetBlog(id);
             return View("getBlog", m_BlogPosts);
         }
@@ -134,13 +135,15 @@ namespace CMS.WebUI.Controllers
             return View("SwapNews", m_BlogPosts);
         }
 
-        public ActionResult BlogPost(int id)
+        public ActionResult BlogPost(int id, int parentId = 5)
         {
             BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(id);
             ViewBag.PageType = 5;
-            ViewBag.PageId = -1;
+            ViewBag.PageId = null;
+            ViewBag.TemplateId = parentId;
+            string m_Template = Utility.GetTemplateById(parentId);
 
-            return View("BlogPost", m_BlogPost);
+            return View(m_Template, m_BlogPost);
         }
 
 

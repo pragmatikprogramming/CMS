@@ -20,6 +20,11 @@
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
+
+    <div class="formfield"><a href="/FAQ/FAQQuestions/@Model.FaqID"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
+    <div class="clear">&nbsp;</div>
+    <div style="line-height: 30px;">&nbsp;</div>
+
         <form action="/FAQ/FAQQuestionEdit" method="post" id="faqQuestionEdit">
             <input type="hidden" name="FaqID" value="@Model.FaqID" />
             <input type="hidden" name="QID" value="@Model.QID" />
@@ -37,7 +42,7 @@
             </script>
             
             <div style="line-height: 30px;">&nbsp;</div>
-            <button form="faqQuestionEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+            <div class="formfield"><button form="faqQuestionEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
             <a href="#myModal" data-toggle="modal" class="btn" onclick="doWork(@Model.QID);" >Delete</a>
         </form>
     </div>

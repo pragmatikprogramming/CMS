@@ -12,6 +12,12 @@
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
+
+    <div class="formlabel">&nbsp;</div>
+    <div class="formfield"><a href="/Document/Index/@Model.ParentId"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
+    <div class="clear">&nbsp;</div>
+    <div style="line-height: 30px;">&nbsp;</div>
+
     <form action="/Document/EditDocument" method="post" id="documentEdit" enctype = "multipart/form-data">
         <input type="hidden" name="ParentId" value="@Model.ParentId" id="ParentId" />
         <input type="hidden" name="OldName" value="@Model.Name" id="OldName" />
@@ -45,7 +51,9 @@
         <div class="clear">&nbsp;</div>
 
         <div style="line-height: 30px;">&nbsp;</div>
-        <button form="documentEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+        <div class="formlabel">&nbsp;</div>
+        <div class="formfield"><button form="documentEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+        <div class="clear">&nbsp;</div>
     </form>
 </div>
 

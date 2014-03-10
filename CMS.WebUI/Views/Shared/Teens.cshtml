@@ -3,10 +3,10 @@
     Layout = "~/Views/Shared/_LayoutTeens.cshtml";
 }
 
-<div class="inner_bg"></div><!--end inner-->
+<!--<!--end inner-->
     <div class="inner-content">
-
-        <div class="margin-top_10">&nbsp;</div> 
+        <div class="inner_bg"></div>
+        <div class="margin-top_10">&nbsp;</div>
         @if (ViewBag.Message != null)
         {
             <div class="formlabel">&nbsp;</div>
@@ -15,15 +15,70 @@
         }
         @if (ViewBag.PageType == 2)
         {
-            @Html.Action("getForm", new { parentId = Model.PageID, id = ViewBag.id})
+            @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
         }
         else if(ViewBag.PageType == 3)
         {
-            @Html.Action("getFAQ", new { id = ViewBag.id})   
+            @Html.Action("getFAQ", "Home", new { id = ViewBag.id})   
         }
         else if(ViewBag.PageType == 4)
         {
-            @Html.Action("getBlog", "Home", new { id = Model.PageTypeId })
+            @Html.Action("getBlog", "Home", new { parentId = ViewBag.TemplateId, id = Model.PageTypeId })
+        }
+        else if(ViewBag.PageType == 5)
+        {
+            <div class="border">
+                <h5><a href="/Home/BlogPost/@Model.Id">@Model.Title</a></h5>
+                <section class="padding">
+                    <span class='st_facebook_large' displayText='Facebook'></span>
+                    <span class='st_twitter_large' displayText='Tweet'></span>
+                    <span class='st_pinterest_large' displayText='Pinterest'></span>
+                    <span class='st_email_large' displayText='Email'></span>
+                    <span class='st_fblike_large' displayText='Facebook Like'></span><br /><br /><br />
+                    <figcaption class="caption float_left">@Model.PublishDate.ToString("MM/dd/yyyy")</figcaption>
+                    <figcaption class="caption float_right">By <strong class="strong">@Model.Author</strong></figcaption>
+                    <div class="clear margin-bottom_10"></div>
+                    <figcaption class="caption">
+                        @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) <br /><br />
+                    </figcaption>
+                    <div class="clear"></div>
+                </section>
+            </div><!--end border-->
+
+            <div class="margin-top_10">&nbsp;</div>
+
+            if(Model.Comments == 1)
+            {
+                <div class="border">
+                    <h5><a href="#">Leave a Comment</a></h5>
+                    <div class="margin-top_10">&nbsp;</div>
+                    <form action="/Home/SubmitComment" method="post">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <input type="hidden" name="BlogId" value="@Model.BlogId" />
+                        <div class="formlabel">Name:</div>
+                        <div class="formfield"><input type="text" name="Name" value="" /></div>
+                        <div class="clear">&nbsp;</div>
+
+                        <div class="formlabel">Comment:</div>
+                        <div class="formfield"><textarea cols="60" rows="5" maxlength="2000" name="Comment" ></textarea></div>
+                        <div class="clear">&nbsp;</div>
+
+                        <div class="formlabel">&nbsp;</div>
+                        <div class="formfield"><input type="submit" value="submit" /></div>
+                        <div class="clear">&nbsp;</div>
+                    </form>
+                </div>
+
+                <div class="margin-top_10">&nbsp;</div>
+
+                <div class="border" >
+                    <h5><a href="#">Comments</a></h5>
+                    <div class="margin-top_10">&nbsp;</div>
+                    @Html.Action("GetComments", new{id = Model.BlogId})
+                </div>
+
+                <div class="margin-top_10">&nbsp;</div>
+            }  
         }
         else
         {
@@ -36,11 +91,21 @@
     <div class="right_part">
         <div class="coloumn3">
             <div class="inner-cen-bg">
-                @Html.Action("SystemSubMenu", "Home", new{id = ViewBag.PageId})	
+                @if(ViewBag.PageId != null)
+                {
+                    @Html.Action("SystemSubMenu", "Home", new{id = ViewBag.PageId})	
+                }
                 <div class="margin-top_10">&nbsp;</div> 
             </div>
         </div><!--end coloumn3-->
         <div class="inner-bot-bg"></div>  
-        <div class="margin-top_10">&nbsp;</div>  
-        @Html.Action("Container", "Home", new{ id = Model.TemplateId })
+        <div class="margin-top_10">&nbsp;</div> 
+        @if(ViewBag.PageId != null)
+        { 
+            @Html.Action("Container", "Home", new{ id = Model.TemplateId })
+        }
+        else
+        {
+            @Html.Action("Container", "Home", new{ id = ViewBag.TemplateId })
+        }
     </div> <!--end right part--> 

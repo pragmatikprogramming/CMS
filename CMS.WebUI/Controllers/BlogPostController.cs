@@ -135,7 +135,8 @@ namespace CMS.WebUI.Controllers
         public ActionResult BlogPreview(int id)
         {
             BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(id);
-            ViewBag.Content = m_BlogPost.Content;
+            ViewBag.PageType = 5;
+            ViewBag.PageId = null;
 
             return View("HomeInterior", m_BlogPost); 
         }

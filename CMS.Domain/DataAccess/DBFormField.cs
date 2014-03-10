@@ -80,7 +80,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FormFields WHERE parentId = 0 AND pageWorkFlowState != 4";
+            string queryString = "SELECT * FROM CMS_FormFields WHERE parentId = 0 AND pageWorkFlowState != 4 ORDER BY label";
             SqlCommand getFormFields = new SqlCommand(queryString, conn);
             SqlDataReader formFieldsReader = getFormFields.ExecuteReader();
 
@@ -109,7 +109,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FormFields WHERE parentId = @parentId";
+            string queryString = "SELECT * FROM CMS_FormFields WHERE parentId = @parentId ORDER BY label";
             SqlCommand getChildren = new SqlCommand(queryString, conn);
             getChildren.Parameters.AddWithValue("parentId", parentId);
 

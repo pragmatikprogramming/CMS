@@ -29,6 +29,7 @@ namespace CMS.WebUI.Controllers
             List<Folder> m_Folders = FolderRepository.RetrieveAll(id);
             List<Document> m_Documents = DBDocument.RetriveAll(id);
             ViewBag.Documents = m_Documents;
+            ViewBag.CurrentFolder = FolderRepository.RetrieveOne(id);
             return View("Document", m_Folders);
         }
 
