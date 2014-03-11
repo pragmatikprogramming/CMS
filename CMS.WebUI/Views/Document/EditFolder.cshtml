@@ -12,12 +12,6 @@
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
-
-    <div class="formlabel">&nbsp;</div>
-    <div class="formfield"><a href="/Document"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
-    <div class="clear">&nbsp;</div>
-    <div style="line-height: 30px;">&nbsp;</div>
-
     <form action="/Document/EditFolder" method="post" id="folderEdit">
         <input type="hidden" name="id" value="@Model.Id" id="id" />
         <input type="hidden" name="ParentId" value="@Model.ParentId" id="ParentId" />
@@ -26,9 +20,7 @@
         <div class="formfield"><input type="text" class="input-xlarge" name="Name" value="@Model.Name"></div>
         <div class="clear">&nbsp;</div>
         <div style="line-height: 30px;">&nbsp;</div>
-        <div class="formlabel">&nbsp;</div>
-        <div class="formfield"><button form="folderEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
-        <div class="clear">&nbsp;</div>
+        <button form="folderEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
     </form>
 </div>
 

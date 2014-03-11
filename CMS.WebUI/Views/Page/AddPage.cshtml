@@ -22,12 +22,6 @@
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
-
-    <div class="formlabel">&nbsp;</div>
-    <div class="formfield"><a href="/Page/Index/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
-    <div class="clear">&nbsp;</div>
-    <div style="line-height: 30px;">&nbsp;</div>
-
     <form action="/Page/getPageTypeIds" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#PageType" method="post">
         <div class="formlabel">Page Type:</div>
         <div class="formfield">
@@ -102,26 +96,26 @@
         <div class="clear">&nbsp;</div>-->
 
         <div class="formlabel">Page Title:</div>
-        <div class="formfield"><input type="text" name="PageTitle" value="@Model.PageTitle" /></div>
+        <div class="formfield"><input type="text" name="PageTitle" /></div>
         <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Navigation Name:</div>
-        <div class="formfield"><input type="text" name="NavigationName" value="@Model.NavigationName"/></div>
+        <div class="formfield"><input type="text" name="NavigationName" /></div>
         <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Redirect URL:</div>
-        <div class="formfield"><input type="text" name="RedirectURL" value=" @Model.RedirectURL" /></div>
+        <div class="formfield"><input type="text" name="RedirectURL" value="" /></div>
         <div class="clear">&nbsp;</div>
         
         <div class="formlabel">Publish Date:</div>
-        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="@Model.PublishDate"/></div>
+        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" /></div>
         <div class="clear">&nbsp;</div>
 
 
         @if(ViewBag.ParentId > 0)
         {
             <div class="formlabel">Expiration Date:</div>
-            <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" readonly="readonly" value="@Model.ExpirationDate"/></div>
+            <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" readonly="readonly" /></div>
             <div class="clear">&nbsp;</div>
         }
 
@@ -159,7 +153,7 @@
         <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Meta Description:</div>
-        <div class="formfield"><textarea cols="20" rows="5" name="MetaDescription">@Model.MetaDescription</textarea></div>
+        <div class="formfield"><textarea cols="20" rows="5" name="MetaDescription"></textarea></div>
         <div class="clear">&nbsp;</div>
 
         <div style="line-height: 30px;">&nbsp;</div>

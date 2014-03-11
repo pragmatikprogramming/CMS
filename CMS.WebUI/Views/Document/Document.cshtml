@@ -22,18 +22,13 @@
 <div class="row-fluid">  
     <div class="row-fluid">            
         <div class="btn-toolbar">
-            <a href="/Document/AddFolder/@ViewBag.ParentId" style="padding-right: 10px;"><button class="btn btn-primary"><i class="icon-plus"></i> New Folder</button></a>@if (ViewBag.ParentId != 0){ <a href="/Document/AddDocument/@ViewBag.ParentId" style="padding-right: 10px;"><button class="btn btn-primary"><i class="icon-plus"></i> New Document</button></a><a href="/Document/Index/@ViewBag.CurrentFolder.ParentId"><button class="btn btn-primary"><i class="icon-reply"></i> Back</button></a> }
-            <div class="btn-group">
+            <!--<a href="/Document/AddFolder/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-plus"></i> New Folder</button></a>&nbsp;&nbsp;&nbsp;-->
+            <a href="/Document/AddFolder/@ViewBag.ParentId"><img src="/Content/images/addFolder.png" title="Add Gallery" alt="Add Gallery" height="55px" width="55px"/></a>@if(ViewBag.ParentId != 0) { <a href="/Document/AddDocument/@ViewBag.ParentId"><img src="/Content/images/addDocument.png" title="Add Document" alt="Add Document"/></a>}
+                                                                                                                                                                                                                                                                                                                                     <div class="btn-group">
             </div>
         </div>
         <div style="color: red">@Html.ValidationSummary()</div>
-
-        <div style="line-height: 30px;">&nbsp;</div>
-
         @Html.FolderBreadCrumb((Int32)ViewBag.ParentId)
-
-        <div style="line-height: 30px;">&nbsp;</div>
-
         <div class="well">
             <table class="table">
                 <thead>
@@ -58,15 +53,15 @@
                 @foreach (var m_Document in ViewBag.Documents)
                 {
                     <tr>
-                        <td>@if (m_Document.FileType == "doc" || m_Document.FileType == "docx")
+                        <td>@if(m_Document.FileType == "doc" || m_Document.FileType == "docx")
                             {
                                 @:<img src="/Content/images/wordIcon.jpg" title="Word Document" alt="Word Document" />
                             }
-                            else if (m_Document.FileType == "xls" || m_Document.FileType == "xlsx")
+                            else if(m_Document.FileType == "xls" || m_Document.FileType == "xlsx")
                             {
                                 @:<img src="/Content/images/excelIcon.jpg" title="Excel Document" alt="Excel Document" />
-                            }
-                            else if (m_Document.FileType == "pdf" || m_Document.FileType == "PDF")
+                            }   
+                            else if(m_Document.FileType == "pdf" || m_Document.FileType == "PDF")
                             {
                                 @:<img src="/Content/images/pdfIcon.jpg" title="PDF Document" alt="PDF Document" />
                             }

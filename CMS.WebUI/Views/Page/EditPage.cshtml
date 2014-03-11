@@ -20,13 +20,8 @@
 <div class="container-fluid">
 <div class="row-fluid">
 <div class="formcontainer">
-    
-    <div style="color: red">@Html.ValidationSummary()</div>
-    <div class="formlabel">&nbsp;</div>
-    <div class="formfield"><a href="/Page/Index/@Model.ParentId"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
-    <div class="clear">&nbsp;</div>
     <div style="line-height: 30px;">&nbsp;</div>
-
+    <div style="color: red">@Html.ValidationSummary()</div>
     <form action="/Page/getPageTypeIds" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#PageType" method="post">
         <div class="formlabel">Page Type:</div>
         <div class="formfield">
@@ -168,9 +163,7 @@
         <div class="clear">&nbsp;</div>
 
         <div style="line-height: 30px;">&nbsp;</div>
-        <div class="formlabel">&nbsp;</div>
-        <div class="formfield"><button form="pageEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
-        <div class="clear">&nbsp;</div>
+        <button form="pageEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
     </form>
 
         <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

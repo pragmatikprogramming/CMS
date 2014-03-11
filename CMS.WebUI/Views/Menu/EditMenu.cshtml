@@ -11,21 +11,13 @@
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
-
-    <div class="formlabel">&nbsp;</div>
-    <div class="formfield"><a href="/Menu"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
-    <div class="clear">&nbsp;</div>
-    <div style="line-height: 30px;">&nbsp;</div>
-
     <form action="/Menu/EditMenu" method="post" id="menuEdit">
         <input type="hidden" name="Id" value="@Model.Id" />
         <div class="formlabel">Menu Name:</div>
         <div class="formfield"><input type="text" class="input-xlarge" name="MenuName" value="@Model.MenuName"></div>
         <div class="clear">&nbsp;</div>
         <div style="line-height: 30px;">&nbsp;</div>
-        <div class="formlabel">&nbsp;</div>
-        <div class="formfield"><button form="menuEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
-        <div class="clear">&nbsp;</div>
+        <button form="menuEdit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
     </form>
 </div>
 

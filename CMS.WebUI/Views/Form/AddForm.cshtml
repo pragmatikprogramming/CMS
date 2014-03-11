@@ -34,11 +34,6 @@
     <div class="formfield" style="color: red">@Html.ValidationSummary()</div>
     <div class="clear">&nbsp;</div>
 
-    <div class="formlabel">&nbsp;</div>
-    <div class="formfield"><a href="/Form"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
-    <div class="clear">&nbsp;</div>
-    <div style="line-height: 30px;">&nbsp;</div>
-
     <form action="/Form/AddForm" method="post" id="formAdd">
 
         <div class="formlabel">Form Name:</div>
@@ -56,7 +51,7 @@
                 <tbody>
             @foreach (var formField in ViewBag.FormFields)
             {
-                if (ViewBag.Count % 2 == 0)
+                if (ViewBag.Count % 4 == 0)
                 {
                     @:<tr>
                 }
@@ -66,16 +61,16 @@
                 
                 ViewBag.Count = ViewBag.Count + 1;
                 
-                if (ViewBag.Count % 2 == 0 && ViewBag.Count != 0)
+                if (ViewBag.Count % 4 == 0 && ViewBag.Count != 0)
                 {
                     @:</tr>
                 }
 
                 
             }
-                @if(ViewBag.Count % 2 != 0)
+                @if(ViewBag.Count % 4 != 0)
                 {
-                    for(var i = ViewBag.Count; i % 2 > 0; i++)
+                    for(var i = ViewBag.Count; i % 4 > 0; i++)
                     {
                         @:<td>&nbsp;</td><td>&nbsp;</td>
                     }
@@ -89,6 +84,5 @@
         <div style="line-height: 30px;">&nbsp;</div>
         <div class="formlabel">&nbsp;</div>
         <div class="formfield"><button form="formAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
-        <div class="clear">&nbsp;</div>
     </form>
 </div>

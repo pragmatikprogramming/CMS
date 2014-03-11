@@ -9,18 +9,8 @@
 <div class="container-fluid">   
 <div class="row-fluid">  
 <div class="formcontainer">
-    @if(!ViewData.ModelState.IsValid)
-    {
-        <div style="line-height: 30px;">&nbsp;</div>
-        <div class="formlabel">&nbsp;</div>
-        <div class="formfield"><div style="color: red">@Html.ValidationSummary()</div></div>
-        <div class="clear">&nbsp;</div>
-    }
     <div style="line-height: 30px;">&nbsp;</div>
-    <div class="formlabel">&nbsp;</div>
-    <div class="formfield"><a href="/Gallery/Images/@ViewBag.Id"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
-    <div class="clear">&nbsp;</div>
-    <div style="line-height: 30px;">&nbsp;</div>
+    <div style="color: red">@Html.ValidationSummary()</div>
         <form action="/Gallery/AddImage/@ViewBag.Id" method="post" id="imageAdd" enctype = "multipart/form-data">
             <input type="hidden" value="@ViewBag.Id" name="ParentId" id="ParentId" />
             <div class="formlabel">Content Group:</div>
@@ -55,9 +45,7 @@
             <div class="clear">&nbsp;</div>
 
             <div style="line-height: 30px;">&nbsp;</div>
-            <div class="formlabel">&nbsp;</div>
-            <div class="formfield"><button form="imageAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
-            <div class="clear">&nbsp;</div>
+            <button form="imageAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button>
         </form>
 </div>
 

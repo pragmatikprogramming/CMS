@@ -90,7 +90,7 @@ namespace CMS.WebUI.Controllers
             {
                 EventRepository.Create(m_Event);
 
-                return RedirectToAction("Index", "Calendar", new { id = DateTime.Parse(m_Event.EventStartDate.ToString()).ToString("MM-dd-yyyy")});
+                return RedirectToAction("Index", "Calendar");
             }
             else
             {

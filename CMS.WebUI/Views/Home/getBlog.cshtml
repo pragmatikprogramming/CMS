@@ -1,7 +1,7 @@
 ﻿@foreach (var post in Model)
 {
     <div class="border">
-        <h5><a href="/Home/BlogPost/@ViewBag.TemplateId/@post.Id">@post.Title</a></h5>   
+        <h5><a href="/Home/BlogPost/@post.Id">@post.Title</a></h5>   
             <section class="padding">
                 <figcaption class="caption float_left">@post.PublishDate.ToString("MM/dd/yyyy")</figcaption>
                 <figcaption class="caption float_right">By <strong class="strong">@post.Author</strong></figcaption>

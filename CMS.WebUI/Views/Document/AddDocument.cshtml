@@ -12,12 +12,6 @@
 <div class="formcontainer">
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
-
-    <div class="formlabel">&nbsp;</div>
-    <div class="formfield"><a href="/Document/Index/@ViewBag.ParentId"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
-    <div class="clear">&nbsp;</div>
-    <div style="line-height: 30px;">&nbsp;</div>
-
     <form action="/Document/AddDocument" method="post" id="documentAdd" enctype = "multipart/form-data">
         <input type="hidden" name="ParentId" value="@ViewBag.ParentId" id="ParentId" />
         <div class="formlabel">Content Group:</div>
@@ -48,9 +42,7 @@
         <div class="clear">&nbsp;</div>
 
         <div style="line-height: 30px;">&nbsp;</div>
-        <div class="formlabel">&nbsp;</div>
-        <div class="formfield"><button form="documentAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
-        <div class="clear">&nbsp;</div>
+        <button form="documentAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button>
     </form>
 </div>
 

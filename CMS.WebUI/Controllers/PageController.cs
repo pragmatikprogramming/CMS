@@ -226,24 +226,10 @@ namespace CMS.WebUI.Controllers
         public ActionResult PagePreview(int id = 0)
         {
             Page m_Page = PageRepository.RetrieveOne(id);
+            ViewBag.Content = m_Page.Content;
+            ViewBag.PageId = m_Page.PageID;
 
-            if (m_Page.RedirectURL == null || m_Page.RedirectURL == string.Empty)
-            {
-                ViewBag.PageType = m_Page.PageType;
-                ViewBag.id = m_Page.PageTypeId;
-                ViewBag.PageId = m_Page.PageID;
-                ViewBag.TemplateId = m_Page.TemplateId;
-                return View(m_Page.TemplateName, m_Page);
-            }
-            else
-            {
-                return Redirect(m_Page.RedirectURL);
-            }
-
-            //ViewBag.Content = m_Page.Content;
-            //ViewBag.PageId = m_Page.PageID;
-
-            //return View(m_Page.TemplateName, m_Page);
+            return View(m_Page.TemplateName, m_Page);
         }
 
         [HttpGet]

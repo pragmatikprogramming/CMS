@@ -215,7 +215,6 @@ namespace CMS.Domain.DataAccess
             string queryString = "SELECT * FROM CMS_BlogPostsToCategories WHERE categoryId = @catId";
             SqlCommand getCats = new SqlCommand(queryString, conn);
             getCats.Parameters.AddWithValue("catId", Category);
-            
 
             SqlDataReader catsReader = getCats.ExecuteReader();
 
@@ -231,9 +230,8 @@ namespace CMS.Domain.DataAccess
 
             string BlogIds = string.Join(",", m_BlogIds.ToArray());
 
-            queryString = "SELECT * FROM CMS_BlogPosts WHERE pageWorkFlowState = 2 AND publishDate >= @m_Date AND BlogId IN (" + BlogIds + ") ORDER BY blogId, id desc";
+            queryString = "SELECT * FROM CMS_BlogPosts WHERE pageWorkFlowState = 2 AND BlogId IN (" + BlogIds + ") ORDER BY blogId, id desc";
             SqlCommand getBlogPosts = new SqlCommand(queryString, conn);
-            getBlogPosts.Parameters.AddWithValue("m_Date", DateTime.Now.AddYears(-1));
             SqlDataReader blogReader = getBlogPosts.ExecuteReader();
 
             int previousPageId = 0;

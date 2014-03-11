@@ -114,17 +114,17 @@ namespace CMS.Domain.Models
             }
             else
             {
-                if (m_Event.EventStartHour > m_Event.EventEndHour)
+                if (m_Event.EventStartHour < m_Event.EventEndHour)
                 {
                     return false;
                 }
-                else if (m_Event.EventStartHour < m_Event.EventEndHour)
+                else if (m_Event.EventStartHour > m_Event.EventEndHour)
                 {
                     return true;
                 }
                 else
                 {
-                    if (m_Event.EventStartMin > m_Event.EventEndMin)
+                    if (m_Event.EventStartMin <= m_Event.EventEndMin)
                     {
                         return false;
                     }

@@ -71,19 +71,6 @@ namespace CMS.Domain.HelperClasses
             return false;
         }
 
-        public static string GetTemplateById(int id)
-        {
-            SqlConnection conn = DB.DbConnect();
-            conn.Open();
-
-            string queryString = "SELECT templateName FROM CMS_Templates WHERE templateId = @id";
-            SqlCommand getTemplate = new SqlCommand(queryString, conn);
-            getTemplate.Parameters.AddWithValue("id", id);
-            string templateName = (string)getTemplate.ExecuteScalar();
-
-            return templateName;
-        }
-
         public static List<Template> GetTemplates()
         {
             SqlConnection conn = DB.DbConnect();
