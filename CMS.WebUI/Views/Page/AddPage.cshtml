@@ -114,14 +114,24 @@
         <div class="clear">&nbsp;</div>
         
         <div class="formlabel">Publish Date:</div>
-        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="@Model.PublishDate"/></div>
+        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="
+            @if(Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
+            {
+                @Model.PublishDate.ToString("MM/dd/yyyy");
+            }
+        "/></div>
         <div class="clear">&nbsp;</div>
 
 
         @if(ViewBag.ParentId > 0)
         {
             <div class="formlabel">Expiration Date:</div>
-            <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" readonly="readonly" value="@Model.ExpireDate"/></div>
+            <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" readonly="readonly" value="
+                @if(Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
+                {
+                    @Model.ExpireDate.ToString("MM/dd/yyyy");
+                }
+                "/></div>
             <div class="clear">&nbsp;</div>
         }
 
