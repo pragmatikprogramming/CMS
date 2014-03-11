@@ -93,7 +93,7 @@ namespace CMS.Domain.DataAccess
             }
             else if (controller == "Home" || controller == "")
             {
-                queryString = "SELECT * FROM CMS_Pages WHERE pageId = @id AND pageWorkFlowState = 2 ORDER BY id DESC";
+                queryString = "SELECT * FROM CMS_Pages WHERE pageId = @id AND pageWorkFlowState = 2 AND (expireDate > @expireDate OR expireDate = '0001-01-01') ORDER BY id DESC";
             }
             else
             {
@@ -101,6 +101,13 @@ namespace CMS.Domain.DataAccess
             }
             SqlCommand getPages = new SqlCommand(queryString, conn);
             getPages.Parameters.AddWithValue("id", m_Id);
+
+            if (action != "PagePreview")
+            {
+                getPages.Parameters.AddWithValue("expireDate", DateTime.Now);
+            }
+
+
             SqlDataReader pageDataReader = getPages.ExecuteReader();
 
             Page m_Page = new Page();
@@ -149,7 +156,7 @@ namespace CMS.Domain.DataAccess
 
             if (controller == "Home" || controller == "")
             {
-                queryString = "SELECT * FROM CMS_Pages WHERE parentId = @parentId AND pageWorkFlowState = 2 order by sortOrder, pageId, id DESC";
+                queryString = "SELECT * FROM CMS_Pages WHERE parentId = @parentId AND pageWorkFlowState = 2 AND (expireDate > @expireDate OR expireDate = '0001-01-01') order by sortOrder, pageId, id DESC";
                 //queryString = "SELECT * FROM CMS_Pages WHERE pageId = @id AND pageWorkFlowState = 2 ORDER BY id DESC";
             }
             else
@@ -159,6 +166,11 @@ namespace CMS.Domain.DataAccess
 
             SqlCommand getPages = new SqlCommand(queryString, conn);
             getPages.Parameters.AddWithValue("parentId", m_Id);
+            if (controller == "Home" || controller == "")
+            {
+                getPages.Parameters.AddWithValue("expireDate", DateTime.Now);
+            }
+
             SqlDataReader pagesDataReader = getPages.ExecuteReader();
 
             List<Page> m_Pages = new List<Page>();
@@ -213,7 +225,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_Page.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, expireDate = @expireDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId, displayOnSubmenu = @displayOnSubmenu, bannerImage = @bannerImage WHERE id = @id and pageId = @pageId";
+                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId, displayOnSubmenu = @displayOnSubmenu, bannerImage = @bannerImage WHERE id = @id and pageId = @pageId";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
 
                 updatePage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -221,7 +233,7 @@ namespace CMS.Domain.DataAccess
                 updatePage.Parameters.AddWithValue("pageTitle", m_Page.PageTitle);
                 updatePage.Parameters.AddWithValue("navigationName", m_Page.NavigationName);
                 updatePage.Parameters.AddWithValue("publishDate", m_Page.PublishDate.ToString());
-                updatePage.Parameters.AddWithValue("expireDate", m_Page.ExpireDate.ToString());
+                //updatePage.Parameters.AddWithValue("expireDate", m_Page.ExpireDate.ToString());
                 updatePage.Parameters.AddWithValue("content", m_Page.Content ?? string.Empty);
                 updatePage.Parameters.AddWithValue("metaDescription", m_Page.MetaDescription ?? string.Empty);
                 updatePage.Parameters.AddWithValue("metaKeywords", m_Page.MetaKeywords ?? string.Empty);
@@ -238,10 +250,17 @@ namespace CMS.Domain.DataAccess
                 updatePage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
 
                 updatePage.ExecuteNonQuery();
+
+                queryString = "UPDATE CMS_Pages SET expireDate = @expireDate WHERE pageId = @pageId";
+                SqlCommand updateExpireDate = new SqlCommand(queryString, conn);
+                updateExpireDate.Parameters.AddWithValue("expireDate", m_Page.ExpireDate.ToString());
+                updateExpireDate.Parameters.AddWithValue("pageId", m_Page.PageID);
+
+                updateExpireDate.ExecuteNonQuery();
             }
             else if (m_Page.PageWorkFlowState == 2 || m_Page.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage)";
+                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage)";
                 SqlCommand insertPage = new SqlCommand(queryString, conn);
                 insertPage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -249,7 +268,7 @@ namespace CMS.Domain.DataAccess
                 insertPage.Parameters.AddWithValue("pageTitle", m_Page.PageTitle);
                 insertPage.Parameters.AddWithValue("navigationName", m_Page.NavigationName);
                 insertPage.Parameters.AddWithValue("publishDate", m_Page.PublishDate.ToString());
-                insertPage.Parameters.AddWithValue("expireDate", m_Page.ExpireDate.ToString());
+                //insertPage.Parameters.AddWithValue("expireDate", m_Page.ExpireDate.ToString());
                 insertPage.Parameters.AddWithValue("content", m_Page.Content ?? string.Empty);
                 insertPage.Parameters.AddWithValue("metaDescription", m_Page.MetaDescription ?? string.Empty);
                 insertPage.Parameters.AddWithValue("metaKeywords", m_Page.MetaKeywords ?? string.Empty);
@@ -264,6 +283,13 @@ namespace CMS.Domain.DataAccess
                 insertPage.Parameters.AddWithValue("displayOnSubmenu", m_Page.DisplayOnSubmenu);
                 insertPage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
                 insertPage.ExecuteNonQuery();
+
+                queryString = "UPDATE CMS_Pages SET expireDate = @expireDate WHERE pageId = @pageId";
+                SqlCommand updateExpireDate = new SqlCommand(queryString, conn);
+                updateExpireDate.Parameters.AddWithValue("expireDate", m_Page.ExpireDate.ToString());
+                updateExpireDate.Parameters.AddWithValue("pageId", m_Page.PageID);
+
+                updateExpireDate.ExecuteNonQuery();
             }
             else
             {
