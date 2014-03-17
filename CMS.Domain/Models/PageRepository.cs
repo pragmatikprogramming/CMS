@@ -36,9 +36,15 @@ namespace CMS.Domain.Models
 
         public void Update(Page m_Page)
         {
-            Page tempPage = DBPage.RetrieveOne(m_Page.Id);
+            Page tempPage = DBPage.getTopByPageId(m_Page.PageID);
             m_Page.SortOrder = tempPage.SortOrder;
             m_Page.PageWorkFlowState = tempPage.PageWorkFlowState;
+
+            if (m_Page.Id != tempPage.Id)
+            {
+                m_Page.Id = tempPage.Id;
+            }
+
             m_Page.LockedBy = Utility.GetLockedBy(m_Page.Id);
 
             DBPage.Update(m_Page);

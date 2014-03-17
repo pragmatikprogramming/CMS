@@ -225,13 +225,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_Page.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_Pages set pageWorkFlowState = 3 WHERE pageId = @pageId AND id != @id";
-                SqlCommand updateState = new SqlCommand(queryString, conn);
-                updateState.Parameters.AddWithValue("pageId", m_Page.PageID);
-                updateState.Parameters.AddWithValue("id", m_Page.Id);
-                updateState.ExecuteNonQuery();
-
-                queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId, displayOnSubmenu = @displayOnSubmenu, bannerImage = @bannerImage WHERE id = @id and pageId = @pageId";
+                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId, displayOnSubmenu = @displayOnSubmenu, bannerImage = @bannerImage WHERE id = @id and pageId = @pageId";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
 
                 updatePage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -265,13 +259,7 @@ namespace CMS.Domain.DataAccess
             }
             else if (m_Page.PageWorkFlowState == 2 || m_Page.PageWorkFlowState == 3)
             {
-                string queryString = "UPDATE CMS_Pages set pageWorkFlowState = 3 WHERE pageId = @pageId";
-                SqlCommand updateState = new SqlCommand(queryString, conn);
-                updateState.Parameters.AddWithValue("pageId", m_Page.PageID);
-                updateState.Parameters.AddWithValue("id", m_Page.Id);
-                updateState.ExecuteNonQuery();
-
-                queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage)";
+                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage)";
                 SqlCommand insertPage = new SqlCommand(queryString, conn);
                 insertPage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -357,19 +345,27 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT parentId FROM CMS_Pages WHERE id = @id";
+            Page m_Page = RetrieveOne(id);
+
+            /*string queryString = "SELECT parentId FROM CMS_Pages WHERE id = @id";
             SqlCommand getPID = new SqlCommand(queryString, conn);
             getPID.Parameters.AddWithValue("id", id);
-            int parentId = (int)getPID.ExecuteScalar();
+            int parentId = (int)getPID.ExecuteScalar();*/
 
-            queryString = "UPDATE CMS_Pages set pageWorkFlowState = 2 WHERE id = @id";
+            string queryString = "UPDATE CMS_Pages set pageWorkFlowState = 2 WHERE id = @id";
             SqlCommand updateWFS = new SqlCommand(queryString, conn);
-            updateWFS.Parameters.AddWithValue("id", id);
+            updateWFS.Parameters.AddWithValue("id", m_Page.Id);
             updateWFS.ExecuteNonQuery();
+
+            queryString = "UPDATE CMS_Pages set pageWorkFlowState = 3 WHERE id != @id AND pageId = @pageId";
+            SqlCommand updateAllState = new SqlCommand(queryString, conn);
+            updateAllState.Parameters.AddWithValue("id", id);
+            updateAllState.Parameters.AddWithValue("pageId", m_Page.PageID);
+            updateAllState.ExecuteNonQuery();
 
             conn.Close();
 
-            return parentId;
+            return m_Page.ParentId;
         }
 
         public static string GetTemplateName(int templateId)
@@ -553,6 +549,53 @@ namespace CMS.Domain.DataAccess
             conn.Close();
 
             return numChildren;
+        }
+
+        public static Page getTopByPageId(int pageId)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT TOP 1 * FROM CMS_Pages WHERE pageId = @pageId ORDER BY id DESC";
+            SqlCommand getPage = new SqlCommand(queryString, conn);
+            getPage.Parameters.AddWithValue("pageId", pageId);
+            SqlDataReader pageDataReader = getPage.ExecuteReader();
+
+            Page m_Page = new Page();
+
+            if (pageDataReader.Read())
+            {
+                m_Page.Id = pageDataReader.GetInt32(0);
+                m_Page.PageID = pageDataReader.GetInt32(1);
+                m_Page.ContentGroup = pageDataReader.GetInt32(2);
+                m_Page.TemplateId = pageDataReader.GetInt32(3);
+                m_Page.PageTitle = pageDataReader.GetString(4);
+                m_Page.NavigationName = pageDataReader.GetString(5);
+                m_Page.PublishDate = pageDataReader.GetDateTime(6);
+                m_Page.ExpireDate = pageDataReader.GetDateTime(7);
+                m_Page.Content = pageDataReader.GetString(8);
+                m_Page.MetaDescription = pageDataReader.GetString(9);
+                m_Page.MetaKeywords = pageDataReader.GetString(10);
+                m_Page.ParentId = pageDataReader.GetInt32(11);
+                m_Page.PageWorkFlowState = pageDataReader.GetInt32(12);
+                m_Page.LockedBy = pageDataReader.GetInt32(13);
+                m_Page.SortOrder = pageDataReader.GetInt32(16);
+                m_Page.RedirectURL = pageDataReader.GetString(17);
+                m_Page.PageType = pageDataReader.GetInt32(18);
+                m_Page.PageTypeId = pageDataReader.GetInt32(19);
+                m_Page.LockedByName = DBPage.GetLockedByName(m_Page.LockedBy);
+                m_Page.DisplayOnSubmenu = pageDataReader.GetInt32(20);
+                m_Page.BannerImageName = pageDataReader.GetString(21);
+
+                if (!pageDataReader.IsDBNull(17))
+                {
+                    m_Page.RedirectURL = pageDataReader.GetString(17);
+                }
+            }
+
+            conn.Close();
+
+            return m_Page;
         }
     }
 }
