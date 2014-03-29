@@ -210,7 +210,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.SuccessPage = m_Form.Success;
                 ViewBag.PageId = m_Page.TemplateId;
                 ViewBag.TemplateId = m_Page.TemplateId;
-                ViewBag.Message = "Your information has been submitted.";
+                //ViewBag.Message = "Your information has been submitted.";
                 return View(m_Page.TemplateName, m_Page);
             }
             else
