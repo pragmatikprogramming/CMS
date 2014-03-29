@@ -11,6 +11,11 @@
     $(function () {
         $("#ExpirationDate").datepicker();
     });
+
+    var tid2 = setTimeout(alertSessionExpire, 1200000);
+    function alertSessionExpire() {
+        alert("Your session will be expiring soon.  Save your work and refresh page");
+    }
 </script>
 
 
@@ -75,7 +80,7 @@
                 "extraPlugins": "imagebrowser",
                 "imageBrowser_listUrl": "/JSON/getImages"
             }, '');
-            </script>
+        </script>
 
         <div style="line-height: 30px;">&nbsp;</div>
 

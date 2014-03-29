@@ -41,7 +41,13 @@ else if (ViewBag.FieldType == 5)
 else if (ViewBag.FieldType == 9)
 {
     <div class="formlabel">Custom Text:</div>
-    <div class="formfield"><textarea rows="5" cols="50" name="Label"></textarea></div>
+    <div class="formfield"><textarea rows="5" cols="50" name="Label" id="Label" style="width: 80%"></textarea></div>
     <div class="clear">&nbsp;</div>
     <input type="hidden" name="FieldType" value="@ViewBag.FieldType" />
+        <script>
+            CKEDITOR.replace('Label', {
+                "extraPlugins": "imagebrowser",
+                "imageBrowser_listUrl": "/JSON/getImages"
+            }, '');
+        </script>
 }

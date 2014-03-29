@@ -30,6 +30,14 @@ namespace CMS.Domain.Models
 
         public void Update(BlogPost m_BlogPost)
         {
+            BlogPost tempBlog = DBBlogPost.getTopByBlogId(m_BlogPost.BlogId);
+            m_BlogPost.PageWorkFlowState = tempBlog.PageWorkFlowState;
+
+            if (m_BlogPost.Id != tempBlog.Id)
+            {
+                m_BlogPost.Id = tempBlog.Id;
+            }
+
             DBBlogPost.Update(m_BlogPost);
         }
 

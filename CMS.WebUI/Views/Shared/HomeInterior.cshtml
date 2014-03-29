@@ -21,7 +21,14 @@
         }
         @if (ViewBag.PageType == 2)
         {
-            @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+            if (ViewBag.isPostBack != null && ViewBag.isPostBack == 1)
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Success));
+            }
+            else
+            {
+                @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+            }
         }
         else if(ViewBag.PageType == 3)
         {

@@ -370,6 +370,79 @@ namespace CMS.Domain.DataAccess
             conn.Close();
 
             return myEvents;
-        }  
+        }
+
+        public static Event getTopByEventId(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT TOP 1 * FROM CMS_Events WHERE id = @id ORDER BY id DESC";
+            SqlCommand getEvent = new SqlCommand(queryString, conn);
+            getEvent.Parameters.AddWithValue("id", id);
+            SqlDataReader myEvent = getEvent.ExecuteReader();
+
+            Event m_Event = new Event();
+
+            if (myEvent.Read())
+            {
+                m_Event.EventID = myEvent.GetInt32(0);
+                m_Event.ContentGroup = myEvent.GetInt32(1);
+                m_Event.EventTitle = myEvent.GetString(2);
+                m_Event.EventStartDate = myEvent.GetDateTime(3);
+                m_Event.EventEndDate = myEvent.GetDateTime(4);
+                m_Event.Branch = myEvent.GetInt32(5);
+                m_Event.BranchName = Utility.getBranchName(m_Event.Branch);
+                m_Event.Body = myEvent.GetString(6);
+                m_Event.PageWorkFlowState = myEvent.GetInt32(7);
+                m_Event.LockedBy = myEvent.GetInt32(8);
+                m_Event.FeaturedEvent = myEvent.GetInt32(11);
+
+                if (m_Event.EventStartDate.Hour >= 12)
+                {
+                    if (m_Event.EventStartDate.Hour == 12)
+                    {
+                        m_Event.EventStartHour = 12;
+                    }
+                    else
+                    {
+                        m_Event.EventStartHour = m_Event.EventStartDate.Hour % 12;
+                    }
+
+                    m_Event.AmpmStart = "pm";
+                }
+                else
+                {
+                    m_Event.AmpmStart = "am";
+                    m_Event.EventStartHour = m_Event.EventStartDate.Hour;
+                }
+                if (m_Event.EventEndDate.Hour >= 12)
+                {
+                    if (m_Event.EventEndDate.Hour == 12)
+                    {
+                        m_Event.EventEndHour = 12;
+                    }
+                    else
+                    {
+                        m_Event.EventEndHour = m_Event.EventEndDate.Hour % 12;
+                    }
+
+                    m_Event.AmpmEnd = "pm";
+                }
+                else
+                {
+                    m_Event.AmpmEnd = "am";
+                    m_Event.EventEndHour = m_Event.EventEndDate.Hour;
+                }
+
+                m_Event.EventStartMin = m_Event.EventStartDate.Minute;
+                m_Event.EventEndMin = m_Event.EventEndDate.Minute;
+
+            }
+
+            conn.Close();
+            return m_Event;
+
+        }
     }
 }

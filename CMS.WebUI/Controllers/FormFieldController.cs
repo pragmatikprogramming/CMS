@@ -37,6 +37,7 @@ namespace CMS.WebUI.Controllers
 
         [CMSAuth]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult AddFormField(FormField m_FormField, string[] childrenTitle)
         {
             ViewBag.DisplayInfo = 0;
@@ -90,6 +91,7 @@ namespace CMS.WebUI.Controllers
 
         [CMSAuth]
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult EditFormField(FormField m_FormField, string[] childrenTitle)
         {
             ViewBag.DisplayInfo = 0;

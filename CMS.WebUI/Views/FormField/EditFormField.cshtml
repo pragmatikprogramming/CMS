@@ -59,7 +59,22 @@
             <input type="hidden" name="Id" value="@Model.Id" />
             <input type="hidden" name="FieldType" value="@Model.FieldType" />
             <div class="formlabel">Label Text:</div>
-            <div class="formfield"><input type="text" class="input-xlarge" name="Label" value="@Model.Label"></div>
+            <div class="formfield">
+                @if (Model.FieldType == 9)
+                {
+                    <textarea rows="5" cols="50" name="Label" id="Label" style="width: 80%">@Model.Label</textarea>
+                    <script>
+                        CKEDITOR.replace('Label', {
+                            "extraPlugins": "imagebrowser",
+                            "imageBrowser_listUrl": "/JSON/getImages"
+                        }, '');
+                    </script>
+                }
+                else
+                {
+                    <input type="text" class="input-xlarge" name="Label" value="@Model.Label">
+                }
+            </div>
             <div class="clear">&nbsp;</div>
             @foreach (var m_option in Model.Children)
             {

@@ -535,5 +535,64 @@ namespace CMS.Domain.DataAccess
 
             conn.Close();
         }
+
+        public static BlogPost getTopByBlogId(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT TOP 1 * FROM CMS_BlogPosts WHERE blogId = @blogId ORDER BY id DESC";
+            SqlCommand getBlog = new SqlCommand(queryString, conn);
+            getBlog.Parameters.AddWithValue("blogId", id);
+            SqlDataReader blogPostReader = getBlog.ExecuteReader();
+
+            BlogPost m_BlogPost = new BlogPost();
+
+            if (blogPostReader.Read())
+            {
+                m_BlogPost.Id = blogPostReader.GetInt32(0);
+                m_BlogPost.BlogId = blogPostReader.GetInt32(1);
+                m_BlogPost.Title = blogPostReader.GetString(2);
+                m_BlogPost.PublishDate = blogPostReader.GetDateTime(3);
+                m_BlogPost.ContentGroup = blogPostReader.GetInt32(4);
+                m_BlogPost.Content = blogPostReader.GetString(5);
+                m_BlogPost.PageWorkFlowState = blogPostReader.GetInt32(6);
+                m_BlogPost.LockedBy = blogPostReader.GetInt32(7);
+                m_BlogPost.LastModifiedBy = blogPostReader.GetInt32(8);
+                m_BlogPost.LastModifiedDate = blogPostReader.GetDateTime(9);
+                m_BlogPost.Comments = blogPostReader.GetInt32(10);
+                m_BlogPost.ExpirationDate = blogPostReader.GetDateTime(11);
+                m_BlogPost.NewsImageId = blogPostReader.GetInt32(12);
+                m_BlogPost.Author = blogPostReader.GetString(13);
+                m_BlogPost.IntroText = blogPostReader.GetString(14);
+                m_BlogPost.NewsImageName = blogPostReader.GetString(15);
+
+                m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
+                m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
+
+                SqlConnection conn2 = DB.DbConnect();
+                conn2.Open();
+
+                queryString = "SELECT * FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
+                SqlCommand getCats = new SqlCommand(queryString, conn2);
+                getCats.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
+                SqlDataReader catsReader = getCats.ExecuteReader();
+
+                List<int> m_Cats = new List<int>();
+
+                while (catsReader.Read())
+                {
+                    m_Cats.Add(catsReader.GetInt32(2));
+                }
+
+                m_BlogPost.Categories = m_Cats;
+
+                conn2.Close();
+            }
+
+            conn.Close();
+
+            return m_BlogPost;
+        }
     }
 }

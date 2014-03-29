@@ -13,8 +13,9 @@ namespace CMS.Domain.Entities
         private string submissionEmail;
         private List<int> myFormFields;
         private List<FormField> formFields;
+        private string success;
 
-
+       
         public int Id
         {
             get 
@@ -75,6 +76,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 formFields = value; 
+            }
+        }
+
+        public string Success
+        {
+            get 
+            { 
+                return success; 
+            }
+            set 
+            { 
+                success = value; 
             }
         }
 

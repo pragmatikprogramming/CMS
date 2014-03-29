@@ -12,6 +12,24 @@
     $(function () {
         $("#ExpirationDate").datepicker();
     });
+
+    var tid = setInterval(savePageData, 180000);
+    var tid3;
+    function savePageData() {
+        //var data = $("#pageEdit").serialize();    
+        $("#Content").val(CKEDITOR.instances['Content'].getData());
+        //alert($("#Content").val());
+        $.post("/BlogPost/EditBlogPost", $("#blogpostEdit").serialize());
+        $("#message").replaceWith('<div id="message"><div class="alert alert-info" ><button type="button" class="close" data-dismiss="alert">x</button><strong>Saved changes successfully</strong></div></div>');
+        tid3 = setInterval(displayMessage, 10000);
+    }
+    var tid2 = setTimeout(alertSessionExpire, 1200000);
+    function alertSessionExpire() {
+        alert("Your session will be expiring soon.  Save your work and refresh page");
+    }
+    function displayMessage() {
+        $("#message").replaceWith('<div id="message" style="line-height: 60px;">&nbsp;</div>');
+    }
 </script>
 
 <div class="header">
@@ -21,6 +39,8 @@
 <div class="container-fluid">   
 <div class="row-fluid">  
 <div class="formcontainer">
+    <div id="message" style="line-height: 60px;">&nbsp        
+    </div>
     <div style="line-height: 30px;">&nbsp;</div>
     <div style="color: red">@Html.ValidationSummary()</div>
 

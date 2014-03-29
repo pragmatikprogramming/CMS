@@ -196,10 +196,18 @@ namespace CMS.WebUI.Controllers
                 FormRepository.InsertFormData(formData, id);
 
                 Page m_Page = PageRepository.RetrieveOne(parentId);
-                FormRepository.SendFormData(m_Form.SubmissionEmail, "webmaster@solanolibrary.com", emailBody, m_Form.FormName + " - Submission");
+
+                string[] m_Emails = m_Form.SubmissionEmail.Split(',');
+
+                foreach (string email in m_Emails)
+                {
+                    FormRepository.SendFormData(email, "webmaster@solanolibrary.com", emailBody, m_Form.FormName + " - Submission");
+                }
 
                 ViewBag.PageType = m_Page.PageType;
                 ViewBag.id = m_Page.PageTypeId;
+                ViewBag.isPostBack = 1;
+                ViewBag.SuccessPage = m_Form.Success;
                 ViewBag.PageId = m_Page.TemplateId;
                 ViewBag.Message = "Your information has been submitted.";
                 return View(m_Page.TemplateName, m_Page);

@@ -44,6 +44,14 @@ namespace CMS.Domain.Models
         }
         public bool Update(Event m_Event)
         {
+            Event tempEvent = DBEvent.getTopByEventId(m_Event.EventID);
+            m_Event.PageWorkFlowState = tempEvent.PageWorkFlowState;
+
+            if (m_Event.EventID != tempEvent.EventID)
+            {
+                m_Event.EventID = tempEvent.EventID;
+            }
+
             DBEvent.Update(m_Event);
             return true;
         }

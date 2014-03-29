@@ -12,6 +12,11 @@
     $(function () {
         $("#EventEndDate").datepicker();
     });
+
+    var tid2 = setTimeout(alertSessionExpire, 1200000);
+    function alertSessionExpire() {
+        alert("Your session will be expiring soon.  Save your work and refresh page");
+    }
 </script>
 
 <div class="header">
