@@ -15,7 +15,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CMS_Forms(formName, submissionEmail, success) VALUES(@formName, @submissionEmail, @success)";
+            string queryString = "INSERT INTO CMS_Forms(formName, submissionEmail, submission) VALUES(@formName, @submissionEmail, @success)";
             SqlCommand insertForm = new SqlCommand(queryString, conn);
             insertForm.Parameters.AddWithValue("formName", m_Form.FormName);
             insertForm.Parameters.AddWithValue("submissionEmail", m_Form.SubmissionEmail);
@@ -71,7 +71,14 @@ namespace CMS.Domain.DataAccess
                 m_Form.FormName = formReader.GetString(1);
                 m_Form.SubmissionEmail = formReader.GetString(2);
                 m_Form.MyFormFields = new List<int>();
-                m_Form.Success = formReader.GetString(4);
+                if (!formReader.IsDBNull(4))
+                {
+                    m_Form.Success = formReader.GetString(4);
+                }
+                else
+                {
+                    m_Form.Success = "";
+                }
 
                 queryString = "SELECT * FROM CMS_FormFields as ff, CMS_FormToFormFields as fff WHERE ff.id = fff.formFieldId AND fff.formId = @formId ORDER BY sortOrder ASC";
                 SqlCommand getFormFields = new SqlCommand(queryString, conn2);
@@ -153,11 +160,12 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_Forms SET formName = @formName, submissionEmail = @submissionEmail WHERE id = @id";
+            string queryString = "UPDATE CMS_Forms SET formName = @formName, submissionEmail = @submissionEmail, submission = @success WHERE id = @id";
             SqlCommand updateForm = new SqlCommand(queryString, conn);
             updateForm.Parameters.AddWithValue("formName", m_Form.FormName);
             updateForm.Parameters.AddWithValue("submissionEmail", m_Form.SubmissionEmail);
             updateForm.Parameters.AddWithValue("id", m_Form.Id);
+            updateForm.Parameters.AddWithValue("success", m_Form.Success);
             updateForm.ExecuteNonQuery();
 
             queryString = "DELETE FROM CMS_FormToFormFields WHERE formId = @formId";

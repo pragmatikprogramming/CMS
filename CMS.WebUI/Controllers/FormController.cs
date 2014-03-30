@@ -39,6 +39,7 @@ namespace CMS.WebUI.Controllers
 
         [HttpPost]
         [CMSAuth]
+        [ValidateInput(false)]
         public ActionResult AddForm(Form m_Form)
         {
             if (ModelState.IsValid)
@@ -64,6 +65,7 @@ namespace CMS.WebUI.Controllers
 
         [HttpPost]
         [CMSAuth]
+        [ValidateInput(false)]
         public ActionResult EditForm(Form m_Form)
         {
             if (ModelState.IsValid)

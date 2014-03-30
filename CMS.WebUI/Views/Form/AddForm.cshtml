@@ -85,7 +85,19 @@
             </table>
         </div>
         <div class="clear">&nbsp;</div>
-       
+        <div style="line-height: 30px;">&nbsp;</div>
+
+        <textarea name="Success" id="Success" style="width: 80%">@Model.Success</textarea>
+        
+        <script>
+            CKEDITOR.replace('Success', {
+                "extraPlugins": "imagebrowser",
+                "imageBrowser_listUrl": "/JSON/getImages"
+            }, '');
+        </script>
+
+        
+
         <div style="line-height: 30px;">&nbsp;</div>
         <div class="formlabel">&nbsp;</div>
         <div class="formfield"><button form="formAdd" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
