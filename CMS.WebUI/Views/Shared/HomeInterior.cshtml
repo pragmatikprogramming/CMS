@@ -21,7 +21,7 @@
         }
         @if (ViewBag.PageType == 2)
         {
-            if (ViewBag.isPostBack != null && ViewBag.isPostBack == 1)
+            if (ViewBag.isPostBack == 1)
             {
                 @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Success));
             }
