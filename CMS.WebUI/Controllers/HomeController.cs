@@ -220,9 +220,8 @@ namespace CMS.WebUI.Controllers
                 ViewBag.id = m_Page.PageTypeId;
                 ViewBag.PageId = m_Page.TemplateId;
                 ViewBag.TemplateId = m_Page.TemplateId;
+                ViewBag.isPostBack = 1;
                 return View(m_Page.TemplateName, m_Page);
-                //
-                //return View("getForm", m_Form);
             }
         }
     }
