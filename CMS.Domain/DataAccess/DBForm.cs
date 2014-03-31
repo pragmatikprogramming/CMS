@@ -373,5 +373,20 @@ namespace CMS.Domain.DataAccess
 
             conn.Close();
         }
+
+        public static string SpecialExistsOnForm(int id)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "select ff.label from CMS_Forms f, CMS_FormToFormFields fff, CMS_FormFields ff WHERE f.id = fff.formId AND fff.formFieldId = ff.id AND f.id = @id and ff.fieldType = 10";
+            SqlCommand getLabel = new SqlCommand(queryString, conn);
+            getLabel.Parameters.AddWithValue("id", id);
+            string m_Label = (string)getLabel.ExecuteScalar();
+
+            conn.Close();
+
+            return m_Label;
+        }
     }
 }

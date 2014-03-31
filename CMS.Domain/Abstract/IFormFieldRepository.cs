@@ -9,11 +9,11 @@ namespace CMS.Domain.Abstract
 {
     public interface IFormFieldRepository
     {
-        void Create(FormField m_FormField, string[] childrenTitle);
+        void Create(FormField m_FormField, string[] childrenTitle, string[] childrenValue);
         FormField RetrieveOne(int id);
         List<FormField> RetrieveAll();
         List<FormField> RetrieveChildren(int parentId);
-        void Update(FormField m_FormField, string[] childrenTitle);
+        void Update(FormField m_FormField, string[] childrenTitle, string[] childrenValue);
         void Delete(int id);
         Dictionary<int, string> getFieldTypes();
         Dictionary<int, string> getValidationTypes();

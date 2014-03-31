@@ -32,6 +32,9 @@
         }
         else if(ViewBag.PageType == 3)
         {
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+            <br />
+            <br />
             @Html.Action("getFAQ", "Home", new { id = ViewBag.id})   
         }
         else if(ViewBag.PageType == 4)

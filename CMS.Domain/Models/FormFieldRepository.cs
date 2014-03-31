@@ -10,20 +10,37 @@ namespace CMS.Domain.Models
 {
     public class FormFieldRepository : IFormFieldRepository
     {
-        public void Create(FormField m_FormField, string[] childrenTitle)
+        public void Create(FormField m_FormField, string[] childrenTitle, string[] childrenValue)
         {
             if (childrenTitle != null)
             {
+                int count = 0;
+
                 foreach (string c_Title in childrenTitle)
                 {
-                    if (c_Title.Length > 0)
+                    if (m_FormField.FieldType == 10)
                     {
-                        FormField temp = new FormField();
-                        temp.Label = c_Title;
-                        temp.FieldType = m_FormField.FieldType;
+                        if (c_Title.Length > 0 && childrenValue[count].Length > 0)
+                        {
+                            FormField temp = new FormField();
+                            temp.Label = c_Title + ":" + childrenValue[count];
+                            temp.FieldType = m_FormField.FieldType;
 
-                        m_FormField.Children.Add(temp);
+                            m_FormField.Children.Add(temp);
+                        }
                     }
+                    else
+                    {
+                        if (c_Title.Length > 0)
+                        {
+                            FormField temp = new FormField();
+                            temp.Label = c_Title;
+                            temp.FieldType = m_FormField.FieldType;
+
+                            m_FormField.Children.Add(temp);
+                        }
+                    }
+                    count++;
                 }
             }
 
@@ -48,23 +65,41 @@ namespace CMS.Domain.Models
             return m_FormFields;
         }
 
-        public void Update(FormField m_FormField, string[] childrenTitle)
+        public void Update(FormField m_FormField, string[] childrenTitle, string[] childrenValue)
         {
             DBFormField.DeleteChildren(m_FormField.Id);
 
             if (childrenTitle != null)
             {
+                int count = 0;
+
                 foreach (string label in childrenTitle)
                 {
-                    if (label.Length > 0)
+                    if (m_FormField.FieldType == 10)
                     {
-                        FormField temp = new FormField();
-                        temp.Label = label;
-                        temp.FieldType = m_FormField.FieldType;
-                        temp.ParentId = m_FormField.Id;
+                        if (label.Length > 0 && childrenValue[count].Length > 0)
+                        {
+                            FormField temp = new FormField();
+                            temp.Label = label + ":" + childrenValue[count];
+                            temp.FieldType = m_FormField.FieldType;
+                            temp.ParentId = m_FormField.Id;
 
-                        DBFormField.Create(temp);
+                            DBFormField.Create(temp);
+                        }
                     }
+                    else
+                    {
+                        if (label.Length > 0)
+                        {
+                            FormField temp = new FormField();
+                            temp.Label = label;
+                            temp.FieldType = m_FormField.FieldType;
+                            temp.ParentId = m_FormField.Id;
+
+                            DBFormField.Create(temp);
+                        }
+                    }
+                    count++;
                 }
             }
 

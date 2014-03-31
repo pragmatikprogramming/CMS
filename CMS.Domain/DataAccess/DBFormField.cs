@@ -64,7 +64,7 @@ namespace CMS.Domain.DataAccess
                 m_FormField.ParentId = formFieldReader.GetInt32(3);
                 m_FormField.ValidationType = formFieldReader.GetInt32(5);
 
-                if (m_FormField.FieldType == 3 || m_FormField.FieldType == 4 || m_FormField.FieldType == 5)
+                if (m_FormField.FieldType == 3 || m_FormField.FieldType == 4 || m_FormField.FieldType == 5 || m_FormField.FieldType == 10)
                 {
                     m_FormField.Children = RetrieveChildren(m_FormField.Id);
                 }
@@ -219,6 +219,7 @@ namespace CMS.Domain.DataAccess
             
             string m_Type = (string)getType.ExecuteScalar();
 
+            conn.Close();
             return m_Type;
         }
 
@@ -238,8 +239,8 @@ namespace CMS.Domain.DataAccess
                 m_Types.Add(typesReader.GetInt32(0), typesReader.GetString(1));
             }
 
-            
 
+            conn.Close();
             return m_Types;
         }
     }

@@ -38,7 +38,7 @@ namespace CMS.WebUI.Controllers
         [CMSAuth]
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult AddFormField(FormField m_FormField, string[] childrenTitle)
+        public ActionResult AddFormField(FormField m_FormField, string[] childrenTitle, string[] childrenValue)
         {
             ViewBag.DisplayInfo = 0;
 
@@ -50,12 +50,22 @@ namespace CMS.WebUI.Controllers
             {
                 ViewBag.childrenTitle = childrenTitle;
             }
+
+            if (childrenValue == null)
+            {
+                ViewBag.childrenTitle = new string[0];
+            }
+            else
+            {
+                ViewBag.childrenValue = childrenValue;
+            }
+
             ViewBag.FieldTypes = FormFieldRepository.getFieldTypes();
             ViewBag.ValidationTypes = FormFieldRepository.getValidationTypes();
 
             if (ModelState.IsValid)
             {
-                FormFieldRepository.Create(m_FormField, childrenTitle);
+                FormFieldRepository.Create(m_FormField, childrenTitle, childrenValue);
                 return RedirectToAction("Index", "FormField");
             }
             else
@@ -92,13 +102,13 @@ namespace CMS.WebUI.Controllers
         [CMSAuth]
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult EditFormField(FormField m_FormField, string[] childrenTitle)
+        public ActionResult EditFormField(FormField m_FormField, string[] childrenTitle, string[] childrenValue)
         {
             ViewBag.DisplayInfo = 0;
 
             if (ModelState.IsValid)
             {
-                FormFieldRepository.Update(m_FormField, childrenTitle);
+                FormFieldRepository.Update(m_FormField, childrenTitle, childrenValue);
                 return RedirectToAction("Index", "FormField");
             }
             else

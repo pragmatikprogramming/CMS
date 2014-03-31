@@ -18,11 +18,11 @@
     @foreach (var formField in Model.FormFields)
     {
         <div class="formlabel">
-            @if(formField.IsRequired == 1)
+            @if (formField.IsRequired == 1)
             {
                 <font style="color:red;">*</font>
             }
-            @if(formField.FieldType != 7 && formField.FieldType != 9)
+            @if (formField.FieldType != 7 && formField.FieldType != 9)
             {    
                 @formField.Label
             }
@@ -32,29 +32,29 @@
             }
         </div>
         
-        if(formField.FieldType == 1)
-        {
+            if (formField.FieldType == 1)
+            {
             <div class="formfield"><input type="@formField.FieldTypeText" class="input-xlarge" name="@formField.Label" value=""></div>
             <div class="clear">&nbsp;</div>
-        }
-        else if (formField.FieldType == 2)
-        {
+            }
+            else if (formField.FieldType == 2)
+            {
             <div class="formfield"><textarea rows="5" cols="30" name="@formField.Label" id="@formField.Label"></textarea></div>
             <div class="clear">&nbsp;</div>
-        }
-        else if(formField.FieldType == 3)
-        {
+            }
+            else if (formField.FieldType == 3)
+            {
                <div class="formfield">
                    <br />
                    <br />
                    <table>
                        <tbody>
                             @{int m_Count = 0;}
-                            @foreach(var m_Child in formField.Children)
+                            @foreach (var m_Child in formField.Children)
                             {
-                                if(m_Count % 4 == 0)
+                                if (m_Count % 4 == 0)
                                 {
-                                    if(m_Count == 0)
+                                    if (m_Count == 0)
                                     {
                                         @:<tr>
                                     }
@@ -68,7 +68,7 @@
                                 
                                 m_Count = m_Count + 1;
                             }
-                            @if(m_Count % 4 != 0 && m_Count != 0)
+                            @if (m_Count % 4 != 0 && m_Count != 0)
                             {
                                 @:</tr>
                             }
@@ -78,20 +78,20 @@
                </div>
                 <div class="clear">&nbsp;</div>
                
-        }
-        else if (formField.FieldType == 4)
-        {
+            }
+            else if (formField.FieldType == 4)
+            {
             <div class="formfield">
                    <br />
                    <br />
                    <table>
                        <tbody>
                             @{int m_Count = 0;}
-                            @foreach(var m_Child in formField.Children)
+                            @foreach (var m_Child in formField.Children)
                             {
-                                if(m_Count % 4 == 0)
+                                if (m_Count % 4 == 0)
                                 {
-                                    if(m_Count == 0)
+                                    if (m_Count == 0)
                                     {
                                         @:<tr>
                                     }
@@ -105,7 +105,7 @@
                                 
                                 m_Count = m_Count + 1;
                             }
-                            @if(m_Count % 4 != 0 && m_Count != 0)
+                            @if (m_Count % 4 != 0 && m_Count != 0)
                             {
                                 @:</tr>
                             }
@@ -114,31 +114,31 @@
 
                </div>
                 <div class="clear">&nbsp;</div>
-        }
-        else if (formField.FieldType == 5)
-        {
+            }
+            else if (formField.FieldType == 5)
+            {
             <div class="formfield">
                 <select name="@formField.Label">
-                    @foreach(var child in formField.Children)
+                    @foreach (var child in formField.Children)
                     {
                         <option value="@child.Label">@child.Label</option>   
                     }
                 </select>
             </div>
             <div class="clear">&nbsp;</div>
-        }
-        else if(formField.FieldType == 6)
-        {
+            }
+            else if (formField.FieldType == 6)
+            {
             <div class="formfield"><input type="password" value="" name="@formField.Label" /></div>
             <div class="clear">&nbsp;</div>   
-        }
-        else if(formField.FieldType == 7)
-        {
+            }
+            else if (formField.FieldType == 7)
+            {
             <div class="formfield"><input type="submit" value="@formField.Label" name=""/></div>
             <div class="clear">&nbsp;</div>
-        }
-        else if(formField.FieldType == 8)
-        {
+            }
+            else if (formField.FieldType == 8)
+            {
             <script>
                 $(function () {
                     $("#@formField.Label").datepicker();
@@ -147,15 +147,27 @@
         
             <div class="formfield"><input type="@formField.FieldTypeText" class="input-xlarge" name="@formField.Label" id="@formField.Label" readonly="readonly"></div>
             <div class="clear">&nbsp;</div>
-        }
-        else if(formField.FieldType == 9)
-        {
+            }
+            else if (formField.FieldType == 9)
+            {
             <div class="formfield">@Html.Raw(System.Web.HttpUtility.HtmlDecode(formField.Label))</div>
             <div class="clear">&nbsp;</div>
-        }
-        else
-        {
+            }
+            else if (formField.FieldType == 10)
+            {
+                <div class="formfield">
+                    <select name="@formField.Label">
+                        @foreach (var child in formField.Children)
+                        {
+                            <option value="@child.Label.ToString().Split(':')[1]">@child.Label.ToString().Split(':')[0]</option>   
+                        }
+                    </select>
+                </div>
+                <div class="clear">&nbsp;</div>   
+            }
+            else
+            {
             <div class="clear">&nbsp;</div>
-        }
+            }
     }
 </form>

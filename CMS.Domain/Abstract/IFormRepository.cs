@@ -20,5 +20,6 @@ namespace CMS.Domain.Abstract
         void ToggleRequired(int parentId, int id, int value);
         void InsertFormData(string formData, int formId);
         void SendFormData(string to, string from, string body, string subject);
+        string SpecialExistsOnForm(int id);
     }
 }

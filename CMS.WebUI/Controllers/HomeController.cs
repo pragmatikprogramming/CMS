@@ -181,6 +181,8 @@ namespace CMS.WebUI.Controllers
                 }
             }
 
+            emailBody += "<table><tr><td>Field:</td><td>Value:</td></tr>";
+
             foreach (string key in Request.Form.Keys)
             {
                 if (string.IsNullOrEmpty(Request.Form[key]) && m_Ffs[key] == 1)
@@ -188,7 +190,21 @@ namespace CMS.WebUI.Controllers
                     ModelState.AddModelError(key, "Please enter a value for " + key);
                 }
                 formData += key + "::" + Request.Form[key] + "^^";
-                emailBody += key + " = " + Request.Form[key] + "<br />";
+                emailBody += "<tr><td>" + key + "</td><td>" + Request.Form[key] + "</td></tr>";
+            }
+
+            emailBody += "</table>";
+
+            string m_Label = FormRepository.SpecialExistsOnForm(id);
+
+            if (m_Label != null && m_Label.Length > 0)
+            {
+                string m_Email = Request.Form[m_Label];
+
+                if (m_Email.Length > 0)
+                {
+                    FormRepository.SendFormData(m_Email, "webmaster@solanolibrary.com", emailBody, m_Form.FormName + " - Submission");
+                }
             }
 
             if (ModelState.IsValid)

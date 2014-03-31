@@ -70,10 +70,17 @@ namespace CMS.Domain.Models
         public void SendFormData(string to, string from, string body, string subject)
         {
             MailMessage mail = new MailMessage(from, to, subject, body);
+            mail.IsBodyHtml = true;
             SmtpClient client = new SmtpClient(ConfigurationManager.AppSettings["SMTPServer"]);
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.EnableSsl = false;
             client.Send(mail);
+        }
+
+        public string SpecialExistsOnForm(int id)
+        {
+            string m_Label = DBForm.SpecialExistsOnForm(id);
+            return m_Label;
         }
     }
 }
