@@ -34,7 +34,9 @@ namespace CMS.Domain.Entities
         private int displayOnSubmenu;
         private int bannerImage;
         private string bannerImageName;
+        private string friendlyURL;
 
+        
         public int Id
         {
             get 
@@ -340,6 +342,18 @@ namespace CMS.Domain.Entities
             }
         }
 
+        public string FriendlyURL
+        {
+            get
+            {
+                return friendlyURL;
+            }
+            set
+            {
+                friendlyURL = value;
+            }
+        }
+
         public Page()
         {
             content = string.Empty;
@@ -349,10 +363,10 @@ namespace CMS.Domain.Entities
 
         public void PageSetDefaults()
         {
-            if(RedirectURL == null)
+            if (RedirectURL == null)
             {
                 RedirectURL = "";
             }
-        }
+        }     
     }
 }

@@ -82,5 +82,59 @@ namespace CMS.Domain.Models
             string m_Label = DBForm.SpecialExistsOnForm(id);
             return m_Label;
         }
+
+        public string FormDataExtract(int FormId, string StartDate, string EndDate)
+        {
+            List<string> m_FormData = DBForm.FormDataExtract(FormId, StartDate, EndDate);
+
+            string csv = "";
+            string[] delimiters = new string[] { "^^" };
+            string[] moreDelimiters = new string[] { "::" };
+            string[] rowResult;
+            string[] result;
+            int count = 0;
+            string header = "";
+            string row = "";
+            foreach (string formData in m_FormData)
+            {
+                rowResult = formData.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string item in rowResult)
+                {
+                    result = item.Split(moreDelimiters, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (result.Length > 0)
+                    {
+                        if (count == 0)
+                        {
+                            header += (result[0].Replace(",", " ") + ",");
+                            row += (result[1].Replace(",", " ") + ",");
+                        }
+                        else
+                        {
+                            row += (result[1].Replace(",", " ") + ",");
+                        }
+                    }
+                }
+
+                count = 1;
+
+                if (header.Length > 0)
+                {
+                    csv += header + "\n" + row + "\n";
+                }
+                else
+                {
+                    csv += row + "\n";
+                }
+
+                header = "";
+                row = "";
+
+            }
+
+            return csv;
+
+        }
     }
 }

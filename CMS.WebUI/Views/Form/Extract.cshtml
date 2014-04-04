@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Extract Form Data";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script>
+    $(function () {
+        $("#StartDate").datepicker();
+    });
+
+    $(function () {
+        $("#EndDate").datepicker();
+    });
+
+    var tid2 = setTimeout(alertSessionExpire, 1200000);
+    function alertSessionExpire() {
+        alert("Your session will be expiring soon.  Save your work and refresh page");
+    }
+</script>
+
+<div class="header">
+    <h1 class="page-title">Create Page</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="formcontainer">
+            <div style="line-height: 30px;">&nbsp;</div>
+            <div style="color: red">@Html.ValidationSummary()</div>
+
+            <form action="/Form/ExtractFormData" method="post" id="FormExtract">
+
+                <div class="formlabel">Form Name:</div>
+                <div class="formfield">
+                    <select name="FormId">
+                        @foreach (var Form in Model)
+                        {
+                            <option value="@Form.Id">@Form.FormName</option>
+                        }
+                    </select>
+                </div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Start Date:</div>
+                <div class="formfield"><input type="text" id="StartDate" name="StartDate" value="" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">End Date:</div>
+                <div class="formfield"><input type="text" id="EndDate" name="EndDate" value="" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div style="line-height: 30px;">&nbsp;</div>
+                <div class="formlabel">&nbsp;</div>
+                <div class="formfield"><button form="FormExtract" class="btn btn-primary"><i class="icon-save"></i> Extract</button></div>
+
+            </form>
+        </div>
+   

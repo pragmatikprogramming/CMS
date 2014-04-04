@@ -34,9 +34,9 @@ namespace CMS.WebUI.Controllers
             BlogPostRepository = BlogPostRepo;
         }
 
-        public ActionResult Index(int id = 0)
+        public ActionResult Index(string friendlyURL, int id = 0)
         {
-            if (id == 0)
+            if (id == 0 && friendlyURL == "Home")
             {
                 Page m_Page = PageRepository.RetrieveOne(39);
                 ViewBag.TemplateId = 4;
@@ -44,7 +44,16 @@ namespace CMS.WebUI.Controllers
             }
             else
             {
-                Page m_Page = PageRepository.RetrieveOne(id);
+                Page m_Page = new Page();
+
+                if (friendlyURL == null)
+                {
+                    m_Page = PageRepository.RetrieveOne(id);
+                }
+                else
+                {
+                    m_Page = PageRepository.RetrieveOneByFriendlyURL(friendlyURL);
+                }
 
                 if (m_Page.RedirectURL == null || m_Page.RedirectURL == string.Empty)
                 {
@@ -239,6 +248,13 @@ namespace CMS.WebUI.Controllers
                 ViewBag.isPostBack = 1;
                 return View(m_Page.TemplateName, m_Page);
             }
+        }
+
+        public FileContentResult ExportCSV()
+        {
+            string csv = "1,2,3,4,5,6,7,8,9";
+
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", "Report123.csv");
         }
     }
 }

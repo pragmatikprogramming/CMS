@@ -40,7 +40,7 @@ namespace CMS.WebUI.Controllers
         {
             if (SessionHandler.authenticate(userName, passWord))
             {
-                Response.Redirect("/Admin/");
+                Response.Redirect("/Admin/Index");
                 Response.End();
             }
             else

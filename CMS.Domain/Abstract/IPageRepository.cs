@@ -11,6 +11,7 @@ namespace CMS.Domain.Abstract
     {
         void Create(Page m_Page);
         Page RetrieveOne(int m_Id);
+        Page RetrieveOneByFriendlyURL(string friendlyURL);
         List<Page> RetrieveAll(int m_Id);
         void Update(Page m_Page);
         bool TrashCan(int m_Id);
@@ -20,5 +21,6 @@ namespace CMS.Domain.Abstract
         void UnlockPage(int pid);
         void sortUp(int id);
         void sortDown(int id);
+        bool friendlyURLExists(string friendlyURL);
     }
 }

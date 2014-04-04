@@ -21,6 +21,14 @@ namespace CMS.WebUI
             );
 
             routes.MapRoute(
+                name: "FriendlyURL",
+                url: "{friendlyURL}",
+                defaults: new { controller = "Home", action = "Index", friendlyURL = "Home" },
+                constraints: new { friendlyURL = "^(?!Admin|BlogPost|Calendar|Category|Document|FAQ|Form|FormField|Gallery|HTMLWidget|JSON|Menu|News|Page|Trash|User|WidgetContainer)(([a-zA-z]+-?)+)$" }
+
+            );
+
+            routes.MapRoute(
                 name: "Admin",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

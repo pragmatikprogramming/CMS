@@ -388,5 +388,29 @@ namespace CMS.Domain.DataAccess
 
             return m_Label;
         }
+
+        public static List<string> FormDataExtract(int FormId, string StartDate, string EndDate)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CMS_FormData WHERE formId = @formId AND submissionDate >= @StartDate AND submissionDate <= @EndDate ORDER BY submissionDate ASC";
+            SqlCommand getFormData = new SqlCommand(queryString, conn);
+            getFormData.Parameters.AddWithValue("formId", FormId);
+            getFormData.Parameters.AddWithValue("StartDate", StartDate);
+            getFormData.Parameters.AddWithValue("EndDate", EndDate);
+
+            SqlDataReader formDataReader = getFormData.ExecuteReader();
+
+            List<string> m_FormData = new List<string>();
+
+            while (formDataReader.Read())
+            {
+                string formData = "Submission Date::" + formDataReader.GetDateTime(3).ToString("yyyy-MM-dd") + "^^" + formDataReader.GetString(2);
+                m_FormData.Add(formData);
+            }
+
+            return m_FormData;
+        }
     }
 }

@@ -28,6 +28,16 @@ namespace CMS.Domain.Models
             return m_Page;
         }
 
+        public Page RetrieveOneByFriendlyURL(string friendlyURL)
+        {
+            Page m_Page = DBPage.RetrieveOneByFriendlyURL(friendlyURL);
+            if (m_Page.TemplateId > 0)
+            {
+                m_Page.TemplateName = DBPage.GetTemplateName(m_Page.TemplateId);
+            }
+            return m_Page;
+        }
+
         public List<Page> RetrieveAll(int m_Id)
         {
             List<Page> m_Pages = DBPage.RetrieveAll(m_Id);
@@ -92,6 +102,12 @@ namespace CMS.Domain.Models
         public void sortDown(int id)
         {
             DBPage.sortDown(id);
+        }
+
+        public bool friendlyURLExists(string friendlyURL)
+        {
+            bool m_Result = DBPage.friendlyURLExists(friendlyURL);
+            return m_Result;
         }
     }
 }

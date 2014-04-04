@@ -138,5 +138,22 @@ namespace CMS.WebUI.Controllers
             FormRepository.ToggleRequired(parentId, id, value);
             return RedirectToAction("OrderFormFields", "Form", new { id = parentId });
         }
+
+        [HttpGet]
+        [CMSAuth]
+        public ActionResult ExtractFormData()
+        {
+            List<Form> m_Forms = FormRepository.RetrieveAll();
+            return View("Extract", m_Forms);
+        }
+
+        [HttpPost]
+        [CMSAuth]
+        public FileContentResult ExtractFormData(int FormId, string StartDate, string EndDate)
+        {
+            string csv = "";
+            csv = FormRepository.FormDataExtract(FormId, StartDate, EndDate);
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", "Report123.csv");
+        }
     }
 }
