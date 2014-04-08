@@ -83,7 +83,7 @@ namespace CMS.WebUI.Controllers
                 }
             }
 
-            if (PageRepository.friendlyURLExists(m_Page.FriendlyURL))
+            if (PageRepository.friendlyURLExists(m_Page.FriendlyURL, m_Page.PageID))
             {
                 ModelState.AddModelError("FriendlyURL", "This Friendly URL already exists");
             }
@@ -162,9 +162,12 @@ namespace CMS.WebUI.Controllers
                 return RedirectToAction("Index", "Page", new { id = m_Page.ParentId });
             }
 
-            if (PageRepository.friendlyURLExists(m_Page.FriendlyURL))
+            if (m_Page.FriendlyURL != null && m_Page.FriendlyURL != string.Empty)
             {
-                ModelState.AddModelError("FriendlyURL", "This Friendly URL already exists");
+                if (PageRepository.friendlyURLExists(m_Page.FriendlyURL, m_Page.PageID))
+                {
+                    ModelState.AddModelError("FriendlyURL", "This Friendly URL already exists");
+                }
             }
 
             if (ModelState.IsValid)

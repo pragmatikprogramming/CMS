@@ -14,6 +14,11 @@ namespace CMS.Domain.Models
     {
         public void Create(Page m_Page)
         {
+            if (m_Page.FriendlyURL == "" || m_Page.FriendlyURL == null)
+            {
+                m_Page.FriendlyURL = "";
+            }
+
             DBPage.Create(m_Page);
         }
 
@@ -53,6 +58,10 @@ namespace CMS.Domain.Models
             if (m_Page.Id != tempPage.Id)
             {
                 m_Page.Id = tempPage.Id;
+            }
+            if (m_Page.FriendlyURL == "" || m_Page.FriendlyURL == null)
+            {
+                m_Page.FriendlyURL = "";
             }
 
             m_Page.LockedBy = Utility.GetLockedBy(m_Page.Id);
@@ -104,9 +113,9 @@ namespace CMS.Domain.Models
             DBPage.sortDown(id);
         }
 
-        public bool friendlyURLExists(string friendlyURL)
+        public bool friendlyURLExists(string friendlyURL, int pageId)
         {
-            bool m_Result = DBPage.friendlyURLExists(friendlyURL);
+            bool m_Result = DBPage.friendlyURLExists(friendlyURL, pageId);
             return m_Result;
         }
     }

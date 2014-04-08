@@ -55,17 +55,24 @@ namespace CMS.WebUI.Controllers
                     m_Page = PageRepository.RetrieveOneByFriendlyURL(friendlyURL);
                 }
 
-                if (m_Page.RedirectURL == null || m_Page.RedirectURL == string.Empty)
+                if (m_Page == null || m_Page.TemplateName == null || m_Page.TemplateName == "")
                 {
-                    ViewBag.PageType = m_Page.PageType;
-                    ViewBag.id = m_Page.PageTypeId;
-                    ViewBag.PageId = m_Page.PageID;
-                    ViewBag.TemplateId = m_Page.TemplateId;
-                    return View(m_Page.TemplateName, m_Page);
+                    return View("404");
                 }
                 else
                 {
-                    return Redirect(m_Page.RedirectURL);
+                    if (m_Page.RedirectURL == null || m_Page.RedirectURL == string.Empty)
+                    {
+                        ViewBag.PageType = m_Page.PageType;
+                        ViewBag.id = m_Page.PageTypeId;
+                        ViewBag.PageId = m_Page.PageID;
+                        ViewBag.TemplateId = m_Page.TemplateId;
+                        return View(m_Page.TemplateName, m_Page);
+                    }
+                    else
+                    {
+                        return Redirect(m_Page.RedirectURL);
+                    }
                 }
             }
         }

@@ -2316,6 +2316,7 @@
     <Content Include="Content\js\compacta_400.font.js" />
     <Content Include="Content\js\cufon-replace.js" />
     <Content Include="Content\js\cufon-yui.js" />
+    <Content Include="Content\js\cycle2.js" />
     <Content Include="Content\js\DD_belatedPNG.js" />
     <Content Include="Content\theme.css" />
     <Content Include="Content\theme_back.css" />
@@ -2470,6 +2471,7 @@
     <Content Include="Views\Page\ImageSelect.cshtml" />
     <Content Include="Views\Home\getBlogPost.cshtml" />
     <Content Include="Views\Form\Extract.cshtml" />
+    <Content Include="Views\Home\404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

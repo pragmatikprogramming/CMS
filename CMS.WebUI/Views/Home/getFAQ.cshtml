@@ -1,6 +1,23 @@
-﻿@foreach (var question in Model)
+﻿  <script>
+  $(function() {
+      $("#accordion").accordion({ collapsible: true, active: false });
+  });
+  </script>
+    <style type="text/css">
+        .ui-accordion {
+            line-height: 20px;
+        }
+        .ui-accordion-content {
+            margin-left: 25px;
+        }
+    </style>
+<div id="accordion">
+@foreach (var question in Model)
 {
-    <p>@question.FaqQuestion</p><br />
-    <p>@Html.Raw(System.Web.HttpUtility.HtmlDecode(question.FaqAnswer)) </p><br />
+    <h3 style="color: black; font-size: 14px;">@question.FaqQuestion</h3>
+    <div>
+        @Html.Raw(System.Web.HttpUtility.HtmlDecode(question.FaqAnswer))
+    </div>
 }
+</div>
 

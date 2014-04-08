@@ -359,6 +359,7 @@ namespace CMS.Domain.Entities
             content = string.Empty;
             metaDescription = string.Empty;
             metaKeywords = string.Empty;
+            FriendlyURL = "";
         }
 
         public void PageSetDefaults()

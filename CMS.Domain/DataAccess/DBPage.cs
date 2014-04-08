@@ -652,14 +652,15 @@ namespace CMS.Domain.DataAccess
             return m_Page;
         }
 
-        public static bool friendlyURLExists(string friendlyURL)
+        public static bool friendlyURLExists(string friendlyURL, int pageId)
         {
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT COUNT(*) FROM CMS_Pages WHERE friendlyURL = @friendlyURL";
+            string queryString = "SELECT COUNT(*) FROM CMS_Pages WHERE friendlyURL = @friendlyURL AND pageId != @pageId";
             SqlCommand getCount = new SqlCommand(queryString, conn);
             getCount.Parameters.AddWithValue("friendlyURL", friendlyURL);
+            getCount.Parameters.AddWithValue("pageId", pageId);
             int m_Count = (int)getCount.ExecuteScalar();
 
             if (m_Count > 0)

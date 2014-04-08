@@ -21,6 +21,6 @@ namespace CMS.Domain.Abstract
         void UnlockPage(int pid);
         void sortUp(int id);
         void sortDown(int id);
-        bool friendlyURLExists(string friendlyURL);
+        bool friendlyURLExists(string friendlyURL, int pageId);
     }
 }

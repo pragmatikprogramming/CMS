@@ -1,22 +1,31 @@
 ﻿<div id="News">
     <div class="title">News & Announcements</div>
-    <div align="center" class="margin-top_10"><a href="/News/Article/@ViewBag.NewsId"><img src="/Galleries/News Images/@Model[0].NewsImageName" width="256" height="220"></a></div>
-                
-    <figcaption>@Model[0].IntroText<br />
+
+    <div class="cycle-slideshow" 
+        data-cycle-fx=scrollHorz
+        data-cycle-timeout=8000
+        data-cycle-pause-on-hover="true"
+        data-cycle-caption="#alt-caption"
+        data-cycle-caption-template="{{alt}}"
+        data-cycle-pager="#custom-pager"
+        data-cycle-pager-template="<strong><a href=#> {{slideNum}} </a></strong>"
+        data-cycle-prev="#prev"
+        data-cycle-next="#next"
+        >
+    
+    @foreach (var news in Model)
+    {
+        <img src="/Galleries/News Images/@news.NewsImageName" width="256" height="220" alt="@news.IntroText">
+    }        
+    
+    </div>
+    <!-- empty element for caption -->
+     <figcaption>
+        <div id="alt-caption" class="center"></div><br />
+        
         <span class="more margin-top_10"><a href="/News">view all news</a></span>
         <span class="pagination">
-            @foreach(var news in Model)
-            {
-                if (ViewBag.Count == 1)
-                {
-                    @:<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#News" href="/Home/SwapNews?id=@news.Id" style="text-decoration: underline;">@ViewBag.Count</a>
-                }
-                else
-                {
-                    @:<a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#News" href="/Home/SwapNews?id=@news.Id" style="text-decoration: none;">@ViewBag.Count</a>
-                }
-                ViewBag.Count = ViewBag.Count + 1;
-            }
-        </span>    
-    </figcaption>
+            <div id="custom-pager" class="center"></div>
+        </span>
+     </figcaption>
 </div>
