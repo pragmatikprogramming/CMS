@@ -83,9 +83,12 @@ namespace CMS.WebUI.Controllers
                 }
             }
 
-            if (PageRepository.friendlyURLExists(m_Page.FriendlyURL, m_Page.PageID))
+            if (m_Page.FriendlyURL != null && m_Page.FriendlyURL != string.Empty)
             {
-                ModelState.AddModelError("FriendlyURL", "This Friendly URL already exists");
+                if (PageRepository.friendlyURLExists(m_Page.FriendlyURL, m_Page.PageID))
+                {
+                    ModelState.AddModelError("FriendlyURL", "This Friendly URL already exists");
+                }
             }
 
             if (ModelState.IsValid)
