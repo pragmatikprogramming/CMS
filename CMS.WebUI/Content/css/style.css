@@ -46,14 +46,21 @@ ul.top_nav li { display: inline-block;margin-left: 20px;padding: 2px 0;width: 11
 ul.top_nav li a { text-decoration:none; color:#636466; background:url(../images/nav_bullet.png) no-repeat left 7px; padding: 4px 0 4px 12px;  }
 ul.top_nav li a:hover { text-decoration:underline; color:#000; }
 
-.search_bar { float:right; clear:both; margin-top:48px; padding-right:10px;  }
+/*.search_bar { float:right; clear:both; margin-top:48px; padding-right:10px;  }
 label { font-size:14px; font-weight:bold; font-family:'Open Sans Condensed', serif;text-transform:uppercase; color:#fff; }
 .input { border:1px solid #7e9db9; color:#636466; padding:2px 5px; width:120px; }
 .select { border:1px solid #7e9db9; color:#636466; padding:1px 0px; width:120px; }
 .input2 { border:1px solid #7e9db9; color:#636466; padding:2px 5px; width:145px; }
 .select2 { border:1px solid #7e9db9; color:#636466; padding:1px 0px; width:156px; }
-.submit {background:#82382F;color:#fff; font-family:'Open Sans Condensed', serif; padding:0px 4px; border:solid 1px #372d33; text-transform:uppercase; font-size:14px; font-weight:bold;}
+.submit {background:#82382F;color:#fff; font-family:'Open Sans Condensed', serif; padding:0px 4px; border:solid 1px #372d33; text-transform:uppercase; font-size:14px; font-weight:bold;}*/
 
+.search_bar { float:right; clear:both; margin-top:48px; padding-right:10px;  }
+.search_bar label { font-size:14px; font-weight:bold; font-family:'Open Sans Condensed', serif;text-transform:uppercase; color:#fff; }
+.search_bar .input { border:1px solid #7e9db9; color:#636466; padding:2px 5px; width:120px; }
+.search_bar .select { border:1px solid #7e9db9; color:#636466; padding:1px 0px; width:120px; }
+.search_bar .input2 { border:1px solid #7e9db9; color:#636466; padding:2px 5px; width:145px; }
+.search_bar .select2 { border:1px solid #7e9db9; color:#636466; padding:1px 0px; width:156px; }
+.search_bar .submit {background:#82382F;color:#fff; font-family:'Open Sans Condensed', serif; padding:0px 4px; border:solid 1px #372d33; text-transform:uppercase; font-size:14px; font-weight:bold;}
 
 /**** Navigation ****/
 
