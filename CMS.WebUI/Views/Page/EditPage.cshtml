@@ -140,6 +140,25 @@
         <div class="formlabel">Redirect URL:</div>
         <div class="formfield"><input type="text" name="RedirectURL" value="@Model.RedirectURL" /></div>
         <div class="clear">&nbsp;</div>
+        
+        <div class="formlabel">Container:</div>
+        <div class="formfield">
+            <select name="WidgetContainerId">
+                <option value="0">-- Select a Container --</option>
+                @foreach (var widget in ViewBag.Widgets)
+                {
+                    if (@widget.Id == Model.WidgetContainerId)
+                    {
+                        <option value="@widget.Id" selected="selected">@widget.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@widget.Id">@widget.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Publish Date:</div>
         <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="

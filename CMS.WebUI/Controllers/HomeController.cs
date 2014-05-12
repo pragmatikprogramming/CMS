@@ -18,13 +18,14 @@ namespace CMS.WebUI.Controllers
         IFormRepository FormRepository;
         IFAQRepository FAQRepository;
         IBlogPostRepository BlogPostRepository;
+        IEventRepository EventRepository;
 
         public HomeController()
         {
 
         }
 
-        public HomeController(IPageRepository PageRepo, IHomeRepository HomeRepo, IImageRepository ImageRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo)
+        public HomeController(IPageRepository PageRepo, IHomeRepository HomeRepo, IImageRepository ImageRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo, IEventRepository EventRepo)
         {
             PageRepository = PageRepo;
             HomeRepository = HomeRepo;
@@ -32,6 +33,7 @@ namespace CMS.WebUI.Controllers
             FormRepository = FormRepo;
             FAQRepository = FAQRepo;
             BlogPostRepository = BlogPostRepo;
+            EventRepository = EventRepo;
         }
 
         public ActionResult Index(string friendlyURL, int id = 0)
@@ -109,6 +111,14 @@ namespace CMS.WebUI.Controllers
         {
             List<Event> m_Events = HomeRepository.FeaturedEvents();
             return View("FeaturedEvents", m_Events);
+        }
+
+        public ActionResult Event(int id)
+        {
+            Event m_Event = EventRepository.RetrieveOne(id);
+            ViewBag.PageType = 6;
+
+            return View("HomeFullWidth", m_Event);
         }
 
         public ActionResult getBlog(int parentId, int id)
@@ -257,11 +267,11 @@ namespace CMS.WebUI.Controllers
             }
         }
 
-        public FileContentResult ExportCSV()
+        /*public FileContentResult ExportCSV()
         {
             string csv = "1,2,3,4,5,6,7,8,9";
 
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", "Report123.csv");
-        }
+        }*/
     }
 }

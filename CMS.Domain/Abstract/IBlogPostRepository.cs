@@ -24,5 +24,7 @@ namespace CMS.Domain.Abstract
         List<BlogPostComment> GetComments(int BlogId);
         void CommentPublish(int id);
         void CommentDelete(int id);
+        void newsSortOrder(List<int> m_SortOrder);
+        List<int> getNewsRotatorBlogIds();
     }
 }

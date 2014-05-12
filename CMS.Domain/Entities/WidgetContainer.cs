@@ -10,7 +10,6 @@ namespace CMS.Domain.Entities
     {
         private int id;
         private string name;
-        private int templateId;
         private List<int> myWidgets;
         private List<HTMLWidget> widgets;
 
@@ -37,18 +36,6 @@ namespace CMS.Domain.Entities
             set 
             { 
                 name = value; 
-            }
-        }
-
-        public int TemplateId
-        {
-            get 
-            { 
-                return templateId; 
-            }
-            set 
-            { 
-                templateId = value; 
             }
         }
 

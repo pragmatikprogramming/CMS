@@ -49,8 +49,6 @@ namespace CMS.WebUI.Controllers
         [CMSAuth]
         public ActionResult ContainerAdd(WidgetContainer m_Container)
         {
-            var TemplateId = ModelState["TemplateId"];
-            TemplateId.Errors.Clear();
             
             if (ModelState.IsValid)
             {
@@ -59,7 +57,6 @@ namespace CMS.WebUI.Controllers
             }
             else
             {
-                ViewBag.Templates = Utility.GetTemplates();
                 ViewBag.Widgets = WidgetContainerRepository.getWidgets();
                 return View("ContainerAdd", m_Container);
             }
@@ -69,7 +66,6 @@ namespace CMS.WebUI.Controllers
         [CMSAuth]
         public ActionResult ContainerEdit(int id)
         {
-            ViewBag.Templates = Utility.GetTemplates();
             ViewBag.Widgets = WidgetContainerRepository.getWidgets();
             WidgetContainer m_Container = WidgetContainerRepository.RetrieveOne(id);
             return View("ContainerEdit", m_Container);
@@ -90,7 +86,6 @@ namespace CMS.WebUI.Controllers
                 {
                     m_Container.MyWidgets = new List<int>();
                 }
-                ViewBag.Templates = Utility.GetTemplates();
                 ViewBag.Widgets = WidgetContainerRepository.getWidgets();
                 return View("ContainerEdit", m_Container);
             }

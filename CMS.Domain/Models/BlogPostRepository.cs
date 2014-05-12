@@ -101,5 +101,17 @@ namespace CMS.Domain.Models
         {
             DBBlogPost.CommentDelete(id);
         }
+
+        public void newsSortOrder(List<int> m_SortOrder)
+        {
+            DBBlogPost.NewsRotatorSortOrder(m_SortOrder);
+        }
+
+        public List<int> getNewsRotatorBlogIds()
+        {
+            List<int> m_Ids = DBBlogPost.getNewsRotatorBlogIds();
+
+            return m_Ids;
+        }
     }
 }

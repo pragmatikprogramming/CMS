@@ -19,9 +19,10 @@ namespace CMS.WebUI.Controllers
         IFAQRepository FAQRepository;
         IBlogPostRepository BlogPostRepository;
         IImageRepository ImageRepository;
+        IWidgetContainer WidgetContainerRepository;
 
         
-        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo, IImageRepository ImageRepo)
+        public PageController(IPageRepository PageRepo, IJSONRepository JSONRepo, IFormRepository FormRepo, IFAQRepository FAQRepo, IBlogPostRepository BlogPostRepo, IImageRepository ImageRepo, IWidgetContainer WidgetContainerRepo)
         {
             PageRepository = PageRepo;
             JSONRepository = JSONRepo;
@@ -29,6 +30,7 @@ namespace CMS.WebUI.Controllers
             FAQRepository = FAQRepo;
             BlogPostRepository = BlogPostRepo;
             ImageRepository = ImageRepo;
+            WidgetContainerRepository = WidgetContainerRepo;
         }
 
         [HttpGet]
@@ -51,6 +53,7 @@ namespace CMS.WebUI.Controllers
             ViewBag.myContentGroups = Utility.ContentGroups();
             ViewBag.Templates = Utility.GetTemplates();
             ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
+            ViewBag.Widgets = WidgetContainerRepository.RetrieveAll();
 
             Page m_Page = new Page();
 
@@ -103,6 +106,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.myContentGroups = Utility.ContentGroups();
                 ViewBag.Templates = Utility.GetTemplates();
                 ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
+                ViewBag.Widgets = WidgetContainerRepository.RetrieveAll();
 
                 return View("AddPage", m_Page);
             }
@@ -129,6 +133,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.myContentGroups = Utility.ContentGroups();
                 ViewBag.Templates = Utility.GetTemplates();
                 ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
+                ViewBag.Widgets = WidgetContainerRepository.RetrieveAll();
                 return View("EditPage", m_Page);
             }
         }
@@ -185,6 +190,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.myContentGroups = Utility.ContentGroups();
                 ViewBag.Templates = Utility.GetTemplates();
                 ViewBag.BannerImages = ImageRepository.RetrieveAll(24);
+                ViewBag.Widgets = WidgetContainerRepository.RetrieveAll();
 
                 return View("EditPage", m_Page);
             }

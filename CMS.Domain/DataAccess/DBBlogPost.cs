@@ -536,6 +536,106 @@ namespace CMS.Domain.DataAccess
             conn.Close();
         }
 
+        public static void NewsRotatorSortOrder(List<int> m_SortOrder)
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "DELETE FROM CMS_WidgetNewsRotator";
+            SqlCommand delSortOrder = new SqlCommand(queryString, conn);
+            delSortOrder.ExecuteNonQuery();
+
+            queryString = "INSERT INTO CMS_WidgetNewsRotator(pageId, sortOrder) VALUES(@pageId, @sortOrder)";
+
+            int count = 1;
+
+            foreach(int m_sort in m_SortOrder)
+            {
+                SqlCommand insSortOrder = new SqlCommand(queryString, conn);
+                insSortOrder.Parameters.AddWithValue("pageId", m_sort);
+                insSortOrder.Parameters.AddWithValue("sortOrder", count);
+                insSortOrder.ExecuteNonQuery();
+
+                count++;
+            }
+
+            conn.Close();
+        }
+
+        public static List<BlogPost> getNewsRotator()
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CMS_WidgetNewsRotator ORDER by sortOrder";
+            SqlCommand getFeaturedNews = new SqlCommand(queryString, conn);
+            SqlDataReader m_News = getFeaturedNews.ExecuteReader();
+
+            List<BlogPost> m_FeaturedNews = new List<BlogPost>();
+
+            while (m_News.Read())
+            {
+                SqlConnection conn2 = DB.DbConnect();
+                conn2.Open();
+
+                queryString = "SELECT TOP 1 * FROM CMS_BlogPosts WHERE blogId = @blogId AND pageWorkFlowState = 2 ORDER BY id DESC";
+                SqlCommand getNews = new SqlCommand(queryString, conn2);
+                getNews.Parameters.AddWithValue("blogId", m_News.GetInt32(1));
+                SqlDataReader m_Blogs = getNews.ExecuteReader();
+
+                if (m_Blogs.Read())
+                {
+                    BlogPost m_Blog = new BlogPost();
+
+                    m_Blog.Id = m_Blogs.GetInt32(0);
+                    m_Blog.BlogId = m_Blogs.GetInt32(1);
+                    m_Blog.Title = m_Blogs.GetString(2);
+                    m_Blog.PublishDate = m_Blogs.GetDateTime(3);
+                    m_Blog.ContentGroup = m_Blogs.GetInt32(4);
+                    m_Blog.Content = m_Blogs.GetString(5);
+                    m_Blog.PageWorkFlowState = m_Blogs.GetInt32(6);
+                    m_Blog.LockedBy = m_Blogs.GetInt32(7);
+                    m_Blog.LastModifiedBy = m_Blogs.GetInt32(8);
+                    m_Blog.LastModifiedDate = m_Blogs.GetDateTime(9);
+                    m_Blog.Comments = m_Blogs.GetInt32(10);
+                    m_Blog.ExpirationDate = m_Blogs.GetDateTime(11);
+                    m_Blog.NewsImageId = m_Blogs.GetInt32(12);
+                    m_Blog.Author = m_Blogs.GetString(13);
+                    m_Blog.IntroText = m_Blogs.GetString(14);
+                    m_Blog.NewsImageName = m_Blogs.GetString(15);
+
+                    m_Blog.LockedByName = DBPage.GetLockedByName(m_Blog.LockedBy);
+                    m_Blog.LastModifiedByName = DBPage.GetLockedByName(m_Blog.LastModifiedBy);
+
+                    m_FeaturedNews.Add(m_Blog);
+                }
+
+                conn2.Close();
+            }
+
+            conn.Close();
+            return m_FeaturedNews;
+        }
+
+        public static List<int> getNewsRotatorBlogIds()
+        {
+            SqlConnection conn = DB.DbConnect();
+            conn.Open();
+
+            string queryString = "SELECT * FROM CMS_WidgetNewsRotator ORDER BY sortOrder";
+            SqlCommand getIds = new SqlCommand(queryString, conn);
+            SqlDataReader m_Ids = getIds.ExecuteReader();
+
+            List<int> Ids = new List<int>();
+
+            while (m_Ids.Read())
+            {
+                Ids.Add(m_Ids.GetInt32(1));
+            }
+
+            return Ids;
+        }
+
         public static BlogPost getTopByBlogId(int id)
         {
             SqlConnection conn = DB.DbConnect();

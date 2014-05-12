@@ -15,10 +15,9 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CMS_WidgetContainers(name, templateId) VALUES(@name, @templateId)";
+            string queryString = "INSERT INTO CMS_WidgetContainers(name) VALUES(@name)";
             SqlCommand insertContainer = new SqlCommand(queryString, conn);
             insertContainer.Parameters.AddWithValue("name", m_Container.Name);
-            insertContainer.Parameters.AddWithValue("templateId", m_Container.TemplateId);
             insertContainer.ExecuteNonQuery();
 
             queryString = "SELECT IDENT_CURRENT('CMS_WidgetContainers')";
@@ -63,7 +62,6 @@ namespace CMS.Domain.DataAccess
             {
                 m_Container.Id = containerReader.GetInt32(0);
                 m_Container.Name = containerReader.GetString(1);
-                m_Container.TemplateId = containerReader.GetInt32(2);
 
                 SqlConnection conn2 = DB.DbConnect();
                 conn2.Open();
@@ -113,7 +111,6 @@ namespace CMS.Domain.DataAccess
             {
                 m_Container.Id = containerReader.GetInt32(0);
                 m_Container.Name = containerReader.GetString(1);
-                m_Container.TemplateId = containerReader.GetInt32(2);
 
                 SqlConnection conn2 = DB.DbConnect();
                 conn2.Open();
@@ -163,7 +160,6 @@ namespace CMS.Domain.DataAccess
             {
                 m_Container.Id = containerReader.GetInt32(0);
                 m_Container.Name = containerReader.GetString(1);
-                m_Container.TemplateId = containerReader.GetInt32(2);
 
                 SqlConnection conn2 = DB.DbConnect();
                 conn2.Open();
@@ -213,7 +209,6 @@ namespace CMS.Domain.DataAccess
                 WidgetContainer m_Container = new WidgetContainer();
                 m_Container.Id = containerReader.GetInt32(0);
                 m_Container.Name = containerReader.GetString(1);
-                m_Container.TemplateId = containerReader.GetInt32(2);
                 m_Containers.Add(m_Container);
 
                 SqlConnection conn2 = DB.DbConnect();
@@ -281,10 +276,9 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_WidgetContainers SET name = @name, templateId = @templateId WHERE id = @id";
+            string queryString = "UPDATE CMS_WidgetContainers SET name = @name WHERE id = @id";
             SqlCommand updateContainer = new SqlCommand(queryString, conn);
             updateContainer.Parameters.AddWithValue("name", m_Container.Name);
-            updateContainer.Parameters.AddWithValue("templateId", m_Container.TemplateId);
             updateContainer.Parameters.AddWithValue("id", m_Container.Id);
             updateContainer.ExecuteNonQuery();
 

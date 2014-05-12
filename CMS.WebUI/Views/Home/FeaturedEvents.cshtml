@@ -3,11 +3,24 @@
                 @foreach(var mEvent in Model)
                 {
                     <div class="coloumn2">
+                        
                         @if(mEvent.EventStartMin == 0)
                         {
+                            <span class="event-title"><a href="/Home/Event/@mEvent.EventID">@mEvent.EventTitle</a><br />
+                            @mEvent.EventStartDate.ToString("MMM d, yyyy")
+                            @if(mEvent.EventStartDate != mEvent.EventEndDate)
+                            {
+                                @:- @mEvent.EventEndDate.ToString("MMM d, yyyy")
+                            }
+                            @{
                             ViewBag.StartTime = mEvent.EventStartHour + ":00 " + mEvent.AmpmStart;
-                            <span class="event-title"><a href="#">@mEvent.EventTitle</a> <br />@ViewBag.StartTime 
-                            @if(mEvent.EventEndHour != 0)
+                            }
+                             
+                            @if(mEvent.EventStartHour != 0)
+                            {
+                                <br />@ViewBag.StartTime 
+                            }
+                            @if (mEvent.EventEndHour != 0 && mEvent.EventStartHour != 0)
                             {
                                 @:- 
                                 if (mEvent.EventEndMin == 0)
@@ -26,8 +39,12 @@
                         else
                         {
                             ViewBag.StartTime = mEvent.EventStartHour + ":" + mEvent.EventStartMin + " " + mEvent.AmpmStart;
-                            <span class="event-title"><a href="#">@mEvent.EventTitle</a> <br />@ViewBag.StartTime
-                            @if(mEvent.EventEndHour != 0)
+                            <span class="event-title"><a href="#">@mEvent.EventTitle</a> 
+                            @if(mEvent.EventStartHour != 0)
+                            {
+                                <br />@ViewBag.StartTime
+                            }
+                            @if (mEvent.EventEndHour != 0 && mEvent.EventStartHour != 0)
                             {
                                 @:- 
                                 if (mEvent.EventEndMin == 0)

@@ -35,6 +35,9 @@ namespace CMS.Domain.Entities
         private int bannerImage;
         private string bannerImageName;
         private string friendlyURL;
+        private int widgetContainerId;
+
+
 
         
         public int Id
@@ -351,6 +354,18 @@ namespace CMS.Domain.Entities
             set
             {
                 friendlyURL = value;
+            }
+        }
+
+        public int WidgetContainerId
+        {
+            get 
+            { 
+                return widgetContainerId; 
+            }
+            set 
+            { 
+                widgetContainerId = value; 
             }
         }
 

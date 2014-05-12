@@ -19,13 +19,7 @@ namespace CMS.Domain.Models
 
         public WidgetContainer getContainer(int id)
         {
-            //id is the page id at this point.  We need template id to retrieve the container
-            if (id == 0)
-            {
-                id = 39;
-            }
-            //Page m_Page = DBPage.RetrieveOne(id);
-            WidgetContainer m_Container = DBWidgetContainer.RetrieveOneByTemplateId(id);
+            WidgetContainer m_Container = DBWidgetContainer.RetrieveOne(id);
             return m_Container;
         }
 
@@ -55,7 +49,7 @@ namespace CMS.Domain.Models
 
         public List<BlogPost> GetNews()
         {
-            List<BlogPost> m_BlogPosts = DBBlogPost.RetrieveAllByCategory(2);
+            List<BlogPost> m_BlogPosts = DBBlogPost.getNewsRotator();
             return m_BlogPosts;
         }
 

@@ -34,5 +34,8 @@
             
 <div class="right_part">
     <div class="margin-top_10" style="line-height: 0px;">&nbsp;</div>
-    @Html.Action("Container", "Home", new{ id = ViewBag.TemplateId })
+    @if(Model.WidgetContainerId > 0)
+    {
+        @Html.Action("Container", "Home", new{ id = Model.WidgetContainerId })
+    }
 </div> <!--end right part-->

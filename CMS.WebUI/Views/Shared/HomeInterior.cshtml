@@ -105,12 +105,8 @@
             
 <div class="right_part">
     <div class="margin-top_10">&nbsp;</div>
-    @if(ViewBag.PageId != null)
+    @if(Model.WidgetContainerId != 0)
     {
         @Html.Action("Container", "Home", new{ id = ViewBag.TemplateId })
-    }
-    else
-    {
-        @Html.Action("getContainer", "WidgetContainer", new{ id = 6 })   
     }
 </div> <!--end right part-->

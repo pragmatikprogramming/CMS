@@ -92,6 +92,47 @@
                 <div class="margin-top_10">&nbsp;</div>
             }   
         }
+        else if(ViewBag.PageType == 6)
+        {
+            <h1>@Model.EventTitle</h1><br /><br />
+            <p>@Model.EventStartDate.ToString("MMM d, yyyy")
+            @if (Model.EventStartDate.ToString("MMM d, yyyy") != Model.EventEndDate.ToString("MMM d, yyyy"))
+            {
+                @: - @Model.EventEndDate.ToString("MMM d, yyyy")
+            }
+            </p>
+            if(Model.EventStartHour != 0)
+            {
+                if (Model.EventStartMin != 0)
+                {
+                    ViewBag.StartTime = Model.EventStartHour + ":" + Model.EventStartMin + Model.AmpmStart;
+                }
+                else
+                {
+                    ViewBag.StartTime = Model.EventStartHour + ":00" + Model.AmpmStart;
+                }
+
+                if (Model.EventEndHour != 0)
+                {
+                    if (Model.EventEndMin != 0)
+                    {
+                        ViewBag.EndTime = Model.EventEndHour + ":" + Model.EventEndMin + Model.AmpmEnd;
+                    }
+                    else
+                    {
+                        ViewBag.EndTime = Model.EventEndHour + ":00" + Model.AmpmEnd;
+                    }
+                }
+            }
+            <p>@ViewBag.StartTime
+            @if(Model.EventEndHour != 0)
+            {
+                @: - @ViewBag.EndTime
+            }
+            </p>
+            <br /><br /><br />
+            <p>@Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Body))</p>
+        }
         else
         {
             @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) 

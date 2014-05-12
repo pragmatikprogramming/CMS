@@ -143,6 +143,7 @@
     <Compile Include="Controllers\TrashController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WidgetContainerController.cs" />
+    <Compile Include="Controllers\WidgetNewsRotatorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2472,6 +2473,7 @@
     <Content Include="Views\Home\getBlogPost.cshtml" />
     <Content Include="Views\Form\Extract.cshtml" />
     <Content Include="Views\Home\404.cshtml" />
+    <Content Include="Views\WidgetNewsRotator\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

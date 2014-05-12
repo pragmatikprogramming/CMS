@@ -100,12 +100,8 @@
         </div><!--end coloumn3-->
         <div class="inner-bot-bg"></div>  
         <div class="margin-top_10">&nbsp;</div> 
-        @if(ViewBag.PageId != null)
+        @if(Model.WidgetContainerId != 0)
         { 
-            @Html.Action("Container", "Home", new{ id = Model.TemplateId })
-        }
-        else
-        {
-            @Html.Action("Container", "Home", new{ id = ViewBag.TemplateId })
+            @Html.Action("Container", "Home", new{ id = Model.WidgetContainerId })
         }
     </div> <!--end right part--> 

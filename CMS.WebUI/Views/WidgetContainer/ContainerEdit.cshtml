@@ -25,24 +25,6 @@
         <div class="formlabel">Name:</div>
         <div class="formfield"><input type="text" name="Name" value="@Model.Name" /></div>
         <div class="clear">&nbsp;</div>
-
-        <div class="formlabel">Template:</div>
-        <div class="formfield"><select name="TemplateId">
-            <option value="">-- Select a Template --</option>
-            @foreach (var Template in ViewBag.Templates)
-                {
-                    if (Template.TemplateId == Model.TemplateId)
-                    {
-                        <option value="@Template.TemplateId" selected="selected">@Template.FriendlyName</option>
-                    }
-                    else
-                    {
-                        <option value="@Template.TemplateId">@Template.FriendlyName</option>
-                    }
-                 }
-
-            </select></div>
-        <div class="clear">&nbsp;</div>
         
         <div class="formlabel">Widgets:</div>
         <div class="formfield">

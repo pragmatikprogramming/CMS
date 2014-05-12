@@ -122,9 +122,28 @@
         <div class="formfield"><input type="text" name="RedirectURL" value=" @Model.RedirectURL" /></div>
         <div class="clear">&nbsp;</div>
         
+        <div class="formlabel">Container:</div>
+        <div class="formfield">
+            <select name="WidgetContainerId">
+                <option value="0">-- Select a Container --</option>
+                @foreach (var widget in ViewBag.Widgets)
+                {
+                    if (@widget.Id == Model.WidgetContainerId)
+                    {
+                        <option value="@widget.Id" selected="selected">@widget.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@widget.Id">@widget.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="clear">&nbsp;</div>
+
         <div class="formlabel">Publish Date:</div>
         <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="
-            @if(Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
+            @if (Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
             {
                 @Model.PublishDate.ToString("MM/dd/yyyy");
             }
@@ -132,11 +151,11 @@
         <div class="clear">&nbsp;</div>
 
 
-        @if(ViewBag.ParentId > 0)
+        @if (ViewBag.ParentId > 0)
         {
             <div class="formlabel">Expiration Date:</div>
             <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" readonly="readonly" value="
-                @if(Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
+                @if (Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
                 {
                     @Model.ExpireDate.ToString("MM/dd/yyyy");
                 }
@@ -164,7 +183,7 @@
 
         <div class="formlabel">Display on Submenu:</div>
         <div class="formfield"><input type="checkbox" name="DisplayOnSubmenu" id="DisplayOnSubmenu" value="1"
-            @if(Model.DisplayOnSubmenu == 1)
+            @if (Model.DisplayOnSubmenu == 1)
             {
                 @:checked="checked"
             }
@@ -192,7 +211,7 @@
                 <h3 id="myModalLabel">Choos An Image</h3>
             </div>
             <div class="modal-body">
-                @foreach(var image in ViewBag.BannerImages)
+                @foreach (var image in ViewBag.BannerImages)
                 {
                     <p class="error-text"><a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#myImage" href="/Page/ImageSelect?ImageName=@image.Name.@image.FileType&ImageId=@image.Id"  data-dismiss="modal">@image.Name.@image.FileType</a></p>
                 }

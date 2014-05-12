@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">News Rotator</h1>
+</div>
+
+<div class="container-fluid">   
+<div class="row-fluid">  
+<div class="formcontainer">
+    <div style="line-height: 30px;">&nbsp;</div>
+    @if(ViewBag.Message != "")
+    {
+        <div class="formlabel">&nbsp;</div>
+        <div class="formfield"><div style="color: red">@ViewBag.Message</div></div>
+        <div class="clear">&nbsp;</div>
+        <div style="line-height: 30px;">&nbsp;</div>
+    }
+
+<form method="post" action="/WidgetNewsRotator/SetOrder" id="sortOrder">
+    <div class="formlabel">News 1</div>
+    <div class="formfield">
+        <select name="sortOrder1">
+            <option value="0">-- Select a News Post --</option>
+            @foreach (var blog in Model)
+            {
+                if(ViewBag.SortOrder1 == blog.BlogId)
+                {
+                    <option value="@blog.BlogId" selected="selected">@blog.Title</option>
+                }
+                else
+                {
+                    <option value="@blog.BlogId">@blog.Title</option>
+                }
+            }
+    </select>
+    </div>
+    <div class="clear">&nbsp;</div>
+
+    <div class="formlabel">News 2</div>
+    <div class="formfield">
+        <select name="sortOrder2">
+            <option value="0">-- Select a News Post --</option>
+            @foreach (var blog in Model)
+            {
+                if(ViewBag.SortOrder2 == blog.BlogId)
+                {
+                    <option value="@blog.BlogId" selected="selected">@blog.Title</option>
+                }
+                else
+                {
+                    <option value="@blog.BlogId">@blog.Title</option>
+                }
+            }
+    </select>
+    </div>
+    <div class="clear">&nbsp;</div>
+
+    <div class="formlabel">News 3</div>
+    <div class="formfield">
+        <select name="sortOrder3">
+            <option value="0">-- Select a News Post --</option>
+            @foreach (var blog in Model)
+            {
+                if(ViewBag.SortOrder3 == blog.BlogId)
+                {
+                    <option value="@blog.BlogId" selected="selected">@blog.Title</option>
+                }
+                else
+                {
+                    <option value="@blog.BlogId">@blog.Title</option>
+                }
+            }
+    </select>
+    </div>
+    <div class="clear">&nbsp;</div>
+
+    <div class="formlabel">News 4</div>
+    <div class="formfield">
+        <select name="sortOrder4">
+            <option value="0">-- Select a News Post --</option>
+            @foreach (var blog in Model)
+            {
+                if(ViewBag.SortOrder4 == blog.BlogId)
+                {
+                    <option value="@blog.BlogId" selected="selected">@blog.Title</option>
+                }
+                else
+                {
+                    <option value="@blog.BlogId">@blog.Title</option>
+                }
+            }
+    </select>
+    </div>
+    <div class="clear">&nbsp;</div>
+
+    <div class="formlabel">News 5</div>
+    <div class="formfield">
+        <select name="sortOrder5">
+            <option value="0">-- Select a News Post --</option>
+            @foreach (var blog in Model)
+            {
+                if(ViewBag.SortOrder5 == blog.BlogId)
+                {
+                    <option value="@blog.BlogId" selected="selected">@blog.Title</option>
+                }
+                else
+                {
+                    <option value="@blog.BlogId">@blog.Title</option>
+                }
+            }
+    </select>
+    </div>
+    <div class="clear">&nbsp;</div>
+
+    <div class="formlabel">News 6</div>
+    <div class="formfield">
+        <select name="sortOrder6">
+            <option value="0">-- Select a News Post --</option>
+            @foreach (var blog in Model)
+            {
+                if(ViewBag.SortOrder6 == blog.BlogId)
+                {
+                    <option value="@blog.BlogId" selected="selected">@blog.Title</option>
+                }
+                else
+                {
+                    <option value="@blog.BlogId">@blog.Title</option>
+                }
+            }
+    </select>
+    </div>
+    <div class="clear">&nbsp;</div>
+
+    <div style="line-height: 30px;">&nbsp;</div>
+    <div class="formlabel">&nbsp;</div>
+    <div class="formfield"><button form="sortOrder" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+    <div class="clear">&nbsp;</div>
+</form>
+
+</div>
