@@ -42,6 +42,8 @@ namespace CMS.WebUI.Controllers
             {
                 Page m_Page = PageRepository.RetrieveOne(39);
                 ViewBag.TemplateId = 4;
+                ViewBag.PageId = 39;
+                Logger.LogEvent("Page ID = " + m_Page.PageID + " BannerImageName = " + m_Page.BannerImageName);
                 return View("Home", m_Page);
             }
             else
@@ -69,6 +71,7 @@ namespace CMS.WebUI.Controllers
                         ViewBag.id = m_Page.PageTypeId;
                         ViewBag.PageId = m_Page.PageID;
                         ViewBag.TemplateId = m_Page.TemplateId;
+                        
                         return View(m_Page.TemplateName, m_Page);
                     }
                     else

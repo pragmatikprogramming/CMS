@@ -37,6 +37,11 @@
         }
         else if(ViewBag.PageType == 4)
         {
+            if(Model.Content != "")
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+                <br /><br />
+            }
             @Html.Action("getBlog", "Home", new { parentId = ViewBag.TemplateId, id = Model.PageTypeId })
         }
         else if(ViewBag.PageType == 5)

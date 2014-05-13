@@ -23,6 +23,11 @@
         }
         else if(ViewBag.PageType == 4)
         {
+            if(Model.Content != "")
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+                <br /><br />
+            }
             @Html.Action("getBlog", "Home", new { parentId = ViewBag.TemplateId, id = Model.PageTypeId })
         }
         else if(ViewBag.PageType == 5)
@@ -100,8 +105,15 @@
         </div><!--end coloumn3-->
         <div class="inner-bot-bg"></div>  
         <div class="margin-top_10">&nbsp;</div> 
-        @if(Model.WidgetContainerId != 0)
-        { 
-            @Html.Action("Container", "Home", new{ id = Model.WidgetContainerId })
+        @if(ViewBag.PageType != 5)
+        {
+            if(Model.WidgetContainerId != 0)
+            {    
+                @Html.Action("Container", "Home", new{ id = Model.WidgetContainerId })
+            }
+        }
+        else
+        {
+            @Html.Action("Container", "Home", new{ id = 3 })
         }
     </div> <!--end right part--> 

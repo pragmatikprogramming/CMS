@@ -161,7 +161,7 @@
         <div class="clear">&nbsp;</div>
 
         <div class="formlabel">Publish Date:</div>
-        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" readonly="readonly" value="
+        <div class="formfield"><input type="text" name="PublishDate" id="PublishDate" value="
             @if(Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
             {
                 @Model.PublishDate.ToString("MM/dd/yyyy");
@@ -172,7 +172,7 @@
         @if(@Model.ParentId > 0)
         {
             <div class="formlabel">Expiration Date:</div>
-            <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" readonly="readonly" value="
+            <div class="formfield"><input type="text" name="ExpireDate" id="ExpireDate" value="
                 @if(Model.PublishDate.ToString() != "1/1/0001 12:00:00 AM")
                 {
                     @Model.ExpireDate.ToString("MM/dd/yyyy");
