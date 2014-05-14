@@ -13,6 +13,15 @@
             <div class="formfield" style="color: red;">@ViewBag.Message</div>
             <div class="clear">&nbsp;</div>
         }
+
+        @if (ViewBag.PageType == 2 || ViewBag.PageType == 3)
+        {
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+            <div class="margin-top_10">&nbsp;</div>
+            <div style="color: red; text-align: center">@Html.ValidationSummary()</div>
+            <div class="margin-top_10">&nbsp;</div>
+        }
+
         @if (ViewBag.PageType == 2)
         {
             @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})

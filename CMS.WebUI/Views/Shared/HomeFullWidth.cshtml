@@ -4,7 +4,7 @@
 }
 <div class="margin-top_10">&nbsp;</div>
 
-        @if (ViewBag.PageType == 2)
+        @if (ViewBag.PageType == 2 || ViewBag.PageType == 3)
         {
             @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
             <div class="margin-top_10">&nbsp;</div>
@@ -99,7 +99,7 @@
         }
         else if(ViewBag.PageType == 6)
         {
-            <h1>@Model.EventTitle</h1><br /><br />
+            <h2>@Model.EventTitle</h2><br /><br />
             <p>@Model.EventStartDate.ToString("MMM d, yyyy")
             @if (Model.EventStartDate.ToString("MMM d, yyyy") != Model.EventEndDate.ToString("MMM d, yyyy"))
             {
