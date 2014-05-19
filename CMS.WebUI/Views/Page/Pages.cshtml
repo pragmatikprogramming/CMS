@@ -81,8 +81,18 @@
                             }
                         </td>
                         <td><a href="/Page/PagePreview/@page.Id" target="_blank"><i class="icon-picture" title="Preview" alt="Preview"></i></a></td>
-                        <td><a href="/Page/EditPage/@page.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a></td>
-                        <td><a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@page.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a></td>
+                        <td>
+                            @if(page.PageTitle != "Home" && page.PageTitle != "Hidden Pages")
+                            {
+                                <a href="/Page/EditPage/@page.Id"><i class="icon-pencil" title="Edit" alt="Edit"></i></a>
+                            }
+                        </td>
+                        <td>
+                            @if(page.PageTitle != "Home" && page.PageTitle != "Hidden Pages")
+                            {
+                                <a href="#myModal" role="button" data-toggle="modal" id="1" onclick="doWork(@page.Id);"><i class="icon-remove" title="Delete" alt="Delete"></i></a>
+                            }                                
+                        </td>
                     </tr>   
                 }
                 </tbody>

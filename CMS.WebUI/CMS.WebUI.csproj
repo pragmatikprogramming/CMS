@@ -2474,6 +2474,7 @@
     <Content Include="Views\Form\Extract.cshtml" />
     <Content Include="Views\Home\404.cshtml" />
     <Content Include="Views\WidgetNewsRotator\Index.cshtml" />
+    <Content Include="Views\Home\WirelessPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

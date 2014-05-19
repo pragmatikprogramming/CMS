@@ -111,8 +111,12 @@
             
 <div class="right_part">
     <div class="margin-top_10">&nbsp;</div>
+    @if (ViewBag.Network == "192.168.101" || ViewBag.Network == "192.168.103" || ViewBag.Network == "192.168.105" || ViewBag.Network == "192.168.107" || ViewBag.Network == "192.168.109" || ViewBag.Network == "192.168.111" || ViewBag.Network == "192.168.113" || ViewBag.Network == "192.168.115")
+    {
+        @Html.Action("WirelessPrint", "Home", new{ id = ViewBag.Network })
+    }
     @if(Model.WidgetContainerId != 0)
     {
-        @Html.Action("Container", "Home", new{ id = ViewBag.TemplateId })
+        @Html.Action("Container", "Home", new{ id = Model.WidgetContainerId })
     }
 </div> <!--end right part-->

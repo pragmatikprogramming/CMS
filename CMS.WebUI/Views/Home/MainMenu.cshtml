@@ -2,7 +2,10 @@
     <ul class="nav">
         @foreach (var page in Model)
         {
-            @:<li><a href="/@page.PageID">@page.NavigationName</a></li>
+            if(page.PageTitle != "Hidden Pages")
+            {
+                @:<li><a href="/@page.PageID">@page.NavigationName</a></li>
+            }
         }
     </ul>
     <div class="clear"></div>

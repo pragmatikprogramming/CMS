@@ -7,3 +7,14 @@
 
 @Html.Raw(Model.Content)
 
+        @if (ViewBag.PageType == 2)
+        {
+            if (ViewBag.isPostBack == 1)
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Success));
+            }
+            else
+            {
+                @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+            }
+        }

@@ -38,6 +38,10 @@ namespace CMS.WebUI.Controllers
 
         public ActionResult Index(string friendlyURL, int id = 0)
         {
+            string[] ip_address = Request.UserHostAddress.Split('.');
+            string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
+            ViewBag.Network = m_Network;
+            
             if (id == 0 && friendlyURL == "Home")
             {
                 Page m_Page = PageRepository.RetrieveOne(39);
@@ -122,6 +126,12 @@ namespace CMS.WebUI.Controllers
             ViewBag.PageType = 6;
 
             return View("HomeFullWidth", m_Event);
+        }
+
+        public ActionResult WirelessPrint(string Network)
+        {
+            ViewBag.Network = Network;
+            return View("WirelessPrint");
         }
 
         public ActionResult getBlog(int parentId, int id)

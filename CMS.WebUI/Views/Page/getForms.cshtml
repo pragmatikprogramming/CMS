@@ -42,6 +42,14 @@
         {
             <option value="9">Home - With Sub Menu</option>
         }
+        @if (ViewBag.m_Page.TemplateId == 6)
+        {
+            <option value="6" selected="selected">Kids</option>
+        }
+        else
+        {
+            <option value="6" >Kids</option>
+        }
         @if (ViewBag.m_Page.TemplateId == 7)
         {
             <option value="7" selected="selected">Teens</option>
