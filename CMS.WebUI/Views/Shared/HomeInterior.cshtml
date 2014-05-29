@@ -5,7 +5,7 @@
 
 <div class="left_part">
     <div style="margin-top: 30px;">
-        @if (ViewBag.PageType == 2 || ViewBag.PageType == 3)
+        @if (ViewBag.PageType == 2 || ViewBag.PageType == 3 || ViewBag.PageType == 4)
         {
             @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
             <div class="margin-top_10">&nbsp;</div>

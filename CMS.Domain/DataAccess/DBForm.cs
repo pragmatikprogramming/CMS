@@ -94,6 +94,10 @@ namespace CMS.Domain.DataAccess
                     temp.ParentId = formFieldsReader.GetInt32(3);
                     temp.IsRequired = formFieldsReader.GetInt32(10);
                     temp.Children = DBFormField.RetrieveChildren(temp.Id);
+                    if (!DBNull.Value.Equals(formFieldsReader[6]))
+                    {
+                        temp.LabelText = formFieldsReader.GetString(6);
+                    }
 
                     m_Form.MyFormFields.Add(temp.Id);
                     m_Form.FormFields.Add(temp);

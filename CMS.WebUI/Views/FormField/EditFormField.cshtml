@@ -58,13 +58,14 @@
         <div id="myForm">
             <input type="hidden" name="Id" value="@Model.Id" />
             <input type="hidden" name="FieldType" value="@Model.FieldType" />
-            <div class="formlabel">Label Text:</div>
+            <div class="formlabel">Label:</div>
             <div class="formfield">
                 @if (Model.FieldType == 9)
                 {
-                    <textarea rows="5" cols="50" name="Label" id="Label" style="width: 80%">@Model.Label</textarea>
+                    <input type="text" class="input-xlarge" name="Label" value="@Model.Label">
+                    <textarea rows="5" cols="50" name="LabelText" id="LabelText" style="width: 80%">@Model.LabelText</textarea>
                     <script>
-                        CKEDITOR.replace('Label', {
+                        CKEDITOR.replace('LabelText', {
                             "extraPlugins": "imagebrowser",
                             "imageBrowser_listUrl": "/JSON/getImages"
                         }, '');

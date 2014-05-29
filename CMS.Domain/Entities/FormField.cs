@@ -10,6 +10,9 @@ namespace CMS.Domain.Entities
     {
         private int id;
         private string label;
+        private string labelText;
+
+
         private int fieldType;
         private string fieldTypeText;
         private int validationType;
@@ -29,6 +32,7 @@ namespace CMS.Domain.Entities
             }
         }
 
+        [Required(ErrorMessage = "Please provide a label")]
         public string Label
         {
             get 
@@ -38,6 +42,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 label = value; 
+            }
+        }
+
+        public string LabelText
+        {
+            get 
+            { 
+                return labelText; 
+            }
+            set 
+            { 
+                labelText = value; 
             }
         }
 

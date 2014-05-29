@@ -122,7 +122,11 @@ namespace CMS.Domain.Models
             }
             else
             {
-                if (m_Event.EventStartHour > m_Event.EventEndHour)
+                if (m_Event.EventStartHour > 0 && m_Event.EventEndHour == -1)
+                {
+                    return true;
+                }
+                else if (m_Event.EventStartHour > m_Event.EventEndHour)
                 {
                     return false;
                 }

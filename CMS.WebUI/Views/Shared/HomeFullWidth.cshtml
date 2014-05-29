@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
 <div class="margin-top_10">&nbsp;</div>
-
         @if (ViewBag.PageType == 2 || ViewBag.PageType == 3)
         {
             @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
@@ -140,7 +139,26 @@
         }
         else
         {
-            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) 
+            if(Model.FriendlyURL == "search-results")
+            {      
+                <script>
+                    (function () {
+                        var cx = '015672553798122529065:oqmu_rsr2_a';
+                        var gcse = document.createElement('script');
+                        gcse.type = 'text/javascript';
+                        gcse.async = true;
+                        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                            '//www.google.com/cse/cse.js?cx=' + cx;
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(gcse, s);
+                    })();
+                </script>
+                <gcse:searchresults-only></gcse:searchresults-only>
+            }
+            else
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) 
+            }
         }
 
 <div class="margin-top_10">&nbsp;</div>

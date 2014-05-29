@@ -79,6 +79,7 @@ namespace CMS.Domain.Entities
             }
         }
 
+        [Required(ErrorMessage = "A success message is required")]
         public string Success
         {
             get 

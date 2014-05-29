@@ -15,12 +15,13 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CMS_FormFields(label, fieldType, parentId, validationType) VALUES(@label, @fieldType, @parentId, @validationType)";
+            string queryString = "INSERT INTO CMS_FormFields(label, fieldType, parentId, validationType, fieldText) VALUES(@label, @fieldType, @parentId, @validationType, @fieldText)";
             SqlCommand insertFormField = new SqlCommand(queryString, conn);
             insertFormField.Parameters.AddWithValue("label", m_FormField.Label ?? "");
             insertFormField.Parameters.AddWithValue("fieldType", m_FormField.FieldType);
             insertFormField.Parameters.AddWithValue("parentId", m_FormField.ParentId);
             insertFormField.Parameters.AddWithValue("validationType", m_FormField.ValidationType);
+            insertFormField.Parameters.AddWithValue("fieldText", m_FormField.LabelText);
 
             insertFormField.ExecuteNonQuery();
 
@@ -63,6 +64,10 @@ namespace CMS.Domain.DataAccess
                 m_FormField.FieldTypeText = getFieldTypeText(formFieldReader.GetInt32(2));
                 m_FormField.ParentId = formFieldReader.GetInt32(3);
                 m_FormField.ValidationType = formFieldReader.GetInt32(5);
+                if (!DBNull.Value.Equals(formFieldReader[6]))
+                {
+                    m_FormField.LabelText = formFieldReader.GetString(6);
+                }
 
                 if (m_FormField.FieldType == 3 || m_FormField.FieldType == 4 || m_FormField.FieldType == 5 || m_FormField.FieldType == 10)
                 {
@@ -96,6 +101,10 @@ namespace CMS.Domain.DataAccess
                 temp.ParentId = formFieldsReader.GetInt32(3);
                 temp.Children = RetrieveChildren(temp.ParentId);
                 temp.ValidationType = formFieldsReader.GetInt32(5);
+                if (!DBNull.Value.Equals(formFieldsReader[6]))
+                {
+                    temp.LabelText = formFieldsReader.GetString(6);
+                }
 
                 m_FormFields.Add(temp);
             }
@@ -138,13 +147,14 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_FormFields SET label = @label, fieldType = @fieldType, parentId = @parentId, validationType = @validationType WHERE id = @id";
+            string queryString = "UPDATE CMS_FormFields SET label = @label, fieldType = @fieldType, parentId = @parentId, validationType = @validationType, fieldText = @fieldText WHERE id = @id";
             SqlCommand updateFormField = new SqlCommand(queryString, conn);
             updateFormField.Parameters.AddWithValue("label", m_FormField.Label ?? "");
             updateFormField.Parameters.AddWithValue("fieldType", m_FormField.FieldType);
             updateFormField.Parameters.AddWithValue("parentId", m_FormField.ParentId);
             updateFormField.Parameters.AddWithValue("id", m_FormField.Id);
             updateFormField.Parameters.AddWithValue("validationType", m_FormField.ValidationType);
+            updateFormField.Parameters.AddWithValue("fieldText", m_FormField.LabelText);
 
             updateFormField.ExecuteNonQuery();
 

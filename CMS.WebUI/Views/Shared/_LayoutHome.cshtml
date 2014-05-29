@@ -53,14 +53,14 @@
                     @Html.Action("NonSystemMenu", "Home", new{ id = 7, viewName="NonSystemMenu"})
               </div>  
                <div class="search_bar">
-               	  <form name="form1" method="post" action="">
+               	  <form name="searchForm" method="post" action="/Home/Search">
                    <label for="name">Search For</label>
-               	    <input type="text" class="input" name="search" value="Search">
+               	    <input type="text" class="input" name="q" value="">
                     <label for="name">In</label>
-               	    <select name="select" class="select" id="select">
-               	      <option>Library Catlog</option>
-               	      <option>This Website</option>
-               	      <option>This Web</option>
+               	    <select name="searchType" class="select" id="select">
+               	      <option value="1">Library Catalog</option>
+               	      <option value="2">This Website</option>
+               	      <option value="3">The Web</option>
            	        </select>
 					<input type="submit" class="submit" name="button"  value="Go">
                  </form>

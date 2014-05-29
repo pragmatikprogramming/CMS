@@ -38,9 +38,9 @@ namespace CMS.WebUI.Controllers
 
         public ActionResult Index(string friendlyURL, int id = 0)
         {
-            string[] ip_address = Request.UserHostAddress.Split('.');
-            string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
-            ViewBag.Network = m_Network;
+            //string[] ip_address = Request.UserHostAddress.Split('.');
+            //string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
+            //ViewBag.Network = m_Network;
             
             if (id == 0 && friendlyURL == "Home")
             {
@@ -114,6 +114,26 @@ namespace CMS.WebUI.Controllers
             return View("SystemSubMenu", m_Pages);
         }
 
+        public RedirectResult Search(string q, int searchType)
+        {
+            if(searchType == 1)
+            {
+               return Redirect("http://carlweb.snap.lib.ca.us/carlweb/jsp/DoSearch?databaseID=240&initialsearch=true&count=10&finish=search_page.jsp&mode=manual&terms=" + Url.Encode(q) + "&Search=Search&index=w&keywords=&keywords=&after=&specific=&before=&lowdate=&hidate=&useCodes=false");
+            }
+            else if(searchType == 2)
+            {
+                return Redirect("/search-results?q=" + Url.Encode(q));
+            }
+            else if(searchType == 3)
+            {
+                return Redirect("http://www.google.com?q=" + Url.Encode(q));
+            }
+            else
+            {
+                return Redirect("/Home");
+            }
+        }
+
         public ActionResult FeaturedEvents()
         {
             List<Event> m_Events = HomeRepository.FeaturedEvents();
@@ -128,9 +148,9 @@ namespace CMS.WebUI.Controllers
             return View("HomeFullWidth", m_Event);
         }
 
-        public ActionResult WirelessPrint(string Network)
+        public ActionResult WirelessPrint(string id)
         {
-            ViewBag.Network = Network;
+            ViewBag.Network = id;
             return View("WirelessPrint");
         }
 

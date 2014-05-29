@@ -136,6 +136,16 @@ namespace CMS.WebUI.Controllers
                 ModelState.AddModelError("EventEndHour", "A complete end time including AM or PM is required");
             }
 
+            if (!EventRepository.EventTimeBothErrorChecking(m_Event))
+            {
+                ModelState.AddModelError("EventStartHour", "You cannot input an end time without a start time");
+            }
+
+            if (!EventRepository.EventStartTimeBeforeEventEndTime(m_Event))
+            {
+                ModelState.AddModelError("EventStartHour", "Start Time must be before End Time");
+            }
+
             if (m_Event.LockedBy > 0 && m_Event.LockedBy != (int)System.Web.HttpContext.Current.Session["uid"])
             {
                 ModelState.AddModelError("EventTitle", "This Event is currently locked and not editable");
