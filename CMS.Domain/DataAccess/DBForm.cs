@@ -241,7 +241,7 @@ namespace CMS.Domain.DataAccess
                 temp.Label = formFieldsReader.GetString(1);
                 temp.FieldType = formFieldsReader.GetInt32(2);
                 temp.ParentId = formFieldsReader.GetInt32(3);
-                temp.IsRequired = formFieldsReader.GetInt32(10);
+                temp.IsRequired = formFieldsReader.GetInt32(11);
 
                 m_FormFields.Add(temp);
             }

@@ -38,16 +38,18 @@ namespace CMS.WebUI.Controllers
 
         public ActionResult Index(string friendlyURL, int id = 0)
         {
-            //string[] ip_address = Request.UserHostAddress.Split('.');
-            //string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
-            //ViewBag.Network = m_Network;
-            
+            string[] ip_address = Request.UserHostAddress.Split('.');
+            if (ip_address.Length == 3)
+            {
+                string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
+                ViewBag.Network = m_Network;
+            }
+
             if (id == 0 && friendlyURL == "Home")
             {
                 Page m_Page = PageRepository.RetrieveOne(39);
                 ViewBag.TemplateId = 4;
                 ViewBag.PageId = 39;
-                Logger.LogEvent("Page ID = " + m_Page.PageID + " BannerImageName = " + m_Page.BannerImageName);
                 return View("Home", m_Page);
             }
             else
