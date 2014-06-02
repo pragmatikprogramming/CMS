@@ -21,7 +21,7 @@ namespace CMS.Domain.DataAccess
             insertFormField.Parameters.AddWithValue("fieldType", m_FormField.FieldType);
             insertFormField.Parameters.AddWithValue("parentId", m_FormField.ParentId);
             insertFormField.Parameters.AddWithValue("validationType", m_FormField.ValidationType);
-            insertFormField.Parameters.AddWithValue("fieldText", m_FormField.LabelText);
+            insertFormField.Parameters.AddWithValue("fieldText", m_FormField.LabelText ?? string.Empty);
 
             insertFormField.ExecuteNonQuery();
 
