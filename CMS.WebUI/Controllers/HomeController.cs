@@ -39,7 +39,7 @@ namespace CMS.WebUI.Controllers
         public ActionResult Index(string friendlyURL, int id = 0)
         {
             string[] ip_address = Request.UserHostAddress.Split('.');
-            if (ip_address.Length == 3)
+            if (ip_address.Length == 4 && ip_address[0] != "127")
             {
                 string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
                 ViewBag.Network = m_Network;
