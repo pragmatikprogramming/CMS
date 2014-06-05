@@ -45,7 +45,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.width = '960px';
 
-	//config.extraPlugins = 'doksoft_include';
-	config.doksoft_include_css = ['/Content/css/ckeditorStyles.css', '/Content/css/reset.css'];
+    //config.extraPlugins = 'doksoft_include';
+    //removed from doksoft_include_css       , '/Content/css/reset.css'
+	config.doksoft_include_css = ['/Content/css/ckeditorStyles.css'];
 	config.contentsCss = ['http://fonts.googleapis.com/css?family=Open+Sans+Condensed:light&v1']
 };

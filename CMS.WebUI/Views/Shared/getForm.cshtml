@@ -141,11 +141,11 @@
             {
             <script>
                 $(function () {
-                    $("#@formField.Label").datepicker();
+                    $("#@formField.Label.Replace(' ', '_')").datepicker();
                 });
             </script>
         
-            <div class="formfield"><input type="@formField.FieldTypeText" class="input-xlarge" name="@formField.Label" id="@formField.Label" readonly="readonly"></div>
+            <div class="formfield"><input type="@formField.FieldTypeText" class="input-xlarge" name="@formField.Label" id="@formField.Label.Replace(' ', '_')" readonly="readonly"></div>
             <div class="clear">&nbsp;</div>
             }
             else if (formField.FieldType == 9)
