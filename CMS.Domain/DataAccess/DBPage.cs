@@ -52,7 +52,7 @@ namespace CMS.Domain.DataAccess
 
             conn.Open();
 
-            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage, friendlyURL, widgetContainerId) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage, @friendlyURL, @widgetContainerId)";
+            queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage, friendlyURL, widgetContainerId, displaySocialMedia) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage, @friendlyURL, @widgetContainerId, @displaySocialMedia)";
             SqlCommand insertPage = new SqlCommand(queryString, conn);
             insertPage.Parameters.AddWithValue("pageId", m_PageId);
             insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -76,6 +76,7 @@ namespace CMS.Domain.DataAccess
             insertPage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
             insertPage.Parameters.AddWithValue("friendlyURL", m_Page.FriendlyURL.ToLower());
             insertPage.Parameters.AddWithValue("widgetContainerId", m_Page.WidgetContainerId);
+            insertPage.Parameters.AddWithValue("displaySocialMedia", m_Page.DisplaySocialMedia);
             insertPage.ExecuteNonQuery();
 
             conn.Close();
@@ -138,6 +139,7 @@ namespace CMS.Domain.DataAccess
                 m_Page.BannerImageName = pageDataReader.GetString(21);
                 m_Page.FriendlyURL = pageDataReader.GetString(22);
                 m_Page.WidgetContainerId = pageDataReader.GetInt32(23);
+                m_Page.DisplaySocialMedia = pageDataReader.GetInt16(24);
 
                 if (!pageDataReader.IsDBNull(17))
                 {
@@ -189,6 +191,7 @@ namespace CMS.Domain.DataAccess
                 m_Page.BannerImageName = pageDataReader.GetString(21);
                 m_Page.FriendlyURL = pageDataReader.GetString(22);
                 m_Page.WidgetContainerId = pageDataReader.GetInt32(23);
+                m_Page.DisplaySocialMedia = pageDataReader.GetInt16(24);
 
                 if (!pageDataReader.IsDBNull(17))
                 {
@@ -280,7 +283,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_Page.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId, displayOnSubmenu = @displayOnSubmenu, bannerImage = @bannerImage, friendlyURL = @friendlyURL, widgetContainerId = @widgetContainerId WHERE id = @id and pageId = @pageId";
+                string queryString = "UPDATE CMS_Pages SET contentGroup = @contentGroup, templateId = @templateId, pageTitle = @pageTitle, navigationName = @navigationName, publishDate = @publishDate, content = @content, metaDescription = @metaDescription, metaKeywords = @metaKeywords, parentId = @parentId, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, redirectURL = @redirectURL, pageType= @pageType, pageTypeId = @pageTypeId, displayOnSubmenu = @displayOnSubmenu, bannerImage = @bannerImage, friendlyURL = @friendlyURL, widgetContainerId = @widgetContainerId, displaySocialMedia = @displaySocialMedia WHERE id = @id and pageId = @pageId";
                 SqlCommand updatePage = new SqlCommand(queryString, conn);
 
                 updatePage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -305,6 +308,7 @@ namespace CMS.Domain.DataAccess
                 updatePage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
                 updatePage.Parameters.AddWithValue("friendlyURL", m_Page.FriendlyURL.ToLower());
                 updatePage.Parameters.AddWithValue("widgetContainerId", m_Page.WidgetContainerId);
+                updatePage.Parameters.AddWithValue("displaySocialMedia", m_Page.DisplaySocialMedia);
 
                 updatePage.ExecuteNonQuery();
 
@@ -316,7 +320,7 @@ namespace CMS.Domain.DataAccess
             }
             else if (m_Page.PageWorkFlowState == 2 || m_Page.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage, friendlyURL, widgetContainerId) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage, @friendlyURL, @widgetContainerId)";
+                string queryString = "INSERT INTO CMS_Pages(pageId, contentGroup, templateId, pageTitle, navigationName, publishDate, expireDate, content, metaDescription, metaKeywords, parentId, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, sortOrder, redirectURL, pageType, pageTypeId, displayOnSubmenu, bannerImage, friendlyURL, widgetContainerId, displaySocialMedia) VALUES(@pageId, @contentGroup, @templateId, @pageTitle, @navigationName, @publishDate, @expireDate, @content, @metaDescription, @metaKeywords, @parentId, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @sortOrder, @redirectURL, @pageType, @pageTypeId, @displayOnSubmenu, @bannerImage, @friendlyURL, @widgetContainerId, @displaySocialMedia)";
                 SqlCommand insertPage = new SqlCommand(queryString, conn);
                 insertPage.Parameters.AddWithValue("pageId", m_Page.PageID);
                 insertPage.Parameters.AddWithValue("contentGroup", m_Page.ContentGroup);
@@ -340,6 +344,7 @@ namespace CMS.Domain.DataAccess
                 insertPage.Parameters.AddWithValue("bannerImage", m_Page.BannerImageName ?? "");
                 insertPage.Parameters.AddWithValue("friendlyURL", m_Page.FriendlyURL.ToLower());
                 insertPage.Parameters.AddWithValue("widgetContainerId", m_Page.WidgetContainerId);
+                insertPage.Parameters.AddWithValue("displaySocialMedia", m_Page.DisplaySocialMedia);
                 insertPage.ExecuteNonQuery();
 
                 queryString = "UPDATE CMS_Pages SET expireDate = @expireDate WHERE pageId = @pageId";
@@ -645,6 +650,7 @@ namespace CMS.Domain.DataAccess
                 m_Page.LockedByName = DBPage.GetLockedByName(m_Page.LockedBy);
                 m_Page.DisplayOnSubmenu = pageDataReader.GetInt32(20);
                 m_Page.BannerImageName = pageDataReader.GetString(21);
+                m_Page.DisplaySocialMedia = (int)pageDataReader.GetInt16(24);
 
                 if (!pageDataReader.IsDBNull(17))
                 {

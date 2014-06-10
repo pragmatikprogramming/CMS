@@ -36,6 +36,9 @@ namespace CMS.Domain.Entities
         private string bannerImageName;
         private string friendlyURL;
         private int widgetContainerId;
+        private int displaySocialMedia;
+
+        
 
 
 
@@ -354,6 +357,18 @@ namespace CMS.Domain.Entities
             set
             {
                 friendlyURL = value;
+            }
+        }
+
+        public int DisplaySocialMedia
+        {
+            get 
+            { 
+                return displaySocialMedia; 
+            }
+            set 
+            { 
+                displaySocialMedia = value; 
             }
         }
 

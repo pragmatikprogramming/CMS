@@ -25,23 +25,23 @@
             }
             else
             {
-                @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+                @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id })
             }
         }
-        else if(ViewBag.PageType == 3)
+        else if (ViewBag.PageType == 3)
         {
-            @Html.Action("getFAQ", "Home", new { id = ViewBag.id})   
+            @Html.Action("getFAQ", "Home", new { id = ViewBag.id })   
         }
-        else if(ViewBag.PageType == 4)
+        else if (ViewBag.PageType == 4)
         {
-            if(Model.Content != "")
+            if (Model.Content != "")
             {
                 @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
                 <br /><br />
             }
             @Html.Action("getBlog", "Home", new { parentId = ViewBag.TemplateId, id = Model.PageTypeId })
         }
-        else if(ViewBag.PageType == 5)
+        else if (ViewBag.PageType == 5)
         {
             <div class="border">
                 <h5><a href="/Home/BlogPost/@Model.Id">@Model.Title</a></h5>
@@ -63,7 +63,7 @@
 
             <div class="margin-top_10">&nbsp;</div>
 
-            if(Model.Comments == 1)
+            if (Model.Comments == 1)
             {
                 <div class="border">
                     <h5><a href="#">Leave a Comment</a></h5>
@@ -90,14 +90,24 @@
                 <div class="border" >
                     <h5><a href="#">Comments</a></h5>
                     <div class="margin-top_10">&nbsp;</div>
-                    @Html.Action("GetComments", new{id = Model.BlogId})
+                    @Html.Action("GetComments", new { id = Model.BlogId })
                 </div>
 
                 <div class="margin-top_10">&nbsp;</div>
-            }   
+            }
         }
-        else if(ViewBag.PageType == 6)
+        else if (ViewBag.PageType == 6)
         {
+
+                
+            <section>
+                <span class='st_facebook_large' displayText='Facebook'></span>
+                <span class='st_twitter_large' displayText='Tweet'></span>
+                <span class='st_pinterest_large' displayText='Pinterest'></span>
+                <span class='st_email_large' displayText='Email'></span>
+                <span class='st_fblike_large' displayText='Facebook Like'></span><br /><br /><br />      
+            </section>
+
             <h2>@Model.EventTitle</h2><br /><br />
             <p>@Model.EventStartDate.ToString("MMM d, yyyy")
             @if (Model.EventStartDate.ToString("MMM d, yyyy") != Model.EventEndDate.ToString("MMM d, yyyy"))
@@ -105,7 +115,7 @@
                 @: - @Model.EventEndDate.ToString("MMM d, yyyy")
             }
             </p>
-            if(Model.EventStartHour != 0)
+            if (Model.EventStartHour != 0)
             {
                 if (Model.EventStartMin != 0)
                 {
@@ -129,7 +139,7 @@
                 }
             }
             <p>@ViewBag.StartTime
-            @if(Model.EventEndHour != 0)
+            @if (Model.EventEndHour != 0)
             {
                 @: - @ViewBag.EndTime
             }
@@ -139,7 +149,7 @@
         }
         else
         {
-            if(Model.FriendlyURL == "search-results")
+            if (Model.FriendlyURL == "search-results")
             {      
                 <script>
                     (function () {
@@ -157,6 +167,16 @@
             }
             else
             {
+                if (@Model.DisplaySocialMedia == 1)
+                {
+                    <section>
+                        <span class='st_facebook_large' displayText='Facebook'></span>
+                        <span class='st_twitter_large' displayText='Tweet'></span>
+                        <span class='st_pinterest_large' displayText='Pinterest'></span>
+                        <span class='st_email_large' displayText='Email'></span>
+                        <span class='st_fblike_large' displayText='Facebook Like'></span><br /><br /><br />      
+                    </section>
+                }
                 @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content)) 
             }
         }

@@ -199,9 +199,18 @@
             <input type="hidden" name="BannerImageId" value="0" />
         </div>
 
-        <div class="formlabel">Display on Submenu:</div>
+        <div class="formlabel">Submenu:</div>
         <div class="formfield"><input type="checkbox" name="DisplayOnSubmenu" id="DisplayOnSubmenu" value="1"
             @if(Model.DisplayOnSubmenu == 1)
+            {
+                @:checked="checked"
+            }
+        /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Social Media:</div>
+        <div class="formfield"><input type="checkbox" name="DisplaySocialMedia" id="DisplaySocialMedia" value="1"
+            @if(Model.DisplaySocialMedia == 1)
             {
                 @:checked="checked"
             }

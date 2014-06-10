@@ -181,9 +181,18 @@
             <input type="hidden" name="BannerImageId" value="0" />
         </div>
 
-        <div class="formlabel">Display on Submenu:</div>
+        <div class="formlabel">Submenu:</div>
         <div class="formfield"><input type="checkbox" name="DisplayOnSubmenu" id="DisplayOnSubmenu" value="1"
             @if (Model.DisplayOnSubmenu == 1)
+            {
+                @:checked="checked"
+            }
+        /></div>
+        <div class="clear">&nbsp;</div>
+
+        <div class="formlabel">Social Media:</div>
+        <div class="formfield"><input type="checkbox" name="DisplaySocialMedia" id="DisplaySocialMedia" value="1"
+            @if(Model.DisplaySocialMedia == 1)
             {
                 @:checked="checked"
             }
@@ -208,7 +217,7 @@
         <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 id="myModalLabel">Choos An Image</h3>
+                <h3 id="myModalLabel">Choose An Image</h3>
             </div>
             <div class="modal-body">
                 @foreach (var image in ViewBag.BannerImages)
