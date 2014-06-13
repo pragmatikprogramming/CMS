@@ -120,7 +120,7 @@ namespace CMS.WebUI.Controllers
         {
             if(searchType == 1)
             {
-               return Redirect("http://carlweb.snap.lib.ca.us/carlweb/jsp/DoSearch?databaseID=240&initialsearch=true&count=10&finish=search_page.jsp&mode=manual&terms=" + Url.Encode(q) + "&Search=Search&index=w&keywords=&keywords=&after=&specific=&before=&lowdate=&hidate=&useCodes=false");
+               return Redirect("http://ls2pac.snap.lib.ca.us/?config=SOLANO#section=search&term=" + HttpUtility.UrlEncode(q));
             }
             else if(searchType == 2)
             {
