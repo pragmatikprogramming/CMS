@@ -278,7 +278,7 @@ namespace CMS.WebUI.Controllers
 
                 foreach (string email in m_Emails)
                 {
-                    FormRepository.SendFormData(email, "webmaster@solanolibrary.com", emailBody, m_Form.FormName + " - Submission");
+                    FormRepository.SendFormData(email, m_Form.FromEmail, emailBody, m_Form.FormName + " - Submission");
                 }
 
                 ViewBag.PageType = m_Page.PageType;

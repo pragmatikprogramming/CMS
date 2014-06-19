@@ -6,9 +6,16 @@
 <div class="inner_bg"></div><!--end inner-->
     <div class="inner-content">
 
-        @if (ViewBag.PageType == 2 || ViewBag.PageType == 3  || ViewBag.PageType == 4)
+        @if (ViewBag.PageType == 2 || ViewBag.PageType == 3)
         {
-            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+            if(ViewBag.PageType == 2 && (ViewBag.isPostBack == null || ViewBag.isPostBack != 1))
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+            }
+            if(ViewBag.PageType == 3)
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
+            }
             <div class="margin-top_10">&nbsp;</div>
             <div style="color: red; text-align: center">@Html.ValidationSummary()</div>
             <div class="margin-top_10">&nbsp;</div>
@@ -37,11 +44,11 @@
         }
         else if(ViewBag.PageType == 4)
         {
-            /*if(Model.Content != "")
+            if(Model.Content != "")
             {
                 @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
                 <br /><br />
-            }*/
+            }
             @Html.Action("getBlog", "Home", new { parentId = ViewBag.TemplateId, id = Model.PageTypeId })
         }
         else if(ViewBag.PageType == 5)
