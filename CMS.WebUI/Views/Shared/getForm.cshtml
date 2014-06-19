@@ -2,6 +2,7 @@
     .formlabel {
     width: 20%;
     text-align: left;
+    font-weight: bold;
     float: left;
 }
 
@@ -10,6 +11,13 @@
     padding-left: 15px;
     float: left;
 }
+
+input {
+        border: 1px solid black;
+    }
+    textarea {
+        border: 1px solid black;
+    }
 
 </style>
 <form action="/Home/ProcessForm" method="post">
@@ -39,7 +47,7 @@
             }
             else if (formField.FieldType == 2)
             {
-            <div class="formfield"><textarea rows="5" cols="30" name="@formField.Label" id="@formField.Label"></textarea></div>
+            <div class="formfield"><textarea rows="10" cols="45" name="@formField.Label" id="@formField.Label"></textarea></div>
             <div class="clear">&nbsp;</div>
             }
             else if (formField.FieldType == 3)

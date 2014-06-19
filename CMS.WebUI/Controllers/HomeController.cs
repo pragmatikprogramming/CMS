@@ -264,7 +264,7 @@ namespace CMS.WebUI.Controllers
 
                 if (m_Email.Length > 0)
                 {
-                    FormRepository.SendFormData(m_Email, "webmaster@solanolibrary.com", emailBody, m_Form.FormName + " - Submission");
+                    FormRepository.SendFormData(m_Email, m_Form.FromEmail, emailBody, m_Form.FormName + " - Submission");
                 }
             }
 

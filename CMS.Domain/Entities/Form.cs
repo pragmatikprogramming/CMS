@@ -14,7 +14,9 @@ namespace CMS.Domain.Entities
         private List<int> myFormFields;
         private List<FormField> formFields;
         private string success;
+        private string fromEmail;
 
+        
        
         public int Id
         {
@@ -91,6 +93,20 @@ namespace CMS.Domain.Entities
                 success = value; 
             }
         }
+
+        [Required(ErrorMessage = "A From Address is required")]
+        public string FromEmail
+        {
+            get 
+            { 
+                return fromEmail; 
+            }
+            set 
+            { 
+                fromEmail = value; 
+            }
+        }
+
 
         public Form()
         {

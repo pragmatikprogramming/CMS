@@ -32,9 +32,6 @@
         }
         else if(ViewBag.PageType == 3)
         {
-            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Content))
-            <br />
-            <br />
             @Html.Action("getFAQ", "Home", new { id = ViewBag.id})   
         }
         else if(ViewBag.PageType == 4)
@@ -50,7 +47,7 @@
         else if(ViewBag.PageType == 5)
         {
             <div class="border">
-                <h5><a href="/Home/BlogPost/@Model.Id">@Model.Title</a></h5>
+                <h5><a href="/Home/BlogPost/@ViewBag.TemplateId/@Model.Id">@Model.Title</a></h5>
                 <section class="padding">
                     <span class='st_facebook_large' displayText='Facebook'></span>
                     <span class='st_twitter_large' displayText='Tweet'></span>
@@ -125,8 +122,15 @@
     {
         @Html.Action("WirelessPrint", "Home", new{ id = ViewBag.Network })
     }
-    @if(Model.WidgetContainerId != 0)
-    {
-        @Html.Action("Container", "Home", new{ id = Model.WidgetContainerId })
-    }
+    @if(ViewBag.PageType != 5)
+        {
+            if(Model.WidgetContainerId != 0)
+            {    
+                @Html.Action("Container", "Home", new{ id = Model.WidgetContainerId })
+            }
+        }
+        else
+        {
+            @Html.Action("Container", "Home", new{ id = 3 })
+        }
 </div> <!--end right part-->

@@ -1,29 +1,30 @@
 ﻿<div id="News">
     <div class="title">News & Announcements</div>
 
-    <div class="cycle-slideshow" 
+    <ul class="cycle-slideshow" 
         data-cycle-fx=scrollHorz
         data-cycle-timeout=8000
         data-cycle-pause-on-hover="true"
         data-cycle-caption="#alt-caption"
-        data-cycle-caption-template="{{alt}}"
+        data-cycle-caption-template="{{cycleTitle}}"
         data-cycle-pager="#custom-pager"
         data-cycle-pager-template="<strong><a href=#> {{slideNum}} </a></strong>"
         data-cycle-prev="#prev"
         data-cycle-next="#next"
+        data-cycle-slides="li"
         >
     
     @foreach (var news in Model)
     {
-        <img src="/Galleries/News Images/@news.NewsImageName" width="256" height="220" alt="@news.IntroText">
+        <li data-cycle-title="@news.IntroText"><a href="/News/Article/@news.Id"><img src="/Galleries/News Images/@news.NewsImageName" width="256" height="220" alt="@news.IntroText"></a></li>
     }        
     
-    </div>
+    </ul>
     <!-- empty element for caption -->
      <figcaption>
         <div id="alt-caption" class="center"></div><br />
         
-        <span class="more margin-top_10"><a href="/News">view all news</a></span>
+        <span class="more margin-top_10"><a href="/1222">view all news</a></span>
         <span class="pagination">
             <div id="custom-pager" class="center"></div>
         </span>

@@ -15,11 +15,12 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "INSERT INTO CMS_Forms(formName, submissionEmail, submission) VALUES(@formName, @submissionEmail, @success)";
+            string queryString = "INSERT INTO CMS_Forms(formName, submissionEmail, submission, fromEmail) VALUES(@formName, @submissionEmail, @success, @fromEmail)";
             SqlCommand insertForm = new SqlCommand(queryString, conn);
             insertForm.Parameters.AddWithValue("formName", m_Form.FormName);
             insertForm.Parameters.AddWithValue("submissionEmail", m_Form.SubmissionEmail);
             insertForm.Parameters.AddWithValue("success", m_Form.Success);
+            insertForm.Parameters.AddWithValue("fromEmail", m_Form.FromEmail);
             insertForm.ExecuteNonQuery();
 
             queryString = "SELECT IDENT_CURRENT('CMS_Forms')";
@@ -71,6 +72,7 @@ namespace CMS.Domain.DataAccess
                 m_Form.FormName = formReader.GetString(1);
                 m_Form.SubmissionEmail = formReader.GetString(2);
                 m_Form.MyFormFields = new List<int>();
+                m_Form.FromEmail = formReader.GetString(5);
                 if (!formReader.IsDBNull(4))
                 {
                     m_Form.Success = formReader.GetString(4);
@@ -92,7 +94,7 @@ namespace CMS.Domain.DataAccess
                     temp.Label = formFieldsReader.GetString(1);
                     temp.FieldType = formFieldsReader.GetInt32(2);
                     temp.ParentId = formFieldsReader.GetInt32(3);
-                    temp.IsRequired = formFieldsReader.GetInt32(10);
+                    temp.IsRequired = formFieldsReader.GetInt32(11);
                     temp.Children = DBFormField.RetrieveChildren(temp.Id);
                     if (!DBNull.Value.Equals(formFieldsReader[6]))
                     {
@@ -145,7 +147,7 @@ namespace CMS.Domain.DataAccess
                     temp.Label = formFieldsReader.GetString(1);
                     temp.FieldType = formFieldsReader.GetInt32(2);
                     temp.ParentId = formFieldsReader.GetInt32(3);
-                    temp.IsRequired = formFieldsReader.GetInt32(10);
+                    temp.IsRequired = formFieldsReader.GetInt32(11);
 
                     tempForm.FormFields.Add(temp);
                 }
@@ -164,12 +166,13 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_Forms SET formName = @formName, submissionEmail = @submissionEmail, submission = @success WHERE id = @id";
+            string queryString = "UPDATE CMS_Forms SET formName = @formName, submissionEmail = @submissionEmail, submission = @success, fromEmail = @fromEmail WHERE id = @id";
             SqlCommand updateForm = new SqlCommand(queryString, conn);
             updateForm.Parameters.AddWithValue("formName", m_Form.FormName);
             updateForm.Parameters.AddWithValue("submissionEmail", m_Form.SubmissionEmail);
             updateForm.Parameters.AddWithValue("id", m_Form.Id);
             updateForm.Parameters.AddWithValue("success", m_Form.Success);
+            updateForm.Parameters.AddWithValue("fromEmail", m_Form.FromEmail);
             updateForm.ExecuteNonQuery();
 
             queryString = "DELETE FROM CMS_FormToFormFields WHERE formId = @formId";
