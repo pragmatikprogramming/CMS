@@ -118,7 +118,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_FormFields WHERE parentId = @parentId ORDER BY label";
+            string queryString = "SELECT * FROM CMS_FormFields WHERE parentId = @parentId ORDER BY id";
             SqlCommand getChildren = new SqlCommand(queryString, conn);
             getChildren.Parameters.AddWithValue("parentId", parentId);
 
