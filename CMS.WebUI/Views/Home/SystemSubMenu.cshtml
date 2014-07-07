@@ -1,6 +1,36 @@
 ﻿<h3>@ViewBag.ParentName Links</h3>
 
-<ul class="catlog_nav">
+<div id="innerwrap">
+    <div id="leftcolumn">
+        <ul class="catlog_nav">
+            @foreach (var page in Model)
+            {
+                if(ViewBag.MyCountOdd % 2 == 1)
+                {
+                    <li><a href="/@page.PageID" title="@page.NavigationName">@page.NavigationName</a></li>
+                }
+                ViewBag.MyCountOdd = ViewBag.MyCountOdd + 1;
+            }
+        </ul>
+    </div>
+    <div id="content">
+        <ul class="catlog_nav">
+            @foreach (var page in Model)
+            {
+                if(ViewBag.MyCountEven % 2 == 0)
+                {
+                    <li><a href="/@page.PageID" title="@page.NavigationName">@page.NavigationName</a></li>
+                }
+                ViewBag.MyCountEven = ViewBag.MyCountEven + 1;
+            }
+        </ul>
+    </div>
+</div>
+<div style="clear:both;"></div>
+
+
+
+<!--<ul class="catlog_nav">
     @foreach (var page in Model)
     {
         if(page.DisplayOnSubmenu == 1)
@@ -9,4 +39,4 @@
         }
     }
   
-</ul>
+</ul>-->

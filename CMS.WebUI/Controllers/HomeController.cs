@@ -112,7 +112,8 @@ namespace CMS.WebUI.Controllers
             List<Page> m_Pages = PageRepository.RetrieveAll(id);
             Page m_Page = PageRepository.RetrieveOne(id);
             ViewBag.ParentName = m_Page.NavigationName;
-
+            ViewBag.MyCountOdd = 1;
+            ViewBag.MyCountEven = 1;
             return View("SystemSubMenu", m_Pages);
         }
 
