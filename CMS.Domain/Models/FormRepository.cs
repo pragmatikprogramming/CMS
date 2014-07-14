@@ -103,7 +103,7 @@ namespace CMS.Domain.Models
                 {
                     result = item.Split(moreDelimiters, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (result.Length > 0)
+                    if (result.Length > 1)
                     {
                         if (count == 0)
                         {
@@ -115,9 +115,23 @@ namespace CMS.Domain.Models
                             row += (result[1].Replace(",", " ") + ",");
                         }
                     }
+                    else if (result.Length == 1)
+                    {
+                        if (count == 0)
+                        {
+                            header += (result[0].Replace(",", " ") + ",");
+                        }
+                    }
+                    else
+                    {
+                        header += ",";
+                    }
+
                 }
 
                 count = 1;
+
+                row = row.Replace(":", "");
 
                 if (header.Length > 0)
                 {

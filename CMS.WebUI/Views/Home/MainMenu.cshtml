@@ -4,7 +4,14 @@
         {
             if(page.PageTitle != "Hidden Pages")
             {
-                @:<li><a href="/@page.PageID">@page.NavigationName</a></li>
+                if (page.FriendlyURL.Length > 0)
+                {
+                    @:<li><a href="/@page.FriendlyURL">@page.NavigationName</a></li>
+                }
+                else
+                {
+                    @:<li><a href="/@page.PageID">@page.NavigationName</a></li>
+                }
             }
         }
     </ul>

@@ -154,7 +154,7 @@ namespace CMS.Domain.DataAccess
             updateFormField.Parameters.AddWithValue("parentId", m_FormField.ParentId);
             updateFormField.Parameters.AddWithValue("id", m_FormField.Id);
             updateFormField.Parameters.AddWithValue("validationType", m_FormField.ValidationType);
-            updateFormField.Parameters.AddWithValue("fieldText", m_FormField.LabelText);
+            updateFormField.Parameters.AddWithValue("fieldText", m_FormField.LabelText ?? "");
 
             updateFormField.ExecuteNonQuery();
 

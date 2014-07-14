@@ -256,6 +256,7 @@ namespace CMS.Domain.DataAccess
                 tempPage.LockedByName = DBPage.GetLockedByName(tempPage.LockedBy);
                 tempPage.DisplayOnSubmenu = pagesDataReader.GetInt32(20);
                 tempPage.BannerImageName = pagesDataReader.GetString(21);
+                tempPage.FriendlyURL = pagesDataReader.GetString(22);
 
                 if (!pagesDataReader.IsDBNull(17))
                 {
