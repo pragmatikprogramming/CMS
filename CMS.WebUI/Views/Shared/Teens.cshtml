@@ -34,7 +34,10 @@
             {
                 @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Success));
             }
-            @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+            else
+            {
+                @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+            }
         }
         else if(ViewBag.PageType == 3)
         {
