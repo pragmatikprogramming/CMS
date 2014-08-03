@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "AddCandidate";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Add Candidate</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <form method="post" action="/Candidate/AddCandidate" id="AddCandidate" name="AddStaff" enctype="multipart/form-data">
+            <div class="formlabel">First:</div>
+            <div class="formfield"><input type="text" name="FirstName" id="FirstName" maxlength="100" value="@Model.FirstName" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Last:</div>
+            <div class="formfield"><input type="text" name="LastName" id="LastName" maxlength="100" value="@Model.LastName" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Email:</div>
+            <div class="formfield"><input type="text" name="Email" id="Email" maxlength="100" value="@Model.Email" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Resume:</div>
+            <div class="formfield"><input type="file" class="input-xlarge" name="fileUpload" id="fileUpload" value="@ViewBag.file" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Non-Compete:</div>
+            <div class="formfield">
+                <select name="Noncompete">
+                    <option value="0"> No </option>
+                    <option value="1"> Yes </option>
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="AddCandidate" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+            <div class="clear">&nbsp;</div>
+        </form>
+    </div>
+</div>
