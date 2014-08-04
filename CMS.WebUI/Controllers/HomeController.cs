@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using CMS.Domain.Entities;
 using CMS.Domain.Abstract;
 using CMS.Domain.HelperClasses;
+using Recaptcha;
+
 
 
 namespace CMS.WebUI.Controllers
@@ -203,6 +205,7 @@ namespace CMS.WebUI.Controllers
             ViewBag.PageType = 5;
             ViewBag.PageId = null;
             ViewBag.TemplateId = parentId;
+            ViewBag.Comment = new BlogPostComment();
             string m_Template = Utility.GetTemplateById(parentId);
 
             return View(m_Template, m_BlogPost);
@@ -210,10 +213,37 @@ namespace CMS.WebUI.Controllers
 
 
         [HttpPost]
-        public ActionResult SubmitComment(BlogPostComment m_Comment)
+        public ActionResult SubmitComment(BlogPostComment m_Comment, string recaptcha_challenge_field, string recaptcha_response_field, int TemplateId, int Id)
         {
-            HomeRepository.SubmitComment(m_Comment);
-            return RedirectToAction("BlogPost", "Home", new { id = m_Comment.Id });
+            RecaptchaValidator m_Validator = new RecaptchaValidator();
+            m_Validator.Challenge = recaptcha_challenge_field;
+            m_Validator.Response = recaptcha_response_field;
+            m_Validator.PrivateKey = "6Ldz_fcSAAAAAJwhvY4Ns3YP9GWDehrct05bUYSj";
+            m_Validator.RemoteIP = Request.ServerVariables["REMOTE_ADDR"];
+
+            RecaptchaResponse m_Response = m_Validator.Validate();
+
+            if (!m_Response.IsValid)
+            {
+                ModelState.AddModelError("captcha", "Incorrect Captcha Response");
+            }
+
+            if (ModelState.IsValid)
+            {
+                HomeRepository.SubmitComment(m_Comment);
+                return RedirectToAction("BlogPost", "Home", new { id = m_Comment.Id, parentId = TemplateId });
+            }
+            else
+            {
+                BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(Id);
+                ViewBag.PageType = 5;
+                ViewBag.PageId = null;
+                ViewBag.TemplateId = TemplateId;
+                ViewBag.Comment = m_Comment;
+                string m_Template = Utility.GetTemplateById(TemplateId);
+
+                return View(m_Template, m_BlogPost);
+            }
         }
 
         public ActionResult GetComments(int id)
