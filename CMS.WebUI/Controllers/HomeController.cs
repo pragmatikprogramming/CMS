@@ -289,6 +289,9 @@ namespace CMS.WebUI.Controllers
                 }
             }
 
+            m_Ffs.Add("recaptcha_challenge_field", 0);
+            m_Ffs.Add("recaptcha_response_field", 0);
+
             emailBody += "<table><tr><td>Field:</td><td>Value:</td></tr>";
 
             foreach (string key in Request.Form.Keys)
@@ -344,7 +347,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.id = m_Page.PageTypeId;
                 ViewBag.PageId = m_Page.TemplateId;
                 ViewBag.TemplateId = m_Page.TemplateId;
-                ViewBag.isPostBack = 1;
+                ViewBag.isPostBack = 0;
                 return View(m_Page.TemplateName, m_Page);
             }
         }
