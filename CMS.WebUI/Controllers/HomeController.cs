@@ -300,8 +300,11 @@ namespace CMS.WebUI.Controllers
                 {
                     ModelState.AddModelError(key, "Please enter a value for " + key);
                 }
-                formData += key + "::" + Request.Form[key] + "^^";
-                emailBody += "<tr><td>" + key + "</td><td>" + Request.Form[key] + "</td></tr>";
+                if (key != "recaptcha_challenge_field" && key != "recaptcha_response_field")
+                {
+                    formData += key + "::" + Request.Form[key] + "^^";
+                    emailBody += "<tr><td>" + key + "</td><td>" + Request.Form[key] + "</td></tr>";
+                }
             }
 
             emailBody += "</table>";
