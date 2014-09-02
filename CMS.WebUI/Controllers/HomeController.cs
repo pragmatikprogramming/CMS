@@ -45,6 +45,7 @@ namespace CMS.WebUI.Controllers
             {
                 string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
                 ViewBag.Network = m_Network;
+                ViewBag.LastIpOctet = ip_address[3];
             }
 
             if (id == 0 && friendlyURL == "Home")
