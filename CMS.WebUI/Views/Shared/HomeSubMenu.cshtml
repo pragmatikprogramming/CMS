@@ -142,7 +142,7 @@
         </div><!--end coloumn3-->
         <div class="inner-bot-bg"></div>  
         <div class="margin-top_10">&nbsp;</div>  
-        @if (ViewBag.Network == "192.168.101" || ViewBag.Network == "192.168.103" || ViewBag.Network == "192.168.105" || ViewBag.Network == "192.168.107" || ViewBag.Network == "192.168.109" || ViewBag.Network == "192.168.111" || ViewBag.Network == "192.168.113" || ViewBag.Network == "192.168.115")
+        @if ((ViewBag.Network == "192.168.101" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.103" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.105" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.107" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.109" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.111" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.113" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.115" && ViewBag.LastIpOctet > 240))
         {
             @Html.Action("WirelessPrint", "Home", new{ id = ViewBag.Network })
         }
