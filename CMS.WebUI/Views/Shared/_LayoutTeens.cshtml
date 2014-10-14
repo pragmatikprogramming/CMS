@@ -96,7 +96,20 @@
             </footer>
         </div><!--end container-->  
     </div><!--end wrapper--> 
-<script type="text/javascript"> Cufon.now(); </script>      
+<script type="text/javascript"> Cufon.now(); </script>     
+    <script type="text/javascript">
+        // causes outgoing links to get logged in Google Analytics
+        for (var ac = 0; ac < links.length; ac++) {
+            if (links[ac].href.indexOf(location.hostname) == -1 && links[ac].href.indexOf("javascript:") == -1) {
+                links[ac].onclick = function () {
+                    var url = this.href.replace(/[\/]/g, "_");
+                    var url = url.replace("http:__", "");
+                    pageTracker._trackPageview("/outgoing/" + url);
+                    return true;
+                }
+            }
+        }
+    </script> 
 </body>
 </html>
 
