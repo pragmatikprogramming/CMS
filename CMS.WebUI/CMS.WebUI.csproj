@@ -2344,6 +2344,12 @@
     <Content Include="Content\CKEditor\samples\assets\posteddata.php" />
     <Content Include="Content\CKEditor\samples\sample_posteddata.php" />
     <Content Include="Content\CKEditor\skins\moonocolor\readme.md" />
+    <Content Include="Content\font\fjallaone-regular.ttf" />
+    <Content Include="Content\font\hennypenny-regular.ttf" />
+    <Content Include="Content\font\opensans-condbold.ttf" />
+    <Content Include="Content\font\opensans-condlight.ttf" />
+    <Content Include="Content\font\opensans-condlightitalic.ttf" />
+    <Content Include="Content\font\purplepurse-regular.ttf" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Properties\PublishProfiles\MJSDEV.pubxml" />
     <None Include="Properties\PublishProfiles\SOLANO LIBRARY LIVE.pubxml" />
