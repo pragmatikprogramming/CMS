@@ -2350,6 +2350,7 @@
     <Content Include="Content\fonts\opensans-condlight.ttf" />
     <Content Include="Content\fonts\opensans-condlightitalic.ttf" />
     <Content Include="Content\fonts\purplepurse-regular.ttf" />
+    <Content Include="Content\fonts\YesevaOne-Regular.ttf" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Properties\PublishProfiles\MJSDEV.pubxml" />
     <None Include="Properties\PublishProfiles\SOLANO LIBRARY LIVE.pubxml" />
