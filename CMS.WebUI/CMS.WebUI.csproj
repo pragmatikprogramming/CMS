@@ -2241,6 +2241,7 @@
     <Content Include="Content\css\style.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.svg" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.js" />
     <Content Include="Content\fullcalendar.print.css" />
@@ -2351,6 +2352,10 @@
     <Content Include="Content\fonts\opensans-condlightitalic.ttf" />
     <Content Include="Content\fonts\purplepurse-regular.ttf" />
     <Content Include="Content\fonts\YesevaOne-Regular.ttf" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.eot" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.ttf" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.woff" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.woff2" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Properties\PublishProfiles\MJSDEV.pubxml" />
     <None Include="Properties\PublishProfiles\SOLANO LIBRARY LIVE.pubxml" />
