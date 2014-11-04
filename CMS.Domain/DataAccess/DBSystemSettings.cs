@@ -40,6 +40,8 @@ namespace CMS.Domain.DataAccess
 
             string queryString = "UPDATE CMS_SystemSettings SET domainName = @domainName, imageBinary = @imageBinary";
             SqlCommand updSettings = new SqlCommand(queryString, conn);
+            updSettings.Parameters.AddWithValue("domainName", m_Settings.DomainName);
+            updSettings.Parameters.AddWithValue("imageBinary", m_Settings.ImageBinary);
             updSettings.ExecuteNonQuery();
         }
     }
