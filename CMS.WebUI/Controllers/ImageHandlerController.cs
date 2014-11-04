@@ -15,7 +15,6 @@ namespace CMS.WebUI.Controllers
         IImageRepository ImageRepository;
         ISystemSettingsRepository SystemSettingsRepository;
 
-        [CMSAuth]
         public ImageHandlerController(IImageRepository ImageRepo, ISystemSettingsRepository SystemSettingsRepo)
         {
             ImageRepository = ImageRepo;
