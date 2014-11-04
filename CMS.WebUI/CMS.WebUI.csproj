@@ -143,10 +143,12 @@
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HTMLWidgetController.cs" />
+    <Compile Include="Controllers\ImageHandlerController.cs" />
     <Compile Include="Controllers\JSONController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\SystemSettingsController.cs" />
     <Compile Include="Controllers\TrashController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WidgetContainerController.cs" />
@@ -2497,6 +2499,7 @@
     <Content Include="Views\Home\404.cshtml" />
     <Content Include="Views\WidgetNewsRotator\Index.cshtml" />
     <Content Include="Views\Home\WirelessPrint.cshtml" />
+    <Content Include="Views\SystemSettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
