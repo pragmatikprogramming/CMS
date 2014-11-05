@@ -38,10 +38,21 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_SystemSettings SET domainName = @domainName, imageBinary = @imageBinary";
+            string queryString = "UPDATE CMS_SystemSettings SET domainName = @domainName";
+
+            if (m_Settings.ImageBinary.Length > 0)
+            {
+                queryString += ", imageBinary = @imageBinary";
+            }
+
             SqlCommand updSettings = new SqlCommand(queryString, conn);
             updSettings.Parameters.AddWithValue("domainName", m_Settings.DomainName);
-            updSettings.Parameters.AddWithValue("imageBinary", m_Settings.ImageBinary);
+
+            if (m_Settings.ImageBinary.Length > 0)
+            {
+                updSettings.Parameters.AddWithValue("imageBinary", m_Settings.ImageBinary);
+            }
+
             updSettings.ExecuteNonQuery();
         }
     }
