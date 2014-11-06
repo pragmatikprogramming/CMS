@@ -42,9 +42,9 @@
             font-weight: bold;
         }
 
-    @if (Model.BarColor != null && Model.BarColor.Length > 0)
+    @if (Session["BarColor"] != null && Session["BarColor"].ToString().Length > 0)
     {
-        @:$(".navbar-inner").css("background-color", @Model.BarColor.ToString());
+        @:$(".navbar-inner").css("background-color", @Session["BarColor"].ToString());
     }
     </style>
 

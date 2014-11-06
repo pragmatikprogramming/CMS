@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using CMS.Domain.Entities;
+using CMS.Domain.DataAccess;
 
 namespace CMS.Domain.HelperClasses
 {
@@ -126,8 +128,12 @@ namespace CMS.Domain.HelperClasses
 
             if (userRecord.Read())
             {
+                SystemSettings m_Settings = new SystemSettings();
+                m_Settings = DBSystemSettings.GetSystemSettings();
+
                 HttpContext.Current.Session["uid"] = userRecord.GetInt32(0);
                 HttpContext.Current.Session["Name"] = userRecord.GetString(1) + " " + userRecord.GetString(2);
+                HttpContext.Current.Session["BarColor"] = m_Settings.BarColor;
 
                 if (is_user_locked((int)HttpContext.Current.Session["uid"]))
                 {
