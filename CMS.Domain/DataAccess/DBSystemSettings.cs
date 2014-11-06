@@ -48,7 +48,7 @@ namespace CMS.Domain.DataAccess
 
             SqlCommand updSettings = new SqlCommand(queryString, conn);
             updSettings.Parameters.AddWithValue("domainName", m_Settings.DomainName);
-            updSettings.Parameters.AddWithValue("barColor", m_Settings.BarColor);
+            updSettings.Parameters.AddWithValue("barColor", m_Settings.BarColor ?? "");
 
             if (m_Settings.ImageBinary.Length > 0)
             {
