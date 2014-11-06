@@ -41,6 +41,11 @@
             color: #fff;
             font-weight: bold;
         }
+
+    @if (Model.BarColor != null && Model.BarColor.Length > 0)
+    {
+        @:$(".navbar-inner").css("background-color", @Model.BarColor.ToString());
+    }
     </style>
 
 

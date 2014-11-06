@@ -9,6 +9,7 @@ namespace CMS.Domain.Entities
     {
         string domainName;
         byte[] imageBinary;
+        string barColor;
 
 
         public string DomainName
@@ -32,6 +33,18 @@ namespace CMS.Domain.Entities
             set
             {
                 imageBinary = value;
+            }
+        }
+
+        public string BarColor
+        {
+            get
+            {
+                return barColor;
+            }
+            set
+            {
+                barColor = value;
             }
         }
     }

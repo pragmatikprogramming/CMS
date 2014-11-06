@@ -25,6 +25,7 @@ namespace CMS.Domain.DataAccess
             {
                 m_Settings.DomainName = settingsReader.GetString(0);
                 m_Settings.ImageBinary = (byte[])settingsReader[1];
+                m_Settings.BarColor = settingsReader.GetString(2);
             }
 
 
@@ -38,7 +39,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "UPDATE CMS_SystemSettings SET domainName = @domainName";
+            string queryString = "UPDATE CMS_SystemSettings SET domainName = @domainName, barColor = @barColor";
 
             if (m_Settings.ImageBinary.Length > 0)
             {
@@ -47,6 +48,7 @@ namespace CMS.Domain.DataAccess
 
             SqlCommand updSettings = new SqlCommand(queryString, conn);
             updSettings.Parameters.AddWithValue("domainName", m_Settings.DomainName);
+            updSettings.Parameters.AddWithValue("barColor", m_Settings.BarColor);
 
             if (m_Settings.ImageBinary.Length > 0)
             {
