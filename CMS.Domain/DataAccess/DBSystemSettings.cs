@@ -25,7 +25,7 @@ namespace CMS.Domain.DataAccess
             {
                 m_Settings.DomainName = settingsReader.GetString(0);
                 m_Settings.ImageBinary = (byte[])settingsReader[1];
-                m_Settings.BarColor = settingsReader.GetString(2);
+                m_Settings.BarColor = settingsReader.GetString(2) ?? "";
             }
 
 
