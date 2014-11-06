@@ -42,12 +42,12 @@
             font-weight: bold;
         }
 
-    @if (HttpContext.Current.Session["BarColor"] != null && HttpContext.Current.Session["BarColor"].ToString().Length > 0)
-    {
-        @:$(".navbar").find(".navbar-inner").css("background, @HttpContext.Current.Session["BarColor"].ToString());
-    }
+        @if (Session["BarColor"] != null && Session["BarColor"].ToString().Length > 0)
+        {
+            @:.navbar .navbar-inner{ background: repeat scroll 0 0 padding-box rgba(0, 0, 0, 0); background-color: @Session["BarColor"] }
+        }
     </style>
-
+   
 
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
