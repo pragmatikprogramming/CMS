@@ -42,9 +42,9 @@
             font-weight: bold;
         }
 
-    @if (Session["BarColor"] != null && Session["BarColor"].ToString().Length > 0)
+    @if (HttpContext.Current.Session["BarColor"] != null && HttpContext.Current.Session["BarColor"].ToString().Length > 0)
     {
-        @:$(".navbar-inner").css("background-color", @Session["BarColor"].ToString());
+        @:$(".navbar").find(".navbar-inner").css("background, @HttpContext.Current.Session["BarColor"].ToString());
     }
     </style>
 
@@ -74,13 +74,13 @@
     <div class="navbar">
         <div class="navbar-inner">
             <ul class="nav pull-right">    
+                <li><a href="/SystemSettings/Index" class="dropdown" role="button">Settings</a></li>
                 <li id="fat-menu" class="dropdown">
                     <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-user"></i> @ViewBag.Name
                         <i class="icon-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/SystemSettings/Index" class="hidden-phone visible-tablet visible-desktop" role="button">Settings</a></li>
+                    <ul class="dropdown-menu">                       
                         <li><a tabindex="-1" href="/Admin/Logout/">Logout</a></li>
                     </ul>
                 </li>    
