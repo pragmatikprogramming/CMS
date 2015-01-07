@@ -40,6 +40,7 @@ namespace CMS.WebUI.Controllers
 
         public ActionResult Index(string friendlyURL, int id = 0)
         {
+            ViewBag.CurrentYear = DateTime.Now.Year;
             string[] ip_address = Request.UserHostAddress.Split('.');
             if (ip_address.Length == 4 && ip_address[0] != "127")
             {
