@@ -89,9 +89,9 @@ namespace CMS.Domain.Models
             List<FormField> m_FormFields = DBForm.getFormFields(formId);
             List<int> m_FormFieldsUpdated = new List<int>();
 
-            foreach(var ff in m_FormFields)
+            foreach(FormField ff in m_FormFields)
             {
-                if(myFormFields.Contains(ff.Id));
+                if(myFormFields.Contains(ff.Id))
                 {
                     m_FormFieldsUpdated.Add(ff.Id);
                     myFormFields.Remove(ff.Id);
