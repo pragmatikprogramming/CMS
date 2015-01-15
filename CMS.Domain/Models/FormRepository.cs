@@ -32,6 +32,7 @@ namespace CMS.Domain.Models
 
         public void Update(Form m_Form)
         {
+            m_Form.MyFormFields = PreserveSortOrder(m_Form.Id, m_Form.MyFormFields);
             DBForm.Update(m_Form);
         }
 
@@ -81,6 +82,28 @@ namespace CMS.Domain.Models
         {
             string m_Label = DBForm.SpecialExistsOnForm(id);
             return m_Label;
+        }
+
+        public List<int> PreserveSortOrder(int formId, List<int> myFormFields)
+        {
+            List<FormField> m_FormFields = DBForm.getFormFields(formId);
+            List<int> m_FormFieldsUpdated = new List<int>();
+
+            foreach(var ff in m_FormFields)
+            {
+                if(myFormFields.Contains(ff.Id));
+                {
+                    m_FormFieldsUpdated.Add(ff.Id);
+                    myFormFields.Remove(ff.Id);
+                }
+            }
+
+            foreach(int ffid in myFormFields)
+            {
+                m_FormFieldsUpdated.Add(ffid);
+            }
+
+            return m_FormFieldsUpdated;
         }
 
         public string FormDataExtract(int FormId, string StartDate, string EndDate)
