@@ -32,7 +32,7 @@ namespace CMS.Domain.Models
 
         public void Update(Form m_Form)
         {
-            m_Form.MyFormFields = PreserveSortOrder(m_Form.Id, m_Form.MyFormFields);
+            m_Form.FormFields = PreserveSortOrder(m_Form.Id, m_Form.MyFormFields);
             DBForm.Update(m_Form);
         }
 
@@ -84,23 +84,29 @@ namespace CMS.Domain.Models
             return m_Label;
         }
 
-        public List<int> PreserveSortOrder(int formId, List<int> myFormFields)
+        public List<FormField> PreserveSortOrder(int formId, List<int> myFormFields)
         {
             List<FormField> m_FormFields = DBForm.getFormFields(formId);
-            List<int> m_FormFieldsUpdated = new List<int>();
+            List<FormField> m_FormFieldsUpdated = new List<FormField>();
 
             foreach(FormField ff in m_FormFields)
             {
                 if(myFormFields.Contains(ff.Id))
                 {
-                    m_FormFieldsUpdated.Add(ff.Id);
+                    FormField m_FormField = new FormField();
+                    m_FormField.Id = ff.Id;
+                    m_FormField.IsRequired = ff.IsRequired;
+                    m_FormFieldsUpdated.Add(m_FormField);
                     myFormFields.Remove(ff.Id);
                 }
             }
 
             foreach(int ffid in myFormFields)
             {
-                m_FormFieldsUpdated.Add(ffid);
+                FormField m_FormField = new FormField();
+                m_FormField.Id = ffid;
+                m_FormField.IsRequired = 0;
+                m_FormFieldsUpdated.Add(m_FormField);
             }
 
             return m_FormFieldsUpdated;
