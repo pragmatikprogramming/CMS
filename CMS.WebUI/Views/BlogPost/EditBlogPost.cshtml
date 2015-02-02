@@ -90,6 +90,10 @@
         <div class="formfield"><input type="text" name="ExpirationDate" id="ExpirationDate" readonly="readonly" value="@if(Model.ExpirationDate.Year != 0001){ @Model.ExpirationDate }" /></div>
         <div class="clear">&nbsp;</div>
 
+        <div class="formlabel">Redirect Url:</div>
+        <div class="formfield"><input type="text" name="RedirectUrl" id="RedirectUrl" value="@Model.RedirectUrl" /></div>
+        <div class="clear">&nbsp;</div>
+
         <textarea name="Content" id="Content" style="width: 80%">@Model.Content</textarea>
         
         <script>

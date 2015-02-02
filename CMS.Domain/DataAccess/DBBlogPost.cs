@@ -41,7 +41,7 @@ namespace CMS.Domain.DataAccess
 
             conn.Open();
 
-            queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, newsImageId, newsImageName, author, introText) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @newsImageId, @newsImageName, @author, @introText)";
+            queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, newsImageId, newsImageName, author, introText, redirectUrl) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @newsImageId, @newsImageName, @author, @introText, @redirectUrl)";
             SqlCommand insertBlogPost = new SqlCommand(queryString, conn);
             insertBlogPost.Parameters.AddWithValue("blogId", m_BlogId);
             insertBlogPost.Parameters.AddWithValue("title", m_BlogPost.Title);
@@ -57,6 +57,7 @@ namespace CMS.Domain.DataAccess
             insertBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName ?? "");
             insertBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author ?? "");
             insertBlogPost.Parameters.AddWithValue("introText", m_BlogPost.IntroText);
+            insertBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl);
             insertBlogPost.ExecuteNonQuery();
 
             foreach (int catId in m_BlogPost.Categories)
@@ -112,6 +113,7 @@ namespace CMS.Domain.DataAccess
                 m_BlogPost.Author = blogPostReader.GetString(13);
                 m_BlogPost.IntroText = blogPostReader.GetString(14);
                 m_BlogPost.NewsImageName = blogPostReader.GetString(15);
+                m_BlogPost.RedirectUrl = blogPostReader.GetString(16);
 
                 m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
                 m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
@@ -173,6 +175,7 @@ namespace CMS.Domain.DataAccess
                 m_BlogPost.Author = blogPostReader.GetString(13);
                 m_BlogPost.IntroText = blogPostReader.GetString(14);
                 m_BlogPost.NewsImageName = blogPostReader.GetString(15);
+                m_BlogPost.RedirectUrl = blogPostReader.GetString(16);
                 m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
                 m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
 
@@ -260,6 +263,7 @@ namespace CMS.Domain.DataAccess
                 m_BlogPost.Author = blogReader.GetString(13);
                 m_BlogPost.IntroText = blogReader.GetString(14);
                 m_BlogPost.NewsImageName = blogReader.GetString(15);
+                m_BlogPost.RedirectUrl = blogReader.GetString(16);
 
                 m_BlogPost.LockedByName = DBPage.GetLockedByName(m_BlogPost.LockedBy);
                 m_BlogPost.LastModifiedByName = DBPage.GetLockedByName(m_BlogPost.LastModifiedBy);
@@ -284,7 +288,7 @@ namespace CMS.Domain.DataAccess
 
             if (m_BlogPost.PageWorkFlowState == 1)
             {
-                string queryString = "UPDATE CMS_BlogPosts SET title = @title, publishDate = @publishDate, expirationDate = @expirationDate, contentGroup = @contentGroup, content = @content, comments = @comments, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, newsImageId = @newsImageId, newsImageName = @newsImageName, author = @author, introText = @introText WHERE id = @id";
+                string queryString = "UPDATE CMS_BlogPosts SET title = @title, publishDate = @publishDate, expirationDate = @expirationDate, contentGroup = @contentGroup, content = @content, comments = @comments, pageWorkFlowState = 1, lockedBy = @lockedBy, lastModifiedBy = @lastModifiedBy, lastModifiedDate = @lastModifiedDate, newsImageId = @newsImageId, newsImageName = @newsImageName, author = @author, introText = @introText, redirectUrl = @redirectUrl WHERE id = @id";
                 SqlCommand updateBlogPost = new SqlCommand(queryString, conn);
                 updateBlogPost.Parameters.AddWithValue("title", m_BlogPost.Title);
                 updateBlogPost.Parameters.AddWithValue("publishDate", m_BlogPost.PublishDate.ToString());
@@ -300,6 +304,7 @@ namespace CMS.Domain.DataAccess
                 updateBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName);
                 updateBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author);
                 updateBlogPost.Parameters.AddWithValue("introText", m_BlogPost.IntroText);
+                updateBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl);
                 updateBlogPost.ExecuteNonQuery();
 
                 queryString = "DELETE FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
@@ -319,7 +324,7 @@ namespace CMS.Domain.DataAccess
             }
             else if (m_BlogPost.PageWorkFlowState == 2 || m_BlogPost.PageWorkFlowState == 3)
             {
-                string queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, newsImageId, newsImageName, author, introText) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @newsImageId, @newsImageName, @author, @introText)";
+                string queryString = "INSERT INTO CMS_BlogPosts(blogId, title, publishDate, expirationDate, contentGroup, [content], comments, pageWorkFlowState, lockedBy, lastModifiedBy, lastModifiedDate, newsImageId, newsImageName, author, introText, redirectUrl) VALUES(@blogId, @title, @publishDate, @expirationDate, @contentGroup, @content, @comments, 1, @lockedBy, @lastModifiedBy, @lastModifiedDate, @newsImageId, @newsImageName, @author, @introText, @redirectUrl)";
                 SqlCommand insertBlogPost = new SqlCommand(queryString, conn);
                 insertBlogPost.Parameters.AddWithValue("blogId", m_BlogPost.BlogId);
                 insertBlogPost.Parameters.AddWithValue("title", m_BlogPost.Title);
@@ -335,6 +340,7 @@ namespace CMS.Domain.DataAccess
                 insertBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName);
                 insertBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author);
                 insertBlogPost.Parameters.AddWithValue("introText", m_BlogPost.IntroText);
+                insertBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl);
                 insertBlogPost.ExecuteNonQuery();
 
                 queryString = "DELETE FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
@@ -603,6 +609,7 @@ namespace CMS.Domain.DataAccess
                     m_Blog.Author = m_Blogs.GetString(13);
                     m_Blog.IntroText = m_Blogs.GetString(14);
                     m_Blog.NewsImageName = m_Blogs.GetString(15);
+                    m_Blog.RedirectUrl = m_Blogs.GetString(16);
 
                     m_Blog.LockedByName = DBPage.GetLockedByName(m_Blog.LockedBy);
                     m_Blog.LastModifiedByName = DBPage.GetLockedByName(m_Blog.LastModifiedBy);

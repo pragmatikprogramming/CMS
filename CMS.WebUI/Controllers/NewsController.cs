@@ -33,7 +33,14 @@ namespace CMS.WebUI.Controllers
         public ActionResult Article(int id)
         {
             BlogPost m_BlogPost = NewsRepository.GetArticle(id);
+
+            if (m_BlogPost.RedirectUrl.Length > 0)
+            {
+                return Redirect(m_BlogPost.RedirectUrl);
+            }
+
             return View("Article", m_BlogPost);
+
         }
 
     }

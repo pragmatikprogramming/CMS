@@ -58,7 +58,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Documents where parentId = @parentId AND pageWorkFlowState != 4";
+            string queryString = "SELECT * FROM CMS_Documents where parentId = @parentId AND pageWorkFlowState != 4 ORDER BY name";
             SqlCommand getDocuments = new SqlCommand(queryString, conn);
             getDocuments.Parameters.AddWithValue("parentId", id);
             SqlDataReader documentsReader = getDocuments.ExecuteReader();
