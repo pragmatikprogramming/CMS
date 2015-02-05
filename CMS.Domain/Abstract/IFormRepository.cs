@@ -23,5 +23,6 @@ namespace CMS.Domain.Abstract
         string SpecialExistsOnForm(int id);
         string FormDataExtract(int FormId, string StartDate, string EndDate);
         List<FormField> PreserveSortOrder(int formId, List<int> myFormFields);
+        string RemoveLineEndings(string value);
     }
 }

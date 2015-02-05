@@ -304,7 +304,7 @@ namespace CMS.WebUI.Controllers
                 }
                 if (key != "recaptcha_challenge_field" && key != "recaptcha_response_field")
                 {
-                    formData += key + "::" + Request.Form[key] + "^^";
+                    formData += FormRepository.RemoveLineEndings(key) + "::" + FormRepository.RemoveLineEndings(Request.Form[key]) + "^^";
                     emailBody += "<tr><td>" + key + "</td><td>" + Request.Form[key] + "</td></tr>";
                 }
             }

@@ -17,7 +17,7 @@ namespace CMS.Domain.Models
             int m_FormId = DBForm.Create(m_Form);
             return m_FormId;
         }
-        
+
         public Form RetrieveOne(int id)
         {
             Form m_Form = DBForm.RetrieveOne(id);
@@ -89,9 +89,9 @@ namespace CMS.Domain.Models
             List<FormField> m_FormFields = DBForm.getFormFields(formId);
             List<FormField> m_FormFieldsUpdated = new List<FormField>();
 
-            foreach(FormField ff in m_FormFields)
+            foreach (FormField ff in m_FormFields)
             {
-                if(myFormFields.Contains(ff.Id))
+                if (myFormFields.Contains(ff.Id))
                 {
                     FormField m_FormField = new FormField();
                     m_FormField.Id = ff.Id;
@@ -101,7 +101,7 @@ namespace CMS.Domain.Models
                 }
             }
 
-            foreach(int ffid in myFormFields)
+            foreach (int ffid in myFormFields)
             {
                 FormField m_FormField = new FormField();
                 m_FormField.Id = ffid;
@@ -180,6 +180,18 @@ namespace CMS.Domain.Models
 
             return csv;
 
+        }
+
+        public string RemoveLineEndings(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+            string lineSeparator = ((char)0x2028).ToString();
+            string paragraphSeparator = ((char)0x2029).ToString();
+
+            return value.Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(lineSeparator, string.Empty).Replace(paragraphSeparator, string.Empty).Replace(":", string.Empty);
         }
     }
 }
