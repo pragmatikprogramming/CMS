@@ -130,7 +130,7 @@ namespace CMS.Domain.Models
 
                 foreach (string item in rowResult)
                 {
-                    result = item.Split(moreDelimiters, StringSplitOptions.RemoveEmptyEntries);
+                    result = item.Split(moreDelimiters, StringSplitOptions.None);
 
                     if (result.Length > 1)
                     {
@@ -149,11 +149,13 @@ namespace CMS.Domain.Models
                         if (count == 0)
                         {
                             header += (result[0].Replace(",", " ") + ",");
+                            row += (",");
                         }
                     }
                     else
                     {
                         header += ",";
+                        row += ",";
                     }
 
                 }
