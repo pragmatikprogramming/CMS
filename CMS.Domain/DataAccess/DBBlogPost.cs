@@ -57,7 +57,7 @@ namespace CMS.Domain.DataAccess
             insertBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName ?? "");
             insertBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author ?? "");
             insertBlogPost.Parameters.AddWithValue("introText", m_BlogPost.IntroText);
-            insertBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl);
+            insertBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl ?? "");
             insertBlogPost.ExecuteNonQuery();
 
             foreach (int catId in m_BlogPost.Categories)
@@ -304,7 +304,7 @@ namespace CMS.Domain.DataAccess
                 updateBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName);
                 updateBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author);
                 updateBlogPost.Parameters.AddWithValue("introText", m_BlogPost.IntroText);
-                updateBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl);
+                updateBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl ?? "");
                 updateBlogPost.ExecuteNonQuery();
 
                 queryString = "DELETE FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
@@ -340,7 +340,7 @@ namespace CMS.Domain.DataAccess
                 insertBlogPost.Parameters.AddWithValue("newsImageName", m_BlogPost.NewsImageName);
                 insertBlogPost.Parameters.AddWithValue("author", m_BlogPost.Author);
                 insertBlogPost.Parameters.AddWithValue("introText", m_BlogPost.IntroText);
-                insertBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl);
+                insertBlogPost.Parameters.AddWithValue("redirectUrl", m_BlogPost.RedirectUrl ?? "");
                 insertBlogPost.ExecuteNonQuery();
 
                 queryString = "DELETE FROM CMS_BlogPostsToCategories WHERE blogPostId = @blogId";
