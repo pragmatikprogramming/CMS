@@ -16,7 +16,7 @@
     
     @foreach (var news in Model)
     {
-        <li data-cycle-title="@news.IntroText"><a href="/News/Article/@news.Id"><img src="/Galleries/News Images/@news.NewsImageName" width="256" height="220" alt="@news.IntroText"></a></li>
+        <li data-cycle-title="@news.IntroText"><a href="/News/Article/@news.Id"><img src="/Galleries/News Images/@news.NewsImageName" width="256" height="220" alt="@news.IntroText" style="padding-left: 22px;"></a></li>
     }        
     
     </ul>
