@@ -2270,6 +2270,7 @@
     <Content Include="Content\images\find-book-img.jpg" />
     <Content Include="Content\images\find.jpg" />
     <Content Include="Content\images\folder.png" />
+    <Content Include="Content\images\form-submit.png" />
     <Content Include="Content\images\get-home-work.jpg" />
     <Content Include="Content\images\go.jpg" />
     <Content Include="Content\images\have-some-img.jpg" />
