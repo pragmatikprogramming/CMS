@@ -234,7 +234,7 @@ namespace CMS.Domain.DataAccess
 
             string BlogIds = string.Join(",", m_BlogIds.ToArray());
 
-            queryString = "SELECT * FROM CMS_BlogPosts WHERE pageWorkFlowState != 4 AND BlogId IN (" + BlogIds + ") ORDER BY blogId, publishDate, id DESCc";
+            queryString = "SELECT * FROM CMS_BlogPosts WHERE pageWorkFlowState != 4 AND BlogId IN (" + BlogIds + ") ORDER BY blogId, publishDate, id DESC";
             SqlCommand getBlogPosts = new SqlCommand(queryString, conn);
             getBlogPosts.Parameters.AddWithValue("m_Date", DateTime.Now.AddYears(-1));
             SqlDataReader blogReader = getBlogPosts.ExecuteReader();
