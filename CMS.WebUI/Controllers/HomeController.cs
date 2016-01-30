@@ -294,7 +294,7 @@ namespace CMS.WebUI.Controllers
             m_Ffs.Add("recaptcha_challenge_field", 0);
             m_Ffs.Add("recaptcha_response_field", 0);
 
-            emailBody += "<table><tr><td>Field:</td><td>Value:</td></tr>";
+            emailBody += "<table style='border: 1px solid black;'><tr><td style='text-align: center;'>Field:</td><td style='text-align: center'>Value:</td></tr>";
 
             foreach (string key in Request.Form.Keys)
             {
