@@ -42,6 +42,7 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+*.config
 
 # Build results
 
@@ -215,3 +216,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+
+*.config

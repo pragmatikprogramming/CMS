@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using CMS.Domain.Entities;
 using CMS.Domain.Abstract;
 using CMS.Domain.HelperClasses;
+using Recaptcha;
+
 
 
 namespace CMS.WebUI.Controllers
@@ -38,11 +40,13 @@ namespace CMS.WebUI.Controllers
 
         public ActionResult Index(string friendlyURL, int id = 0)
         {
+            ViewBag.CurrentYear = DateTime.Now.Year;
             string[] ip_address = Request.UserHostAddress.Split('.');
             if (ip_address.Length == 4 && ip_address[0] != "127")
             {
                 string m_Network = ip_address[0] + "." + ip_address[1] + "." + ip_address[2];
                 ViewBag.Network = m_Network;
+                ViewBag.LastIpOctet = Int32.Parse(ip_address[3]);
             }
 
             if (id == 0 && friendlyURL == "Home")
@@ -203,6 +207,7 @@ namespace CMS.WebUI.Controllers
             ViewBag.PageType = 5;
             ViewBag.PageId = null;
             ViewBag.TemplateId = parentId;
+            ViewBag.Comment = new BlogPostComment();
             string m_Template = Utility.GetTemplateById(parentId);
 
             return View(m_Template, m_BlogPost);
@@ -210,10 +215,37 @@ namespace CMS.WebUI.Controllers
 
 
         [HttpPost]
-        public ActionResult SubmitComment(BlogPostComment m_Comment)
+        public ActionResult SubmitComment(BlogPostComment m_Comment, string recaptcha_challenge_field, string recaptcha_response_field, int TemplateId, int Id)
         {
-            HomeRepository.SubmitComment(m_Comment);
-            return RedirectToAction("BlogPost", "Home", new { id = m_Comment.Id });
+            RecaptchaValidator m_Validator = new RecaptchaValidator();
+            m_Validator.Challenge = recaptcha_challenge_field;
+            m_Validator.Response = recaptcha_response_field;
+            m_Validator.PrivateKey = "6Ldz_fcSAAAAAJwhvY4Ns3YP9GWDehrct05bUYSj";
+            m_Validator.RemoteIP = Request.ServerVariables["REMOTE_ADDR"];
+
+            RecaptchaResponse m_Response = m_Validator.Validate();
+
+            if (!m_Response.IsValid)
+            {
+                ModelState.AddModelError("captcha", "Incorrect Captcha Response");
+            }
+
+            if (ModelState.IsValid)
+            {
+                HomeRepository.SubmitComment(m_Comment);
+                return RedirectToAction("BlogPost", "Home", new { id = m_Comment.Id, parentId = TemplateId });
+            }
+            else
+            {
+                BlogPost m_BlogPost = BlogPostRepository.RetrieveOne(Id);
+                ViewBag.PageType = 5;
+                ViewBag.PageId = null;
+                ViewBag.TemplateId = TemplateId;
+                ViewBag.Comment = m_Comment;
+                string m_Template = Utility.GetTemplateById(TemplateId);
+
+                return View(m_Template, m_BlogPost);
+            }
         }
 
         public ActionResult GetComments(int id)
@@ -223,8 +255,24 @@ namespace CMS.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProcessForm(int parentId, int id)
+        public ActionResult ProcessForm(int parentId, int id, string recaptcha_challenge_field, string recaptcha_response_field)
         {
+            /** RECAPTCHA VERIFICATION **/
+
+
+            RecaptchaValidator m_Validator = new RecaptchaValidator();
+            m_Validator.Challenge = recaptcha_challenge_field;
+            m_Validator.Response = recaptcha_response_field;
+            m_Validator.PrivateKey = "6Ldz_fcSAAAAAJwhvY4Ns3YP9GWDehrct05bUYSj";
+            m_Validator.RemoteIP = Request.ServerVariables["REMOTE_ADDR"];
+
+            RecaptchaResponse m_Response = m_Validator.Validate();
+
+            if (!m_Response.IsValid)
+            {
+                ModelState.AddModelError("captcha", "Incorrect Captcha Response");
+            }
+
             string formData = "";
             string emailBody = "";
             Form m_Form = FormRepository.RetrieveOne(id);
@@ -243,7 +291,10 @@ namespace CMS.WebUI.Controllers
                 }
             }
 
-            emailBody += "<table><tr><td>Field:</td><td>Value:</td></tr>";
+            m_Ffs.Add("recaptcha_challenge_field", 0);
+            m_Ffs.Add("recaptcha_response_field", 0);
+
+            emailBody += "<table style='border: 1px solid black; border-collapse: collapse;'><tr><td style='text-align: center; border: 1px solid black; padding-left: 10px; padding-right: 20px;'>Field</td><td style='text-align: center; border: 1px solid black; padding-left: 10px;'>Value:</td></tr>";
 
             foreach (string key in Request.Form.Keys)
             {
@@ -251,8 +302,11 @@ namespace CMS.WebUI.Controllers
                 {
                     ModelState.AddModelError(key, "Please enter a value for " + key);
                 }
-                formData += key + "::" + Request.Form[key] + "^^";
-                emailBody += "<tr><td>" + key + "</td><td>" + Request.Form[key] + "</td></tr>";
+                if (key != "recaptcha_challenge_field" && key != "recaptcha_response_field" && key != "x" && key != "y")
+                {
+                    formData += FormRepository.RemoveLineEndings(key) + "::" + FormRepository.RemoveLineEndings(Request.Form[key]) + "^^";
+                    emailBody += "<tr style='width: 100%;'><td style='border: 1px solid black; padding-left: 10px; padding-right: 20px; width: 10%;'>" + key + "</td><td style='border: 1px solid black; padding-left: 10px; width: 90%;'>" + Request.Form[key] + "</td></tr>";
+                }
             }
 
             emailBody += "</table>";
@@ -288,7 +342,6 @@ namespace CMS.WebUI.Controllers
                 ViewBag.Success = m_Form.Success;
                 ViewBag.PageId = m_Page.TemplateId;
                 ViewBag.TemplateId = m_Page.TemplateId;
-                //ViewBag.Message = "Your information has been submitted.";
                 return View(m_Page.TemplateName, m_Page);
             }
             else
@@ -298,7 +351,7 @@ namespace CMS.WebUI.Controllers
                 ViewBag.id = m_Page.PageTypeId;
                 ViewBag.PageId = m_Page.TemplateId;
                 ViewBag.TemplateId = m_Page.TemplateId;
-                ViewBag.isPostBack = 1;
+                ViewBag.isPostBack = 0;
                 return View(m_Page.TemplateName, m_Page);
             }
         }

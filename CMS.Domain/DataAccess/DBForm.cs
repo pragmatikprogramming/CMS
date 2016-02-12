@@ -184,14 +184,15 @@ namespace CMS.Domain.DataAccess
 
             int sortOrder = 1;
 
-            foreach (int FormField in m_Form.MyFormFields)
+            foreach (FormField FormField in m_Form.FormFields)
             {
                 conn.Open();
 
-                queryString = "INSERT INTO CMS_FormToFormFields(formId, formFieldId, sortOrder) VALUES(@formId, @formFieldId, @sortOrder)";
+                queryString = "INSERT INTO CMS_FormToFormFields(formId, formFieldId, sortOrder, isRequired) VALUES(@formId, @formFieldId, @sortOrder, @isRequired)";
                 SqlCommand insertInfo = new SqlCommand(queryString, conn);
                 insertInfo.Parameters.AddWithValue("formId", m_Form.Id);
-                insertInfo.Parameters.AddWithValue("formFieldId", FormField);
+                insertInfo.Parameters.AddWithValue("formFieldId", FormField.Id);
+                insertInfo.Parameters.AddWithValue("isRequired", FormField.IsRequired);
                 insertInfo.Parameters.AddWithValue("sortOrder", sortOrder);
 
                 insertInfo.ExecuteNonQuery();

@@ -44,6 +44,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Ninject\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Recaptcha, Version=1.0.6.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetReCaptcha.1.0.6.0\lib\net40\Recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha.Web">
+      <HintPath>..\Recaptcha for .NET v1.5.1\v4.5\Recaptcha.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -136,10 +143,12 @@
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HTMLWidgetController.cs" />
+    <Compile Include="Controllers\ImageHandlerController.cs" />
     <Compile Include="Controllers\JSONController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\SystemSettingsController.cs" />
     <Compile Include="Controllers\TrashController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WidgetContainerController.cs" />
@@ -2233,7 +2242,8 @@
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.svg" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.js" />
     <Content Include="Content\fullcalendar.print.css" />
@@ -2260,6 +2270,7 @@
     <Content Include="Content\images\find-book-img.jpg" />
     <Content Include="Content\images\find.jpg" />
     <Content Include="Content\images\folder.png" />
+    <Content Include="Content\images\form-submit.png" />
     <Content Include="Content\images\get-home-work.jpg" />
     <Content Include="Content\images\go.jpg" />
     <Content Include="Content\images\have-some-img.jpg" />
@@ -2322,9 +2333,9 @@
     <Content Include="Content\theme.css" />
     <Content Include="Content\theme_back.css" />
     <Content Include="Global.asax" />
-    <Content Include="Content\font\fontawesome-webfont.eot" />
-    <Content Include="Content\font\fontawesome-webfont.ttf" />
-    <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\CKEditor\CHANGES.md" />
     <Content Include="Content\CKEditor\LICENSE.md" />
     <Content Include="Content\CKEditor\plugins\htmlwriter\samples\assets\outputforflash\outputforflash.fla" />
@@ -2337,8 +2348,20 @@
     <Content Include="Content\CKEditor\samples\assets\posteddata.php" />
     <Content Include="Content\CKEditor\samples\sample_posteddata.php" />
     <Content Include="Content\CKEditor\skins\moonocolor\readme.md" />
+    <Content Include="Content\fonts\fjallaone-regular.ttf" />
+    <Content Include="Content\fonts\hennypenny-regular.ttf" />
+    <Content Include="Content\fonts\opensans-condbold.ttf" />
+    <Content Include="Content\fonts\opensans-condlight.ttf" />
+    <Content Include="Content\fonts\opensans-condlightitalic.ttf" />
+    <Content Include="Content\fonts\purplepurse-regular.ttf" />
+    <Content Include="Content\fonts\YesevaOne-Regular.ttf" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.eot" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.ttf" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.woff" />
+    <Content Include="Content\fonts\opensans-condlight-webfont.woff2" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Properties\PublishProfiles\MJSDEV.pubxml" />
+    <None Include="Properties\PublishProfiles\SOLANO LIBRARY LIVE.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -2355,7 +2378,9 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2475,6 +2500,7 @@
     <Content Include="Views\Home\404.cshtml" />
     <Content Include="Views\WidgetNewsRotator\Index.cshtml" />
     <Content Include="Views\Home\WirelessPrint.cshtml" />
+    <Content Include="Views\SystemSettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

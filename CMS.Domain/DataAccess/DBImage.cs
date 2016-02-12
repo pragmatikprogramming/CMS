@@ -63,7 +63,7 @@ namespace CMS.Domain.DataAccess
             SqlConnection conn = DB.DbConnect();
             conn.Open();
 
-            string queryString = "SELECT * FROM CMS_Images where parentId = @id AND pageWorkFlowState != 4";
+            string queryString = "SELECT * FROM CMS_Images where parentId = @id AND pageWorkFlowState != 4 ORDER BY name";
             SqlCommand getImages = new SqlCommand(queryString, conn);
             getImages.Parameters.AddWithValue("id", id);
 

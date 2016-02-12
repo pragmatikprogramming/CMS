@@ -4,6 +4,6 @@
         <li><a href="@Model[0].LinkUrl" title="Your Library Cart">@Model[0].MenuItemName</a></li>
         <li><a href="@Model[1].LinkUrl" title="Search the Site">@Model[1].MenuItemName</a></li>
         <li><a href="@Model[2].LinkUrl" title="Hours & Locations">@Model[2].MenuItemName</a></li>
-        <span class="more"><a href="#">more...</a></span>			
+        <span class="more"><a href="/@ViewBag.MenuName.Replace(' ', '-').ToLower()">more...</a></span>			
     </ul>
 </article>

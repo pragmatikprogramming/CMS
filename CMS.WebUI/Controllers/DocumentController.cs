@@ -155,6 +155,8 @@ namespace CMS.WebUI.Controllers
 
             if (fileUpload != null && fileUpload.ContentLength > 0)
             {
+                Logger.LogEvent(fileUpload.ContentType);
+
                 if (!Utility.mimeTypeAllowed(fileUpload.ContentType))
                 {
                     ModelState.AddModelError("Name", "This document type is not allowed");

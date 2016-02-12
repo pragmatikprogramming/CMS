@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Recaptcha;
+@{
     ViewBag.Title = "Teens";
     Layout = "~/Views/Shared/_LayoutTeens.cshtml";
 }
@@ -30,7 +31,14 @@
 
         @if (ViewBag.PageType == 2)
         {
-            @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+            if (ViewBag.isPostBack != null && ViewBag.isPostBack == 1)
+            {
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(ViewBag.Success));
+            }
+            else
+            {
+                @Html.Action("getForm", "Home", new { parentId = Model.PageID, id = ViewBag.id})
+            }
         }
         else if(ViewBag.PageType == 3)
         {
@@ -47,6 +55,7 @@
         }
         else if(ViewBag.PageType == 5)
         {
+            <div style="color: red; font-size: 16px; margin-bottom: 20px;">@Html.ValidationSummary()</div>
             <div class="border">
                 <h5><a href="/Home/BlogPost/@ViewBag.TemplateId/@Model.Id">@Model.Title</a></h5>
                 <section class="padding">
@@ -69,18 +78,26 @@
 
             if(Model.Comments == 1)
             {
+                
                 <div class="border">
                     <h5><a href="#">Leave a Comment</a></h5>
                     <div class="margin-top_10">&nbsp;</div>
                     <form action="/Home/SubmitComment" method="post">
                         <input type="hidden" name="Id" value="@Model.Id" />
                         <input type="hidden" name="BlogId" value="@Model.BlogId" />
+                        <input type="hidden" name="TemplateId" value="@ViewBag.TemplateId" />
                         <div class="formlabel">Name:</div>
-                        <div class="formfield"><input type="text" name="Name" value="" /></div>
+                        <div class="formfield"><input type="text" name="Name" value="@ViewBag.Comment.Name" /></div>
                         <div class="clear">&nbsp;</div>
 
                         <div class="formlabel">Comment:</div>
-                        <div class="formfield"><textarea cols="60" rows="5" maxlength="2000" name="Comment" ></textarea></div>
+                        <div class="formfield"><textarea cols="60" rows="5" maxlength="2000" name="Comment" >@ViewBag.Comment.Comment</textarea></div>
+                        <div class="clear">&nbsp;</div>
+
+                        <div class="formlabel">&nbsp;</div>
+                        <div class="formfield">
+                            @Html.Raw(Html.GenerateCaptcha())
+                        </div>
                         <div class="clear">&nbsp;</div>
 
                         <div class="formlabel">&nbsp;</div>
@@ -130,7 +147,7 @@
         </div><!--end coloumn3-->
         <div class="inner-bot-bg"></div>  
         <div class="margin-top_10">&nbsp;</div> 
-        @if (ViewBag.Network == "192.168.101" || ViewBag.Network == "192.168.103" || ViewBag.Network == "192.168.105" || ViewBag.Network == "192.168.107" || ViewBag.Network == "192.168.109" || ViewBag.Network == "192.168.111" || ViewBag.Network == "192.168.113" || ViewBag.Network == "192.168.115")
+        @if ((ViewBag.Network == "192.168.101" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.103" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.105" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.107" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.109" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.111" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.113" && ViewBag.LastIpOctet > 240) || (ViewBag.Network == "192.168.115" && ViewBag.LastIpOctet > 240))
         {
             @Html.Action("WirelessPrint", "Home", new{ id = ViewBag.Network })
         }

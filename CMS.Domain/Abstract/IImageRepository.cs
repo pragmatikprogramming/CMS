@@ -15,5 +15,6 @@ namespace CMS.Domain.Abstract
         List<Image> RetrieveAll(int id);
         void Update(Image m_Image, HttpPostedFileBase fileUpload, string OldName, string OldFileType);
         void Delete(int id);
+        byte[] ToBinary(HttpPostedFileBase myFile);
     }
 }

@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿@using Recaptcha;
+<style type="text/css">
     .formlabel {
     width: 20%;
     text-align: left;
@@ -26,13 +27,14 @@ input {
     @foreach (var formField in Model.FormFields)
     {
         <div class="formlabel">
-            @if (formField.IsRequired == 1)
-            {
-                <font style="color:red;">*</font>
-            }
+            
             @if (formField.FieldType != 7 && formField.FieldType != 9)
             {    
                 @formField.Label
+                if (formField.IsRequired == 1)
+                {
+                    <font style="color:red;">*</font>
+                }
             }
             else
             {
@@ -142,8 +144,15 @@ input {
             }
             else if (formField.FieldType == 7)
             {
-            <div class="formfield"><input type="submit" value="@formField.Label" name=""/></div>
-            <div class="clear">&nbsp;</div>
+                
+                <div class="formfield">
+                    @Html.Raw(Html.GenerateCaptcha())
+                </div>
+                <div class="clear">&nbsp;</div>
+                <div class="formlabel">&nbsp;</div>
+                <!--<div class="formfield"><input type="submit" value="@formField.Label" name=""/></div>-->
+                <div class="formfield"><input type="image" src="/Content/images/form-submit.png" style="border: 0px;" alt="Submit" /></div>
+                <div class="clear">&nbsp;</div>
             }
             else if (formField.FieldType == 8)
             {

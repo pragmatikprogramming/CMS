@@ -1,0 +1,2 @@
+1. Added support for HTTPS.
+2. Signed the assemblies.

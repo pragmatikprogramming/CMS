@@ -27,6 +27,7 @@ namespace CMS.Domain.Entities
         private string newsImageName;
         private string introText;
         private string author;
+        private string redirectUrl;
 
 
         public int Id
@@ -259,6 +260,18 @@ namespace CMS.Domain.Entities
             set 
             { 
                 author = value; 
+            }
+        }
+
+        public string RedirectUrl
+        {
+            get
+            {
+                return redirectUrl;
+            }
+            set
+            {
+                redirectUrl = value;
             }
         }
 

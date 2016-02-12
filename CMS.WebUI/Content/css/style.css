@@ -18,6 +18,20 @@ a img { border: 0; }
 .center { text-align:center;}
 .border {border: 1px solid #a7a9ac;}
 
+@font-face { font-family:'Henny Penny';src: url(../fonts/hennypenny-regular.ttf); }
+@font-face {font-family:'Purple Purse';src: url(../fonts/purplepurse-regular.ttf);}
+@font-face {font-family:'Yeseva One';src: url(../fonts/YesevaOne-Regular.ttf);}
+
+@font-face {
+    font-family: 'Open Sans Condensed';
+    src: url('../fonts/opensans-condlight-webfont.eot');
+    src: url('../fonts/opensans-condlight-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans-condlight-webfont.woff2') format('woff2'),
+         url('../fonts/opensans-condlight-webfont.woff') format('woff'),
+         url('../fonts/opensans-condlight-webfont.ttf') format('truetype'),
+         url('../fonts/opensans-condlight-webfont.svg#open_sanscondensed_light') format('svg');
+}
+
 .wrapper { background-color:#fff; width: 960px; margin:0 auto; border:solid 1px #8c6c6b; -moz-box-shadow: 0px 5px 10px #333;-webkit-box-shadow: 0px 5px 10px #333;box-shadow: 0px 5px 10px #333;  margin-bottom:40px;}
 .container { padding:10px;}
 ul.mainlist {list-style:square;margin-left:14px;margin-bottom:10px;margin-top:5px;}

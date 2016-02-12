@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:light|Yeseva+One&v1' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="~/Content/js/cufon-yui.js"></script>
 	<script type="text/javascript" src="~/Content/js/cufon-replace.js"></script>
     <script type="text/javascript" src="~/Content/js/compacta_400.font.js"></script>
@@ -33,13 +32,39 @@
 	      		/* EXAMPLE */
 	      		//DD_belatedPNG.fix('*');
 	    	</script>
-		<![endif]-->       
+		<![endif]-->    
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-296382-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>   
 </head>
 <body class="teens-bg">	
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MDL39F"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function (w, d, s, l, i) {
+w[l] = w[l] || []; w[l].push({
+'gtm.start':
+new Date().getTime(), event: 'gtm.js'
+}); var f = d.getElementsByTagName(s)[0],
+j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+'//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-MDL39F');</script>
+<!-- End Google Tag Manager -->
+
     <div class="wrapper">
         <div class="container"> 
     	    <header>
-        	    <div class="logo"><a href="index.html">
+        	    <div class="logo"><a href="/Home">
                     <img src="~/Content/images/teens-logo.jpg" width="146" height="153" title="Solano County Library Logo" alt="Solano County Library" /></a>
         	    </div>
                 @if (ViewBag.PageId != null && ViewBag.PageId != -1 && Model.BannerImageName != null && Model.BannerImageName.Length > 0)
@@ -79,12 +104,25 @@
         	    <div class="footer_menu">
             	    <a href="http://www.solanocounty.com/depts/county_admin/feedback/default.asp">County Survey</a> : <a href="/contact-us">Contact</a> : <a href="/holiday-schedule">Holiday Schedule</a> : <a href="/privacy-policy">Privacy Policy</a> : <a href="http://libonline.snap.lib.ca.us/">Reserve a Computer</a>
                 </div>
-                <div class="copyright">Copyright 2006 Solano County Library</div>
+                <div class="copyright">Copyright @ViewBag.CurrentYear Solano County Library</div>
                 <div class="clear"></div>
             </footer>
         </div><!--end container-->  
     </div><!--end wrapper--> 
-<script type="text/javascript"> Cufon.now(); </script>      
+<script type="text/javascript"> Cufon.now(); </script>     
+    <script type="text/javascript">
+        // causes outgoing links to get logged in Google Analytics
+        for (var ac = 0; ac < links.length; ac++) {
+            if (links[ac].href.indexOf(location.hostname) == -1 && links[ac].href.indexOf("javascript:") == -1) {
+                links[ac].onclick = function () {
+                    var url = this.href.replace(/[\/]/g, "_");
+                    var url = url.replace("http:__", "");
+                    pageTracker._trackPageview("/outgoing/" + url);
+                    return true;
+                }
+            }
+        }
+    </script> 
 </body>
 </html>
 

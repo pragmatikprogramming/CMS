@@ -11,8 +11,6 @@ namespace CMS.Domain.Entities
         private int id;
         private string label;
         private string labelText;
-
-
         private int fieldType;
         private string fieldTypeText;
         private int validationType;

@@ -41,8 +41,13 @@
             color: #fff;
             font-weight: bold;
         }
-    </style>
 
+        @if (Session["BarColor"] != null && Session["BarColor"].ToString().Length > 0)
+        {
+            @:.navbar .navbar-inner{ background: repeat scroll 0 0 padding-box rgba(0, 0, 0, 0); background-color: @Session["BarColor"] }
+        }
+    </style>
+   
 
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -69,17 +74,18 @@
     <div class="navbar">
         <div class="navbar-inner">
             <ul class="nav pull-right">    
+                <li><a href="/SystemSettings/Index" class="dropdown" role="button">Settings</a></li>
                 <li id="fat-menu" class="dropdown">
                     <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-user"></i> @ViewBag.Name
                         <i class="icon-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu">                       
                         <li><a tabindex="-1" href="/Admin/Logout/">Logout</a></li>
                     </ul>
                 </li>    
             </ul>
-            <a class="brand" href="index.html"><!--<img src="~/Content/images/logo-tagline.png" width="149" height="20" alt="Logo">--></a>
+            <a class="brand" href="index.html"><img src="@Url.Action("GetAdminLogo", "ImageHandler")" width="149" height="20" alt="Logo"></a>
         </div><!-- end navbar-inner-->
     </div><!-- end navbar -->
     

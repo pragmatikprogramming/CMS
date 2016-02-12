@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Edit Company";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Edit Company</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <form action="/Companies/EditCompany/" method="post" name="EditCompany" id="EditCompany" >
+            <input type="hidden" name="Id" id="Id" value="@Model.Id" />
+            <div class="formlabel">Name:</div>
+            <div class="formfield"><input type="text" name="Name" id="Name" value="@Model.Name" maxlength="100" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Type:</div>
+            <div class="formfield">
+                <select name="Type">
+                    @foreach (var type in ViewBag.CompanyTypes)
+                    {
+                        if (@Model.Type == type.Id)
+                        {
+                            <option value="@type.Id" selected="selected">@type.Type</option>
+                        }
+                        else
+                        {
+                            <option value="@type.Id">@type.Type</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Address:</div>
+            <div class="formfield"><input type="text" name="Address" id="Address" value="@Model.Address" maxlength="100" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">City:</div>
+            <div class="formfield"><input type="text" name="City" id="City" value="@Model.City" maxlength="100" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">State:</div>
+            <div class="formfield"><input type="text" name="State" id="State" value="@Model.State" maxlength="100" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Zip:</div>
+            <div class="formfield"><input type="text" name="Zip" id="Zip" value="@Model.Zip" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Country:</div>
+            <div class="formfield"><input type="text" name="Country" id="Country" value="@Model.Country" maxlength="100" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Phone:</div>
+            <div class="formfield"><input type="text" name="Phone" id="Phone" value="@Model.Phone" maxlength="35" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Alt Phone:</div>
+            <div class="formfield"><input type="text" name="PhoneSecondary" id="PhoneSecondary" value="@Model.PhoneSecondary" maxlength="35" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Website:</div>
+            <div class="formfield"><input type="text" name="Website" id="Website" value="@Model.Website" /></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">Description:</div>
+            <div class="formfield"><textarea rows="5" cols="25" name="Description" id="Description">@Model.Description</textarea></div>
+            <div class="clear">&nbsp;</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="EditCompany" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+            <div class="clear">&nbsp;</div>
+
+        </form>
+    </div>
+</div>

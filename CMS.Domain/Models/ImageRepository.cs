@@ -110,5 +110,18 @@ namespace CMS.Domain.Models
         {
             DBImage.Delete(id);
         }
+
+        public byte[] ToBinary(HttpPostedFileBase myFile)
+        {
+            var content = new byte[0];
+
+            if (myFile != null && myFile.ContentLength > 0)
+            {
+                content = new byte[myFile.ContentLength];
+                myFile.InputStream.Read(content, 0, myFile.ContentLength);
+            }
+
+            return content;
+        }
     }
 }

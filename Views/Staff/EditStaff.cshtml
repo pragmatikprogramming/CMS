@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Edit Staff";
+    Layout = "~/Views/Shared/KRLayout.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Edit Staff</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid" style="margin-top: 5%">
+        <form method="post" action="/Staff/EditStaff" id="EditStaff" name="EditStaff">
+            <input type="hidden" name="Id" id="Id" value="@Model.Id" />
+            <input type="hidden" name="OptOut" id="OptOut" value="@Model.OptOut" />
+
+            <div class="formlabel">Fisrt Name:</div>
+            <div class="formfield"><input type="text" maxlength="255" value="@Model.FirstName" name="FirstName" id="FirstName" /></div>
+            <div class="clear"></div>
+
+            <div class="formlabel">Last Name:</div>
+            <div class="formfield"><input type="text" maxlength="255" value="@Model.LastName" name="LastName" id="LastName" /></div>
+            <div class="clear"></div>
+
+            <div class="formlabel">Email:</div>
+            <div class="formfield"><input type="text" maxlength="255" value="@Model.Email" name="Email" id="Email" /></div>
+            <div class="clear"></div>
+
+            <div class="formlabel">Company:</div>
+            <div class="formfield">
+                <select name="CompanyId">
+                    @foreach (var company in ViewBag.Companies)
+                    {
+                        if (company.Id == Model.CompanyId)
+                        {
+                            <option value="@company.Id" selected="selected">@company.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@company.Id">@company.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="clear"></div>
+
+            <div class="formlabel">Title:</div>
+            <div class="formfield"><input type="text" maxlength="255" value="@Model.Title" name="Title" id="Title" /></div>
+            <div class="clear"></div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><button form="EditStaff" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+        </form>
+    </div>
+</div>

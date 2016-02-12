@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="header">
+    <h1 class="page-title">Edit System Settings</h1>
+</div>
+
+<div class="container-fluid">   
+    <div class="row-fluid">  
+        <div class="formcontainer">
+            <div style="line-height: 30px;">&nbsp;</div>
+            <div style="color: red">@Html.ValidationSummary()</div>
+
+            <div class="formlabel">&nbsp;</div>
+            <div class="formfield"><a href="/Admin/Index"><button class="btn btn-primary"><i class="icon-reply"></i> Cancel</button></a></div>
+            <div class="clear">&nbsp;</div>
+            <div style="line-height: 30px;">&nbsp;</div>
+
+            <form action="/SystemSettings/SaveSettings" method="post" id="systemSettings" enctype = "multipart/form-data">
+                <div class="formlabel">Domain Name:</div>
+                <div class="formfield"><input type="text" name="DomainName" id="DomainName" value="@Model.DomainName" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Admin Logo:</div>
+                <div class="formfield"><input type="file" class="input-xlarge" name="fileUpload" id="fileUpload" value="@ViewBag.file" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div class="formlabel">Bar Color:</div>
+                <div class="formfield"><input type="text" name="BarColor" id="BarColor" value="@Model.BarColor" /></div>
+                <div class="clear">&nbsp;</div>
+
+                <div style="line-height: 30px;">&nbsp;</div>
+                <div class="formlabel">&nbsp;</div>
+                <div class="formfield"><button form="systemSettings" class="btn btn-primary"><i class="icon-save"></i> Save</button></div>
+                <div class="clear">&nbsp;</div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+

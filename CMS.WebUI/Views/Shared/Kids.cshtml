@@ -15,8 +15,10 @@
         <span class='st_fblike_large' displayText='Facebook Like'></span><br /><br /><br />      
     </section>
 }
-
-@Html.Raw(Model.Content)
+        @if(ViewBag.isPostBack == null || ViewBag.isPostBack != 1)
+        {
+            @Html.Raw(Model.Content)
+        }
 
         @if (ViewBag.PageType == 2)
         {

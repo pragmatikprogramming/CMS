@@ -17,7 +17,7 @@ namespace CMS.Domain.Models
             int m_FormId = DBForm.Create(m_Form);
             return m_FormId;
         }
-        
+
         public Form RetrieveOne(int id)
         {
             Form m_Form = DBForm.RetrieveOne(id);
@@ -32,6 +32,7 @@ namespace CMS.Domain.Models
 
         public void Update(Form m_Form)
         {
+            m_Form.FormFields = PreserveSortOrder(m_Form.Id, m_Form.MyFormFields);
             DBForm.Update(m_Form);
         }
 
@@ -83,6 +84,34 @@ namespace CMS.Domain.Models
             return m_Label;
         }
 
+        public List<FormField> PreserveSortOrder(int formId, List<int> myFormFields)
+        {
+            List<FormField> m_FormFields = DBForm.getFormFields(formId);
+            List<FormField> m_FormFieldsUpdated = new List<FormField>();
+
+            foreach (FormField ff in m_FormFields)
+            {
+                if (myFormFields.Contains(ff.Id))
+                {
+                    FormField m_FormField = new FormField();
+                    m_FormField.Id = ff.Id;
+                    m_FormField.IsRequired = ff.IsRequired;
+                    m_FormFieldsUpdated.Add(m_FormField);
+                    myFormFields.Remove(ff.Id);
+                }
+            }
+
+            foreach (int ffid in myFormFields)
+            {
+                FormField m_FormField = new FormField();
+                m_FormField.Id = ffid;
+                m_FormField.IsRequired = 0;
+                m_FormFieldsUpdated.Add(m_FormField);
+            }
+
+            return m_FormFieldsUpdated;
+        }
+
         public string FormDataExtract(int FormId, string StartDate, string EndDate)
         {
             List<string> m_FormData = DBForm.FormDataExtract(FormId, StartDate, EndDate);
@@ -101,9 +130,9 @@ namespace CMS.Domain.Models
 
                 foreach (string item in rowResult)
                 {
-                    result = item.Split(moreDelimiters, StringSplitOptions.RemoveEmptyEntries);
+                    result = item.Split(moreDelimiters, StringSplitOptions.None);
 
-                    if (result.Length > 0)
+                    if (result.Length > 1)
                     {
                         if (count == 0)
                         {
@@ -115,9 +144,25 @@ namespace CMS.Domain.Models
                             row += (result[1].Replace(",", " ") + ",");
                         }
                     }
+                    else if (result.Length == 1)
+                    {
+                        if (count == 0)
+                        {
+                            header += (result[0].Replace(",", " ") + ",");
+                            row += (",");
+                        }
+                    }
+                    else
+                    {
+                        header += ",";
+                        row += ",";
+                    }
+
                 }
 
                 count = 1;
+
+                row = row.Replace(":", "");
 
                 if (header.Length > 0)
                 {
@@ -135,6 +180,18 @@ namespace CMS.Domain.Models
 
             return csv;
 
+        }
+
+        public string RemoveLineEndings(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+            string lineSeparator = ((char)0x2028).ToString();
+            string paragraphSeparator = ((char)0x2029).ToString();
+
+            return value.Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(lineSeparator, string.Empty).Replace(paragraphSeparator, string.Empty).Replace(":", string.Empty);
         }
     }
 }
